@@ -1,0 +1,94 @@
+<script lang="ts">
+	import IconArrowLeft from "~icons/lucide/arrow-left";
+
+	let { url, date } = $props<{ url: string; date: string }>();
+</script>
+
+<!-- Section 1: Hero -->
+<section class="section-hero">
+	<div class="hero-top">
+		<button type="button" class="btn-volver" onclick={() => history.back()}>
+			<IconArrowLeft width="16" height="16" /> Volver
+		</button>
+		<span class="report-label">reporte de auditoria</span>
+	</div>
+	<h2 class="hero-title">
+		Reporte de performance<br>
+		<span class="text-accent">&amp;</span> <span class="text-accent">sustentabilidad</span> <span class="text-accent">digital</span>
+	</h2>
+	<p class="hero-subtitle">
+		Sitio web auditado: <strong>{url}</strong> &middot; Fecha: {date}
+	</p>
+</section>
+
+<style>
+	.text-accent {
+		color: var(--color-audit-accent);
+	}
+
+	.section-hero {
+		padding-bottom: 32px;
+		padding-top: 24px;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		align-items: flex-start;
+		width: 100%;
+		margin-top: 24px;
+	}
+
+	.hero-top {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	:global(.btn-volver) {
+		background: rgba(255, 255, 255, 0.05) !important;
+		border: 1px solid rgba(255, 255, 255, 0.1) !important;
+		color: var(--color-white) !important;
+		border-radius: 48px !important;
+		padding: 8px 16px !important;
+		font-family: var(--font-body) !important;
+		font-size: var(--text-sm) !important;
+		font-weight: 600 !important;
+		display: flex !important;
+		align-items: center !important;
+		gap: 8px !important;
+		transition: background var(--dur-fast) var(--ease-out-expo) !important;
+		cursor: pointer;
+	}
+
+	:global(.btn-volver:hover) {
+		background: rgba(255, 255, 255, 0.1) !important;
+	}
+
+	.report-label {
+		color: var(--color-audit-accent);
+		font-family: var(--font-headline);
+		font-size: 12px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 1.2px;
+	}
+
+	:global(.hero-title), :global(.hero-title *) {
+		font-size: 40px !important;
+		line-height: 40px !important;
+		color: var(--color-white) !important;
+		margin: 0 !important;
+		letter-spacing: -1px !important;
+	}
+
+	.hero-subtitle {
+		color: #d4d8e4;
+		font-family: var(--font-headline);
+		font-size: 12px;
+		text-transform: uppercase;
+		letter-spacing: 1.2px;
+	}
+
+	.hero-subtitle strong {
+		font-weight: 700;
+	}
+</style>

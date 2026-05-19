@@ -1,0 +1,60 @@
+:root {
+	/* ── Ciclo17 — High-Fidelity Brand Layer ── */
+	
+	/* Brand Colors */
+	--color-primary: #2a8f6e; /* Eucalyptus */
+	--color-primary-fg: #ffffff;
+	--color-secondary: #e9f3f0; /* Scheme 1 Background */
+	--color-white: #ffffff;
+	--color-black: #070202;
+	
+	/* Neutrals & Opacities */
+	--color-neutral-bg: #e9f3f0;
+	--color-text-primary: #070202;
+	--color-text-body: #070202;
+	--color-text-heading: #070202;
+	--color-text-muted: rgba(7, 2, 2, 0.6);
+	--color-border-light: rgba(7, 2, 2, 0.15);
+	
+	/* Audit Report Specific Tokens */
+	--color-audit-bg: #141827;
+	--color-audit-card: #191e31;
+	--color-audit-accent: #d6f47a;
+	--color-audit-text: #d4d8e4;
+	--color-audit-success: #61d46a;
+	--color-audit-warning: #f3ba25;
+	--color-audit-error: #ff4c4d;
+	
+	/* Spacing Context (Figma specific) */
+	--page-padding: 64px;
+	--section-padding-large: 112px;
+	--section-padding-medium: 80px;
+	--navbar-height: 72px;
+	
+	/* Typography Scale */
+	--font-headline: 'Space Grotesk', sans-serif;
+	--font-body: 'DM Sans', sans-serif;
+	
+	--text-h1: 64px;
+	--text-h2: 52px;
+	--text-h3: 40px;
+	--text-h4: 36px;
+	--text-h5: 28px;
+	--text-base: 16px;
+	--text-medium: 18px;
+	--text-small: 14px;
+	--text-tiny: 12px;
+	
+	/* Radii */
+	--radius-large: 40px;
+	--radius-pill: 100px;
+	
+	/* Effects */
+	--shadow-button-outer: 0px 1px 1px rgba(7, 2, 2, 0.05);
+	--shadow-button-primary-inner: 
+		inset 0px 32px 24px 0px rgba(255, 255, 255, 0.05),
+		inset 0px 2px 1px 0px rgba(255, 255, 255, 0.25),
+		inset 0px -2px 1px 0px rgba(0, 0, 0, 0.2);
+	--shadow-button-secondary-inner: 
+		inset 0px -2px 1px 0px rgba(7, 2, 2, 0.05);
+}

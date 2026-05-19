@@ -1,0 +1,25 @@
+/* ── Fábrica17 — Steel Rails (Baseline Tokens) ── */
+
+:root {
+	/* Spacing Primitives (Mapped to Figma variables where possible) */
+	--space-1: 4px;
+	--space-2: 8px;
+	--space-3: 12px;
+	--space-4: 16px;
+	--space-5: 20px;
+	--space-6: 24px;
+	--space-8: var(--page-padding, 32px); /* Mapping 8 to Page Padding (64px) */
+	--space-10: 40px;
+	--space-12: 48px;
+	--space-16: var(--section-padding-medium, 64px); /* Mapping 16 to Medium Padding (80px) */
+	--space-20: 80px;
+	--space-24: var(--section-padding-large, 96px); /* Mapping 24 to Large Padding (112px) */
+	--space-32: 128px;
+
+	/* Color Primitives */
+	--color-white: #ffffff;
+	--color-black: #070202;
+	
+	/* Layout Primitives */
+	--max-width-container: 1280px;
+}

@@ -1,0 +1,18 @@
+:root {
+	/* ── Client Visual Identity Overrides (Template) ── */
+	
+	/* Brand Colors */
+	--color-primary: [BRAND_PRIMARY_COLOR]; /* e.g., #c91e1e */
+	--color-primary-dark: [BRAND_PRIMARY_DARK_COLOR];
+	--color-accent-dark: [BRAND_ACCENT_COLOR];
+	
+	/* Typography from Figma extraction */
+	--font-headline: '[BRAND_FONT_HEADLINE]', sans-serif;
+	--font-body: '[BRAND_FONT_BODY]', sans-serif;
+	--font-nav: '[BRAND_FONT_NAV]', sans-serif;
+
+	/* Semantic Colors mapped from Figma */
+	--color-text-primary: [BRAND_TEXT_PRIMARY];
+	--color-text-body: [BRAND_TEXT_BODY];
+	--color-neutral-bg: [BRAND_BG_COLOR];
+}

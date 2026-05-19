@@ -1,0 +1,2 @@
+/* SvelteKit shell — delegates everything to the cliente token system */
+@import url('../cliente/tokens.css');
