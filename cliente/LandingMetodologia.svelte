@@ -44,47 +44,45 @@
 	];
 
 	let sectionRef: HTMLElement;
+	let cardStackEl: HTMLElement;
 	let isLocked = false;
-	let targetProgress = 0;    // Driven by wheel delta
-	let progress = $state(0);  // Smoothly interpolated (renders cards)
-	let rafId: number;
-
-	// Glow follows the topmost fully-arrived card
-	let activeGlowIndex = $derived(
-		Math.min(cards.length - 1, Math.max(0, Math.round(progress * (cards.length - 1))))
-	);
-
-	// Track last unlock time to prevent immediate re-lock from iOS momentum scroll
+	let targetProgress = 0;
+	let progress = $state(0);
+	let rafId = 0;
+	let isMobile = $state(false);
+	let activeCarouselIndex = $state(0);
 	let unlockTime = 0;
+
+	// Glow index: driven by scroll progress on desktop, snap index on mobile
+	let activeGlowIndex = $derived(
+		isMobile
+			? activeCarouselIndex
+			: Math.min(cards.length - 1, Math.max(0, Math.round(progress * (cards.length - 1))))
+	);
 
 	function lockPage() {
 		if (isLocked) return;
-		if (Date.now() - unlockTime < 800) return; // Ignore for 800ms after unlock
+		if (Date.now() - unlockTime < 800) return;
 		isLocked = true;
 		document.documentElement.style.overflow = 'hidden';
 		document.body.style.overflow = 'hidden';
 		document.body.style.overscrollBehavior = 'none';
 		document.documentElement.style.overscrollBehavior = 'none';
-		// Suavemente centra la sección en la pantalla (menor salto = menor sensación de succión)
 		sectionRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
 	}
 
 	function unlockPage() {
 		if (!isLocked) return;
 		isLocked = false;
-		unlockTime = Date.now(); // Start cooldown window
+		unlockTime = Date.now();
 		document.documentElement.style.overflow = '';
 		document.body.style.overflow = '';
 		document.body.style.overscrollBehavior = '';
 		document.documentElement.style.overscrollBehavior = '';
 	}
 
-	/**
-	 * Compute each card's physical position from continuous progress.
-	 */
 	function getCardStyle(i: number): string {
-		const segment = progress * (cards.length - 1); // 0 → 4
-
+		const segment = progress * (cards.length - 1);
 		let translateY = 0;
 		let scale = 1;
 		let opacity = 1;
@@ -99,15 +97,13 @@
 			brightness = Math.max(0.45, 1 - levelsAbove * 0.13);
 			zIndex = 1;
 		} else {
-			const arrival = segment - (i - 1); // 0 = appearing, 1 = fully placed
-
+			const arrival = segment - (i - 1);
 			if (arrival <= 0) {
 				translateY = 110;
 				scale = 0.92;
 				opacity = 0;
 				zIndex = i;
 			} else if (arrival < 1) {
-				// Ease-out curve for the physical slide
 				const eased = 1 - Math.pow(1 - arrival, 2.5);
 				translateY = (1 - eased) * 100;
 				scale = 0.94 + eased * 0.06;
@@ -133,79 +129,50 @@
 	}
 
 	onMount(() => {
-		// Smooth animation loop: lerp progress toward target
+		const mq = window.matchMedia('(max-width: 768px)');
+		isMobile = mq.matches;
+		const onMQChange = (e: MediaQueryListEvent) => { isMobile = e.matches; };
+		mq.addEventListener('change', onMQChange);
+
 		function animate() {
 			const diff = targetProgress - progress;
 			if (Math.abs(diff) > 0.001) {
-				progress += diff * 0.1; // Smooth damping factor
+				progress += diff * 0.1;
 			} else {
 				progress = targetProgress;
 			}
-
-			// Check unlock conditions AFTER settling
 			if (progress >= 0.995 && targetProgress >= 1) {
-				progress = 1;
-				targetProgress = 1;
-				unlockPage();
+				progress = 1; targetProgress = 1; unlockPage();
 			} else if (progress <= 0.005 && targetProgress <= 0) {
-				progress = 0;
-				targetProgress = 0;
-				unlockPage();
+				progress = 0; targetProgress = 0; unlockPage();
 			}
-
 			rafId = requestAnimationFrame(animate);
 		}
 		rafId = requestAnimationFrame(animate);
 
-		// Lock when the section is well within the viewport.
-		// Detect entry direction to set correct initial progress.
-		let lastScrollY = window.scrollY;
-		window.addEventListener('scroll', () => { lastScrollY = window.scrollY; }, { passive: true });
+		const desktopObserver = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (!isMobile && entry.isIntersecting && !isLocked && (Date.now() - unlockTime > 800)) {
+					const rect = entry.boundingClientRect;
+					const enteringFromBelow = rect.top > 0;
+					targetProgress = enteringFromBelow ? 0 : 1;
+					progress = enteringFromBelow ? 0 : 1;
+					lockPage();
+				}
+			});
+		}, { threshold: 0.8 });
+		if (sectionRef) desktopObserver.observe(sectionRef);
 
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting && !isLocked && (Date.now() - unlockTime > 800)) {
-						// Determine entry direction from boundingClientRect
-						const rect = entry.boundingClientRect;
-						const enteringFromBelow = rect.top > 0;
-						if (enteringFromBelow) {
-							// Scrolling down into section — start at 0
-							targetProgress = 0;
-							progress = 0;
-						} else {
-							// Scrolling up into section — start at end so cards reverse
-							targetProgress = 1;
-							progress = 1;
-						}
-						lockPage();
-					}
-				});
-			},
-			{ threshold: 0.8 }
-		);
-		if (sectionRef) observer.observe(sectionRef);
-
-		// Wheel → accumulate into targetProgress
-		// TOTAL_SCROLL_DISTANCE: trackpad/mouse wheel
 		const TOTAL_SCROLL_DISTANCE = 3200;
-		// TOUCH_SCROLL_DISTANCE: 3 typical swipes on iPhone to complete sequence
-		const TOUCH_SCROLL_DISTANCE = 600;
-
 		const handleWheel = (e: WheelEvent) => {
-			if (!isLocked) return;
+			if (isMobile || !isLocked) return;
 			e.preventDefault();
 			e.stopPropagation();
-			e.stopImmediatePropagation();
-
 			targetProgress += e.deltaY / TOTAL_SCROLL_DISTANCE;
-			// Allow slight overshoot so the unlock condition triggers
 			targetProgress = Math.max(-0.05, Math.min(1.05, targetProgress));
 		};
-
-		// Keyboard scroll blocking
 		const handleKeyDown = (e: KeyboardEvent) => {
-			if (!isLocked) return;
+			if (isMobile || !isLocked) return;
 			const keys = ['ArrowDown', 'ArrowUp', 'Space', ' ', 'PageDown', 'PageUp'];
 			if (keys.includes(e.key)) {
 				e.preventDefault();
@@ -214,23 +181,14 @@
 				targetProgress = Math.max(-0.05, Math.min(1.05, targetProgress));
 			}
 		};
-
-		// Touch support
 		let touchStartY = 0;
-		const handleTouchStart = (e: TouchEvent) => {
-			touchStartY = e.touches[0].clientY;
-		};
-
+		const handleTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
 		const handleTouchMove = (e: TouchEvent) => {
-			if (!isLocked) return;
+			if (isMobile || !isLocked) return;
 			e.preventDefault();
-			e.stopPropagation();
-
 			const deltaY = touchStartY - e.touches[0].clientY;
 			touchStartY = e.touches[0].clientY;
-
-			// Use a shorter distance for touch — finger travel is much shorter than trackpad
-			targetProgress += deltaY / TOUCH_SCROLL_DISTANCE;
+			targetProgress += deltaY / 600;
 			targetProgress = Math.max(-0.05, Math.min(1.05, targetProgress));
 		};
 
@@ -239,14 +197,34 @@
 		window.addEventListener('touchstart', handleTouchStart, { passive: true });
 		window.addEventListener('touchmove', handleTouchMove, { passive: false, capture: true });
 
+		let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+		const scrollEndHandler = () => {
+			if (!isMobile || !cardStackEl) return;
+			const firstCard = cardStackEl.querySelector('.stack-card') as HTMLElement | null;
+			if (!firstCard) return;
+			const cardW = firstCard.offsetWidth + 12;
+			activeCarouselIndex = Math.round(cardStackEl.scrollLeft / cardW);
+		};
+		const scrollFallbackHandler = () => {
+			if (!isMobile) return;
+			if (debounceTimer) clearTimeout(debounceTimer);
+			debounceTimer = setTimeout(scrollEndHandler, 150);
+		};
+		cardStackEl?.addEventListener('scrollend', scrollEndHandler);
+		cardStackEl?.addEventListener('scroll', scrollFallbackHandler, { passive: true });
+
 		return () => {
+			mq.removeEventListener('change', onMQChange);
 			cancelAnimationFrame(rafId);
-			observer.disconnect();
 			unlockPage();
+			desktopObserver.disconnect();
 			window.removeEventListener('wheel', handleWheel, { capture: true });
 			window.removeEventListener('keydown', handleKeyDown, { capture: true });
 			window.removeEventListener('touchstart', handleTouchStart);
 			window.removeEventListener('touchmove', handleTouchMove, { capture: true });
+			cardStackEl?.removeEventListener('scrollend', scrollEndHandler);
+			cardStackEl?.removeEventListener('scroll', scrollFallbackHandler);
+			if (debounceTimer) clearTimeout(debounceTimer);
 		};
 	});
 </script>
@@ -258,10 +236,14 @@
 		style="background: radial-gradient(ellipse at 70% 60%, {cards[activeGlowIndex].glowColor} 0%, transparent 70%);"
 	></div>
 
-	<!-- Card Stack -->
-	<div class="card-stack">
+	<!-- Card Stack / Carousel -->
+	<div class="card-stack" bind:this={cardStackEl}>
+		<!-- Peek ghost cards — desktop only, always behind real cards (z-index: 0 < real cards 1+) -->
+		<div class="peek-ghost peek-ghost--near" aria-hidden="true"></div>
+		<div class="peek-ghost peek-ghost--far" aria-hidden="true"></div>
+
 		{#each cards as card, i}
-			<div class="stack-card" style={getCardStyle(i)}>
+			<div class="stack-card" style={isMobile ? '' : getCardStyle(i)}>
 				{#if i === 0}
 					<div class="card-inner-top">
 						<span class="top-pill">{card.pill}</span>
@@ -297,6 +279,19 @@
 			</div>
 		{/each}
 	</div>
+
+	<!-- Mobile: dot pagination indicators (pure CSS circles, no text) -->
+	<div class="carousel-indicators" role="tablist" aria-label="Pasos de metodología">
+		{#each cards as _, i}
+			<div
+				class="carousel-indicator"
+				class:active={activeCarouselIndex === i}
+				role="tab"
+				aria-selected={activeCarouselIndex === i}
+				aria-label={i === 0 ? 'Introducción' : `Paso ${i}`}
+			></div>
+		{/each}
+	</div>
 </section>
 
 <style>
@@ -308,8 +303,10 @@
 		background: var(--color-surface-dark);
 		overflow: hidden;
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		gap: var(--space-6);
 		padding: var(--section-pad-md) var(--gutter);
 		padding-top: max(80px, env(safe-area-inset-top, 80px));
 		padding-bottom: max(80px, env(safe-area-inset-bottom, 80px));
@@ -320,16 +317,42 @@
 		inset: 0;
 		pointer-events: none;
 		z-index: 0;
-		transition: background 0.8s var(--ease-out-expo);
+		transition: background 0.8s ease-out;
 	}
 
-	/* ── Card Stack ── */
+	/* ── Desktop Card Stack ───────────────────────────────────────────── */
 	.card-stack {
 		position: relative;
 		z-index: 1;
 		width: 100%;
 		max-width: 1128px;
-		height: clamp(260px, 32vh, 310px); /* Increased to prevent text cropping on multiline titles */
+		height: clamp(280px, 32vh, 320px);
+	}
+
+	/* Peek ghost cards: static divs always rendered behind real cards */
+	.peek-ghost {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		border-radius: var(--radius-xl);
+		background: var(--color-surface-base);
+		border: 1px solid rgba(255, 255, 255, 0.07);
+		pointer-events: none;
+		z-index: 0; /* Behind all real stack-cards (z-index 1+) */
+	}
+	/* Closest ghost: 3% narrower on each side, 10px lower */
+	.peek-ghost--near {
+		left: 3%;
+		right: 3%;
+		transform: translateY(10px);
+		opacity: 0.55;
+	}
+	/* Deeper ghost: 6% narrower, 20px lower */
+	.peek-ghost--far {
+		left: 6%;
+		right: 6%;
+		transform: translateY(20px);
+		opacity: 0.28;
 	}
 
 	.stack-card {
@@ -338,7 +361,6 @@
 		border-radius: var(--radius-xl);
 		background: var(--color-surface-base);
 		border: 1px solid var(--color-border-card);
-		/* Subtle top-edge highlight for depth and premium feel */
 		box-shadow:
 			inset 0 1px 0 rgba(255, 255, 255, 0.07),
 			0 4px 24px rgba(0, 0, 0, 0.2);
@@ -349,38 +371,40 @@
 		overflow: hidden;
 	}
 
-	/* ── Top Card (Index 0) ── */
+	/* ── Top Card (Index 0) ──────────────────────────────────────────── */
 	.card-inner-top {
 		height: 100%;
 		width: 100%;
-		padding: var(--space-10) var(--space-10); /* More horizontal padding */
+		padding: var(--space-10);
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		justify-content: flex-start; /* Prevents overflow clipping at the top */
-		gap: var(--space-5);
-		background-image: linear-gradient(170.7deg, rgba(218, 147, 255, 0.2) 0%, rgba(218, 147, 255, 0) 50%, rgba(222, 246, 149, 0.3) 100%);
+		justify-content: center; /* Vertically center content in the card */
+		gap: var(--space-4);
+		background-image: linear-gradient(
+			170.7deg,
+			rgba(218, 147, 255, 0.2) 0%,
+			rgba(218, 147, 255, 0) 50%,
+			rgba(222, 246, 149, 0.3) 100%
+		);
 	}
 
-	/* Two-column layout for the top card matching the Figma spec */
 	.top-inner {
 		display: flex;
 		align-items: flex-start;
-		gap: var(--space-6);
+		gap: var(--space-8);
 		width: 100%;
 	}
 
 	.top-left {
 		flex: 1.2;
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-2);
+		min-width: 0;
 	}
 
 	.top-right {
 		flex: 1;
-		display: flex;
-		align-items: flex-start;
+		min-width: 0;
+		padding-top: 4px; /* optical alignment */
 	}
 
 	.top-pill {
@@ -394,10 +418,10 @@
 
 	.top-title {
 		font-family: var(--font-headline);
-		font-size: var(--text-2xl); /* matches Figma h-3/size: 40px at desktop */
+		font-size: var(--text-2xl);
 		font-weight: 700;
 		color: var(--color-white);
-		line-height: 48px;          /* matches Figma h-3/line-height: 48px */
+		line-height: 1.15;
 		margin: 0;
 	}
 
@@ -410,14 +434,14 @@
 		margin: 0;
 	}
 
-	/* ── Step Cards (Index 1-4) ── */
+	/* ── Step Cards (Index 1–4) ──────────────────────────────────────── */
 	.card-inner-step {
 		height: 100%;
 		width: 100%;
-		padding: var(--space-10) var(--space-10);
+		padding: var(--space-10);
 		display: flex;
-		align-items: flex-start; /* Both cols start at top, matching Figma */
-		gap: var(--space-6);
+		align-items: center; /* Both columns vertically centered within the card */
+		gap: var(--space-8);
 	}
 
 	.step-left {
@@ -429,11 +453,11 @@
 	}
 
 	.number-block {
-		width: 30px;
-		height: 30px;
+		width: 36px;
+		height: 36px;
 		border-radius: var(--radius-md);
-		background: rgba(255, 255, 255, 0.1);
-		border: 1px solid var(--color-border-card); /* Fallback */
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid currentColor;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -446,15 +470,16 @@
 	.title-block {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-2); /* 8px — matches Figma gap between title and subtitle */
+		gap: var(--space-2);
+		min-width: 0;
 	}
 
 	.step-title {
 		font-family: var(--font-headline);
-		font-size: var(--text-2xl); /* matches Figma h-3/size: 40px at desktop */
+		font-size: var(--text-2xl);
 		font-weight: 700;
 		color: var(--color-white);
-		line-height: 48px;          /* matches Figma h-3/line-height: 48px */
+		line-height: 1.15;
 		margin: 0;
 	}
 
@@ -469,9 +494,7 @@
 
 	.step-right {
 		flex: 1;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start; /* Align to top, matching Figma */
+		min-width: 0;
 	}
 
 	.step-desc {
@@ -479,68 +502,168 @@
 		font-size: var(--text-sm);
 		font-weight: 400;
 		color: var(--color-text-secondary);
-		line-height: 23px;
+		line-height: 1.6;
 		margin: 0;
 	}
 
-	/* ── Mobile ── */
+	/* ── Carousel indicators: hidden on desktop ──────────────────────── */
+	.carousel-indicators {
+		display: none;
+	}
+
+	/* ── Tablet (768px–1000px): stack columns before they clip ────────── */
+	@media (max-width: 1000px) and (min-width: 769px) {
+		.card-stack {
+			height: clamp(320px, 38vh, 380px);
+		}
+		.card-inner-top,
+		.card-inner-step {
+			padding: var(--space-8);
+		}
+		.top-inner {
+			flex-direction: column;
+			gap: var(--space-4);
+		}
+		.top-left,
+		.top-right {
+			flex: none;
+			width: 100%;
+			padding-top: 0;
+		}
+		.card-inner-step {
+			gap: var(--space-6);
+		}
+		.top-title,
+		.step-title {
+			font-size: var(--text-xl);
+		}
+	}
+
+	/* ── Mobile (<768px): Horizontal scroll-snap carousel ────────────── */
 	@media (max-width: 768px) {
 		.meto-section {
-			padding: 40px 16px;
-			padding-top: max(48px, env(safe-area-inset-top, 48px));
-			padding-bottom: max(48px, env(safe-area-inset-bottom, 48px));
+			padding: max(56px, env(safe-area-inset-top)) 0 max(var(--space-8), env(safe-area-inset-bottom));
+			justify-content: center; /* Cards + dots grouped in the middle, no space-between gap */
+			gap: var(--space-5);
 		}
 
+		/* Horizontal snap carousel */
 		.card-stack {
-			height: clamp(300px, 35vh, 320px); /* Tighter height to eliminate empty whitespace at bottom */
+			display: flex;
+			flex-direction: row;
+			overflow-x: scroll;
+			overflow-y: visible;
+			scroll-snap-type: x mandatory;
+			-webkit-overflow-scrolling: touch;
+			scrollbar-width: none;
+			height: auto;
+			padding: 0 20px 4px; /* side padding creates peek effect for adjacent cards */
+			gap: 12px;
+			width: 100%;
+			max-width: 100%;
+			flex-shrink: 0;
+		}
+		.card-stack::-webkit-scrollbar {
+			display: none;
+		}
+
+		.peek-ghost {
+			display: none;
+		}
+
+		/* Cards are full-width snap items */
+		.stack-card {
+			position: static !important;
+			transform: none !important;
+			opacity: 1 !important;
+			filter: none !important;
+			flex: 0 0 calc(100vw - 72px);
+			height: auto;
+			scroll-snap-align: center;
+			pointer-events: auto;
+			will-change: auto;
 		}
 
 		.card-inner-top {
+			height: auto;
 			padding: var(--space-8) var(--space-6);
-			gap: 16px;
-		}
-
-		.card-inner-step {
-			padding: var(--space-8) var(--space-6);
-			flex-direction: column;
-			gap: 20px;
+			justify-content: flex-start;
+			gap: var(--space-4);
 		}
 
 		.top-inner {
 			flex-direction: column;
-			gap: 16px;
+			gap: var(--space-4);
 		}
 
-		.step-left, .top-left {
-			width: 100%;
-			flex: none; /* Prevent flex-grow from pushing the description to the bottom */
-		}
-
-		.step-right, .top-right {
-			width: 100%;
+		.top-left,
+		.top-right {
 			flex: none;
-			justify-content: flex-start;
+			width: 100%;
+			padding-top: 0;
 		}
 
-		.top-title, .step-title {
-			font-size: 26px;
+		.card-inner-step {
+			height: auto;
+			padding: var(--space-8) var(--space-6);
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: flex-start;
+			gap: var(--space-5);
+		}
+
+		.step-left,
+		.step-right {
+			flex: none;
+			width: 100%;
+		}
+
+		.top-title,
+		.step-title {
+			font-size: var(--text-xl);
 			line-height: 1.2;
-			letter-spacing: -0.015em;
+		}
+
+		/* Dot indicators */
+		.carousel-indicators {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: var(--space-2);
+			z-index: 1;
+			flex-shrink: 0;
+		}
+
+		.carousel-indicator {
+			width: 6px;
+			height: 6px;
+			border-radius: var(--radius-full);
+			background: var(--color-text-muted);
+			opacity: 0.35;
+			transition:
+				width 0.25s ease,
+				opacity 0.25s ease,
+				background 0.25s ease;
+		}
+
+		.carousel-indicator.active {
+			width: 20px;
+			background: var(--color-accent-primary);
+			opacity: 1;
 		}
 	}
 
 	@media (max-width: 480px) {
-		.card-stack {
-			height: 330px; /* Snug fit for wrapped text without massive bottom gap */
+		.stack-card {
+			flex: 0 0 calc(100vw - 48px);
 		}
-
-		.card-inner-top, .card-inner-step {
+		.card-inner-top,
+		.card-inner-step {
 			padding: var(--space-6) var(--space-5);
 		}
-
-		.top-title, .step-title {
-			font-size: 22px;
-			line-height: 1.2;
+		.top-title,
+		.step-title {
+			font-size: var(--text-lg);
 		}
 	}
 </style>
