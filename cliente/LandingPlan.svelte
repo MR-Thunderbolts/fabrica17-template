@@ -14,12 +14,12 @@
 	}
 
 	const steps = [
-		{ number: "1", label: "Taller Inicial",                 bg: "#effbca", svg: shape1 },
-		{ number: "2", label: "Planificación &\nInvestigación", bg: "#ccd3df", svg: shape16 },
-		{ number: "3", label: "Contenido",                      bg: "#f7e9fc", svg: shape12 },
-		{ number: "4", label: "Diseño Web",                     bg: "#fdf1d3", svg: shape3  },
-		{ number: "5", label: "Desarrollo &\nTesting",          bg: "#fbd8d1", svg: shape21 },
-		{ number: "6", label: "Entrega &\nPostventa",           bg: "#effbca", svg: shape22 }
+		{ number: "1", label: "Taller Inicial",                 bg: "var(--color-card-green-1)", svg: shape1 },
+		{ number: "2", label: "Planificación &\nInvestigación", bg: "var(--color-card-gray)", svg: shape16 },
+		{ number: "3", label: "Contenido",                      bg: "var(--color-card-purple)", svg: shape12 },
+		{ number: "4", label: "Diseño Web",                     bg: "var(--color-card-warning)", svg: shape3  },
+		{ number: "5", label: "Desarrollo &\nTesting",          bg: "var(--color-card-salmon)", svg: shape21 },
+		{ number: "6", label: "Entrega &\nPostventa",           bg: "var(--color-card-green-1)", svg: shape22 }
 	];
 </script>
 
@@ -63,7 +63,7 @@
 	.plan-section {
 		position: relative;
 		padding: var(--section-pad-md) var(--gutter);
-		background: var(--color-audit-surface);
+		background: var(--color-surface-base);
 		overflow: hidden;
 		width: 100%;
 	}
@@ -135,7 +135,7 @@
 		font-family: var(--font-body);
 		font-size: var(--text-lg);
 		font-weight: 400;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		line-height: 1.5;
 		margin: 0;
 		max-width: 600px;
@@ -201,7 +201,7 @@
 		font-family: var(--font-headline);
 		font-size: 36px;
 		font-weight: 700;
-		color: var(--color-audit-surface);
+		color: var(--color-surface-base);
 		line-height: 1;
 	}
 

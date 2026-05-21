@@ -127,11 +127,11 @@
 	}
 
 	:global(.icon-accent) {
-		color: var(--color-audit-accent) !important;
+		color: var(--color-accent-primary) !important;
 	}
 	:global(.icon-accent svg) {
-		stroke: var(--color-audit-accent) !important;
-		color: var(--color-audit-accent) !important;
+		stroke: var(--color-accent-primary) !important;
+		color: var(--color-accent-primary) !important;
 	}
 
 	.section-title {
@@ -144,7 +144,7 @@
 	}
 
 	.section-site {
-		color: #d4d8e4;
+		color: var(--color-text-secondary);
 		font-family: var(--font-body);
 		font-size: var(--text-xs);
 		letter-spacing: 0.08em;
@@ -158,7 +158,7 @@
 	}
 
 	.metric-card {
-		background: #191e31;
+		background: var(--color-surface-base);
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-radius: 28px;
 		padding: 33px;
@@ -193,7 +193,7 @@
 	}
 
 	.metric-unit {
-		color: #d4d8e4;
+		color: var(--color-text-secondary);
 		font-family: var(--font-body);
 		font-size: var(--text-base);
 		font-weight: 600;
@@ -214,7 +214,7 @@
 	}
 
 	.metric-desc {
-		color: #d4d8e4;
+		color: var(--color-text-secondary);
 		font-family: var(--font-body);
 		font-size: var(--text-base);
 		margin: 0;
@@ -233,22 +233,22 @@
 	}
 
 	.status-success {
-		background: rgba(78, 170, 85, 0.2);
-		color: #61d46a;
+		background: var(--color-success-bg);
+		color: var(--color-success);
 	}
 
 	.status-warning {
-		background: rgba(195, 149, 30, 0.2);
-		color: #f3ba25;
+		background: var(--color-warning-bg);
+		color: var(--color-warning);
 	}
 
 	.status-error {
-		background: rgba(220, 53, 69, 0.2);
-		color: #ff6b6b;
+		background: var(--color-error-bg);
+		color: var(--color-error);
 	}
 	
 	:global(.icon-error) {
-		color: #ff6b6b;
+		color: var(--color-error);
 	}
 
 	/* CO2 Scale */
@@ -267,15 +267,15 @@
 		justify-content: center;
 		background: rgba(255, 255, 255, 0.05);
 		border-radius: 6px;
-		color: #d4d8e4;
+		color: var(--color-text-secondary);
 		font-family: var(--font-headline);
 		font-weight: 600;
 		font-size: var(--text-sm);
 	}
 
 	.class-block.active {
-		background: var(--color-audit-accent);
-		color: var(--color-audit-bg);
+		background: var(--color-accent-primary);
+		color: var(--color-bg-base);
 		transform: scale(1.1);
 		box-shadow: 0 0 12px rgba(214, 244, 122, 0.4);
 		z-index: 1;
@@ -283,7 +283,7 @@
 
 	/* Issues Card */
 	.issues-card {
-		background: #191e31;
+		background: var(--color-surface-base);
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-radius: 28px;
 		padding: 33px;
@@ -309,7 +309,7 @@
 	}
 
 	.issues-site {
-		color: #d4d8e4;
+		color: var(--color-text-secondary);
 		font-size: var(--text-xs);
 	}
 
@@ -352,7 +352,7 @@
 	}
 
 	.issue-impact {
-		color: #d4d8e4;
+		color: var(--color-text-secondary);
 		font-size: var(--text-sm);
 	}
 

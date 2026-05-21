@@ -69,7 +69,7 @@
 <style>
 	.faq-section {
 		padding: var(--section-pad-lg) var(--gutter);
-		background: var(--color-audit-surface);
+		background: var(--color-surface-base);
 		width: 100%;
 	}
 
@@ -192,7 +192,7 @@
 		font-family: var(--font-body);
 		font-size: 16px;
 		font-weight: 400;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		line-height: 24px;
 		margin: 0;
 	}

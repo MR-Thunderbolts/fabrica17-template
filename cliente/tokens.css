@@ -33,18 +33,17 @@
 
 	/* Radius */
 	--radius-sm:   6px;
-	--radius-base: 12px;
+	--radius-md:   12px;
 	--radius-lg:   20px;
-	--radius-md:   28px;
+	--radius-xl:   28px;
 	--radius-full: 9999px;
 
 	/* ── Brand Palette ── */
 	/* Surface */
-	--color-audit-bg:      #141827;
-	--color-audit-surface: #191e31;
-	--color-audit-fg:      #d4d8e4;
-	--color-audit-text:    #d4d8e4;
-	--color-audit-accent:  #d6f47a;
+	--color-bg-base:       #141827;
+	--color-surface-base:  #191e31;
+	--color-text-secondary:#d4d8e4;
+	--color-accent-primary:#d6f47a;
 
 	/* Primary (Purple) */
 	--color-primary:       #d790f0;
@@ -58,6 +57,17 @@
 	--color-card-green-3:  #effbca;
 	--color-card-purple:   #f7e9fc;
 	--color-card-warning:  #fdf1d3;
+	--color-card-blue:     #e0e7ff;
+	--color-card-gray:     #ccd3df;
+	--color-card-salmon:   #fbd8d1;
+
+	/* Semantic Status */
+	--color-success:       #61d46a;
+	--color-success-bg:    rgba(78, 170, 85, 0.2);
+	--color-warning:       #f3ba25;
+	--color-warning-bg:    rgba(195, 149, 30, 0.2);
+	--color-error:         #ff6b6b;
+	--color-error-bg:      rgba(220, 53, 69, 0.2);
 
 	/* Surface variants */
 	--color-surface-dark:  #0f121d;
@@ -93,10 +103,10 @@
 /* ─── OKLCH Palette (progressive enhancement) ────────────── */
 @supports (color: oklch(0.5 0.1 0)) {
 	:root {
-		--color-audit-bg:      oklch(0.16 0.025 265);
-		--color-audit-surface: oklch(0.19 0.027 264);
-		--color-audit-fg:      oklch(0.87 0.012 265);
-		--color-audit-accent:  oklch(0.92 0.16 125); /* Calibrated: P3 match for #D6F47A — hue 125 balances yellow-green shift */
+		--color-bg-base:       oklch(0.16 0.025 265);
+		--color-surface-base:  oklch(0.19 0.027 264);
+		--color-text-secondary:oklch(0.87 0.012 265);
+		--color-accent-primary:oklch(0.92 0.16 125); /* Calibrated: P3 match for #D6F47A — hue 125 balances yellow-green shift */
 		/* --color-primary and --color-primary-hover intentionally NOT overridden here.
 		   Let the browser map #D790F0 (sRGB) → P3 natively. Any OKLCH override
 		   causes perceptual mismatch vs. the Figma design reference. */
@@ -121,8 +131,8 @@ html {
 }
 
 body {
-	background: var(--color-audit-bg);
-	color: var(--color-audit-fg);
+	background: var(--color-bg-base);
+	color: var(--color-text-secondary);
 	min-height: 100vh;
 	/* Light-on-dark compensation: +0.05 line-height, subtle tracking */
 	line-height: 1.55;

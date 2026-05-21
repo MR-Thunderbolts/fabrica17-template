@@ -137,7 +137,7 @@
 		font-family: var(--font-body);
 		font-size: var(--text-lg);
 		font-weight: 400;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		line-height: 1.5;
 		margin: 0;
 	}
@@ -160,8 +160,8 @@
 		flex-direction: column;
 		justify-content: space-between;
 		padding: 36px 32px;
-		border-radius: var(--radius-md);
-		background: var(--color-audit-surface);
+		border-radius: var(--radius-xl);
+		background: var(--color-surface-base);
 		border: 1px solid var(--color-border-card);
 		gap: 32px;
 	}
@@ -172,7 +172,7 @@
 		right: 28px;
 		background: rgba(214, 244, 122, 0.1);
 		border: 1px solid rgba(214, 244, 122, 0.25);
-		color: var(--color-audit-accent);
+		color: var(--color-accent-primary);
 		font-family: var(--font-headline);
 		font-size: 11px;
 		font-weight: 600;
@@ -198,7 +198,7 @@
 	.icon-container {
 		width: 32px;
 		height: 32px;
-		color: var(--color-audit-accent);
+		color: var(--color-accent-primary);
 	}
 
 	.card-title {
@@ -214,7 +214,7 @@
 		font-family: var(--font-body);
 		font-size: var(--text-base);
 		font-weight: 600;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		line-height: 23px;
 		margin: 0;
 	}
@@ -226,7 +226,7 @@
 		font-family: var(--font-body);
 		font-size: var(--text-base);
 		font-weight: 400;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
@@ -268,7 +268,7 @@
 
 	.btn-card.accent {
 		background: var(--color-card-green-2);
-		border: 1px solid var(--color-audit-accent);
+		border: 1px solid var(--color-accent-primary);
 	}
 
 	.btn-card.accent:hover {

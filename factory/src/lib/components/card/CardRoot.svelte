@@ -53,17 +53,17 @@
 	}
 
 	[data-variant="elevated"] {
-		background: var(--color-neutral-bg);
+		background: var(--color-surface-base, #ffffff);
 		box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
 	}
 
 	[data-variant="outlined"] {
-		background: var(--color-neutral-bg);
-		border: 1px solid var(--color-border-light, #e5e7eb);
+		background: var(--color-surface-base, #ffffff);
+		border: 1px solid var(--color-border-card, #e5e7eb);
 	}
 
 	[data-variant="filled"] {
-		background: var(--color-secondary, #f3f4f6);
+		background: var(--color-bg-base, #f3f4f6);
 	}
 
 	[data-variant="ghost"] {

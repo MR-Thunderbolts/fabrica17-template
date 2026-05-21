@@ -70,7 +70,7 @@
 		position: relative;
 		width: 100%;
 		max-width: 1128px;
-		background: var(--color-audit-surface);
+		background: var(--color-surface-base);
 		border-radius: var(--radius-md);
 		padding: 64px;
 		display: flex;
@@ -129,7 +129,7 @@
 		font-family: var(--font-body);
 		font-size: var(--text-lg);
 		font-weight: 400;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		line-height: 1.5;
 		margin: 0;
 	}
@@ -208,28 +208,28 @@
 		font-family: var(--font-headline);
 		font-size: 20px;
 		font-weight: 700;
-		color: var(--color-audit-accent);
+		color: var(--color-accent-primary);
 	}
 
 	.co2-label {
 		font-family: var(--font-body);
 		font-size: 14px;
 		font-weight: 500;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 	}
 
 	.green-energy {
 		display: flex;
 		align-items: center;
 		gap: 8px;
-		color: var(--color-audit-accent);
+		color: var(--color-accent-primary);
 		font-family: var(--font-body);
 		font-size: 14px;
 		font-weight: 500;
 	}
 
 	:global(.leaf-icon) {
-		color: var(--color-audit-accent);
+		color: var(--color-accent-primary);
 	}
 
 	.footer-brand {
@@ -250,7 +250,7 @@
 		font-family: var(--font-body);
 		font-size: 14px;
 		font-weight: 400;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		opacity: 0.7;
 		line-height: 20px;
 		margin: 0;

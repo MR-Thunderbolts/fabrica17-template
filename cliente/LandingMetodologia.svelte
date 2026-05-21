@@ -5,56 +5,41 @@
 	const cards = [
 		{
 			pill: "METODOLOGÍA CICLO17",
-			pillColor: "rgba(255, 255, 255, 0.7)",
-			title: "Un proceso diseñado para lograr resultados",
+			title: "Un proceso diseñado\npara lograr resultados",
 			desc: "Un proceso que elimina riesgos en la ejecución y es 100% colaborativo con nuestros clientes.",
-			gradientBorder: "linear-gradient(135deg, rgba(214, 244, 122, 0.5), rgba(255, 255, 255, 0.08) 50%, rgba(215, 144, 240, 0.5))",
-			glowColor: "rgba(215, 144, 240, 0.12)",
-			surfaceTint: "rgba(215, 144, 240, 0.03)"
+			glowColor: "rgba(215, 144, 240, 0.12)"
 		},
 		{
-			pill: "PERFORMANCE — UX",
 			stepNumber: "01",
-			pillColor: "#d790f0",
+			pillColor: "var(--color-primary)",
 			title: "Brief y planificación",
 			subtitle: "ROADMAP ACCIONABLE",
 			desc: "Iniciamos el proyecto con un taller, para entenderte a ti y tus objetivos y modelo de negocio diseñamos una planificación alineada a tus necesidades.",
-			gradientBorder: "linear-gradient(135deg, rgba(215, 144, 240, 0.7), rgba(255, 255, 255, 0.06) 50%, rgba(215, 144, 240, 0.3))",
-			glowColor: "rgba(215, 144, 240, 0.18)",
-			surfaceTint: "rgba(215, 144, 240, 0.05)"
+			glowColor: "rgba(215, 144, 240, 0.18)"
 		},
 		{
-			pill: "DISEÑO",
 			stepNumber: "02",
-			pillColor: "#d6f47a",
+			pillColor: "var(--color-accent-primary)",
 			title: "Descubrimiento",
 			subtitle: "INVESTIGACIÓN & ARQUITECTURA",
 			desc: "Con los objetivos de negocio claros, nos enfocamos en entender el mercado, tus clientes, organizamos la información de tu sitio y trazamos la mejor experiencia antes diseñar una pantalla ó tocar un línea de código.",
-			gradientBorder: "linear-gradient(135deg, rgba(214, 244, 122, 0.7), rgba(255, 255, 255, 0.06) 50%, rgba(214, 244, 122, 0.3))",
-			glowColor: "rgba(214, 244, 122, 0.15)",
-			surfaceTint: "rgba(214, 244, 122, 0.04)"
+			glowColor: "rgba(214, 244, 122, 0.15)"
 		},
 		{
-			pill: "DESARROLLO WEB",
 			stepNumber: "03",
-			pillColor: "#ffffff",
+			pillColor: "var(--color-white)",
 			title: "Diseño web eficiente",
 			subtitle: "DISEÑO UX/UI",
 			desc: "Diseñamos o ajustamos la interface actual, siempre coherente a los objetivos de negocio y necesidades de l@s usuri@s. Nos aseguramos que tu sitio sea amigable, que convierta, accesible y muy fácil de usar.",
-			gradientBorder: "linear-gradient(135deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.1) 50%, rgba(214, 244, 122, 0.65))",
-			glowColor: "rgba(255, 255, 255, 0.10)",
-			surfaceTint: "rgba(255, 255, 255, 0.03)"
+			glowColor: "rgba(255, 255, 255, 0.10)"
 		},
 		{
-			pill: "OPTIMIZACIÓN",
 			stepNumber: "04",
-			pillColor: "#d790f0",
+			pillColor: "var(--color-primary)",
 			title: "Desarrollo limpio",
 			subtitle: "GREEN CODING",
-			desc: "Codificamos u optimizamos tu sitio, con foco en el rendimiento y la eficiencia. Nuestro stack tecnológico apunta hacia un código eficiente, scalable y liviano que genere resultados y el menor impacto ambiental digital.",
-			gradientBorder: "linear-gradient(135deg, rgba(215, 144, 240, 0.85), rgba(255, 255, 255, 0.08) 50%, rgba(214, 244, 122, 0.85))",
-			glowColor: "rgba(215, 144, 240, 0.20)",
-			surfaceTint: "rgba(215, 144, 240, 0.06)"
+			desc: "Codificamos u optimizamos tu sitio, con foco en el rendimiento y la eficiencia. Nuestro stack tecnológico apunta hacia un código eficiente, escalable y liviano que genere resultados y el menor impacto ambiental digital.",
+			glowColor: "rgba(215, 144, 240, 0.20)"
 		}
 	];
 
@@ -69,13 +54,17 @@
 		Math.min(cards.length - 1, Math.max(0, Math.round(progress * (cards.length - 1))))
 	);
 
+	// Track last unlock time to prevent immediate re-lock from iOS momentum scroll
+	let unlockTime = 0;
+
 	function lockPage() {
 		if (isLocked) return;
+		if (Date.now() - unlockTime < 800) return; // Ignore for 800ms after unlock
 		isLocked = true;
 		document.documentElement.style.overflow = 'hidden';
 		document.body.style.overflow = 'hidden';
-		document.documentElement.style.overscrollBehavior = 'none';
 		document.body.style.overscrollBehavior = 'none';
+		document.documentElement.style.overscrollBehavior = 'none';
 		// Suavemente centra la sección en la pantalla (menor salto = menor sensación de succión)
 		sectionRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
 	}
@@ -83,10 +72,11 @@
 	function unlockPage() {
 		if (!isLocked) return;
 		isLocked = false;
+		unlockTime = Date.now(); // Start cooldown window
 		document.documentElement.style.overflow = '';
 		document.body.style.overflow = '';
-		document.documentElement.style.overscrollBehavior = '';
 		document.body.style.overscrollBehavior = '';
+		document.documentElement.style.overscrollBehavior = '';
 	}
 
 	/**
@@ -135,9 +125,6 @@
 		}
 
 		return `
-			--border-grad: ${cards[i].gradientBorder};
-			--surface-tint: ${cards[i].surfaceTint};
-			--pill-color: ${cards[i].pillColor};
 			transform: translateY(${translateY}%) scale(${scale});
 			opacity: ${opacity};
 			filter: brightness(${brightness});
@@ -178,7 +165,7 @@
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
-					if (entry.isIntersecting && !isLocked) {
+					if (entry.isIntersecting && !isLocked && (Date.now() - unlockTime > 800)) {
 						// Determine entry direction from boundingClientRect
 						const rect = entry.boundingClientRect;
 						const enteringFromBelow = rect.top > 0;
@@ -200,8 +187,10 @@
 		if (sectionRef) observer.observe(sectionRef);
 
 		// Wheel → accumulate into targetProgress
-		// Total "virtual scroll distance" = 4000px worth of wheel delta for full progress
-		const TOTAL_SCROLL_DISTANCE = 4000;
+		// TOTAL_SCROLL_DISTANCE: trackpad/mouse wheel
+		const TOTAL_SCROLL_DISTANCE = 3200;
+		// TOUCH_SCROLL_DISTANCE: 3 typical swipes on iPhone to complete sequence
+		const TOUCH_SCROLL_DISTANCE = 600;
 
 		const handleWheel = (e: WheelEvent) => {
 			if (!isLocked) return;
@@ -240,7 +229,8 @@
 			const deltaY = touchStartY - e.touches[0].clientY;
 			touchStartY = e.touches[0].clientY;
 
-			targetProgress += deltaY / TOTAL_SCROLL_DISTANCE;
+			// Use a shorter distance for touch — finger travel is much shorter than trackpad
+			targetProgress += deltaY / TOUCH_SCROLL_DISTANCE;
 			targetProgress = Math.max(-0.05, Math.min(1.05, targetProgress));
 		};
 
@@ -272,28 +262,38 @@
 	<div class="card-stack">
 		{#each cards as card, i}
 			<div class="stack-card" style={getCardStyle(i)}>
-				<div class="card-inner">
-					<div class="card-content-wrapper">
-						<div class="card-left">
-							{#if i === 0}
-								<h2 class="card-title">{card.title}</h2>
-							{:else}
-								<div class="title-row">
-									<div class="circle-number" style="border-color: {card.pillColor}">
-										{card.stepNumber}
-									</div>
-									<h2 class="card-title">{card.title}</h2>
-								</div>
-								<div class="card-subtitle-wrapper">
-									<span class="card-subtitle">{card.subtitle}</span>
-								</div>
-							{/if}
-						</div>
-						<div class="card-right">
-							<p class="card-desc">{card.desc}</p>
+				{#if i === 0}
+					<div class="card-inner-top">
+						<span class="top-pill">{card.pill}</span>
+						<div class="top-inner">
+							<div class="top-left">
+								<h2 class="top-title">
+									{#each card.title.split('\n') as line, idx}
+										{line}{#if idx === 0}<br aria-hidden="true" />{/if}
+									{/each}
+								</h2>
+							</div>
+							<div class="top-right">
+								<p class="top-desc">{card.desc}</p>
+							</div>
 						</div>
 					</div>
-				</div>
+				{:else}
+					<div class="card-inner-step">
+						<div class="step-left">
+							<div class="number-block" style="border-color: {card.pillColor}; color: {card.pillColor}">
+								{card.stepNumber}
+							</div>
+							<div class="title-block">
+								<h3 class="step-title">{card.title}</h3>
+								<span class="step-subtitle" style="color: {card.pillColor}">{card.subtitle}</span>
+							</div>
+						</div>
+						<div class="step-right">
+							<p class="step-desc">{card.desc}</p>
+						</div>
+					</div>
+				{/if}
 			</div>
 		{/each}
 	</div>
@@ -329,108 +329,157 @@
 		z-index: 1;
 		width: 100%;
 		max-width: 1128px;
-		height: clamp(340px, 50vh, 390px);
+		height: clamp(260px, 32vh, 310px); /* Increased to prevent text cropping on multiline titles */
 	}
 
 	.stack-card {
 		position: absolute;
 		inset: 0;
-		padding: 1.5px;
-		border-radius: var(--radius-md);
-		background: var(--border-grad);
+		border-radius: var(--radius-xl);
+		background: var(--color-surface-base);
+		border: 1px solid var(--color-border-card);
+		/* Subtle top-edge highlight for depth and premium feel */
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.07),
+			0 4px 24px rgba(0, 0, 0, 0.2);
 		will-change: transform, opacity, filter;
 		pointer-events: none;
-	}
-
-	.card-inner {
-		background: linear-gradient(
-			165deg,
-			color-mix(in srgb, var(--color-audit-surface) 96%, var(--surface-tint)),
-			var(--color-audit-surface) 60%
-		);
-		border-radius: calc(var(--radius-md) - 1.5px);
-		height: 100%;
-		width: 100%;
-		padding: 44px 64px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		position: relative;
-	}
-
-	.card-content-wrapper {
-		display: flex;
-		align-items: flex-start;
-		width: 100%;
-		gap: 64px;
-	}
-
-	.card-left {
-		flex: 1.25;
 		display: flex;
 		flex-direction: column;
-		gap: 16px;
+		overflow: hidden;
 	}
 
-	.title-row {
+	/* ── Top Card (Index 0) ── */
+	.card-inner-top {
+		height: 100%;
+		width: 100%;
+		padding: var(--space-10) var(--space-10); /* More horizontal padding */
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-start; /* Prevents overflow clipping at the top */
+		gap: var(--space-5);
+		background-image: linear-gradient(170.7deg, rgba(218, 147, 255, 0.2) 0%, rgba(218, 147, 255, 0) 50%, rgba(222, 246, 149, 0.3) 100%);
+	}
+
+	/* Two-column layout for the top card matching the Figma spec */
+	.top-inner {
 		display: flex;
 		align-items: flex-start;
-		gap: 18px;
+		gap: var(--space-6);
 		width: 100%;
 	}
 
-	.circle-number {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 38px;
-		height: 38px;
-		border-radius: 50%;
-		border: 1.5px solid var(--pill-color);
-		color: var(--color-white);
-		font-family: var(--font-headline);
-		font-size: 13px;
-		font-weight: 600;
-		flex-shrink: 0;
-		margin-top: 3px;
+	.top-left {
+		flex: 1.2;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
 	}
 
-	.card-title {
-		font-family: var(--font-headline);
-		font-size: var(--text-3xl);
-		font-weight: 700;
-		color: var(--color-white);
-		line-height: 1.2;
-		margin: 0;
+	.top-right {
+		flex: 1;
+		display: flex;
+		align-items: flex-start;
 	}
 
-	.card-subtitle-wrapper {
-		margin-left: 56px; /* Align perfectly under title when circle is 38px + 18px gap = 56px */
-	}
-
-	.card-subtitle {
+	.top-pill {
 		font-family: var(--font-headline);
-		font-size: 12px;
-		font-weight: 700;
-		color: var(--color-accent);
-		letter-spacing: 0.1em;
+		font-size: var(--text-xs);
+		font-weight: 400;
+		color: var(--color-accent-primary);
+		letter-spacing: 1.2px;
 		text-transform: uppercase;
 	}
 
-	.card-right {
-		flex: 1;
-		max-width: 460px;
-		display: flex;
-		align-items: flex-start;
-		padding-top: 6px; /* Fine-tune baseline alignment with first line of title */
+	.top-title {
+		font-family: var(--font-headline);
+		font-size: var(--text-2xl); /* matches Figma h-3/size: 40px at desktop */
+		font-weight: 700;
+		color: var(--color-white);
+		line-height: 48px;          /* matches Figma h-3/line-height: 48px */
+		margin: 0;
 	}
 
-	.card-desc {
+	.top-desc {
 		font-family: var(--font-body);
-		font-size: 17px;
+		font-size: var(--text-sm);
 		font-weight: 400;
-		color: var(--color-audit-fg);
-		line-height: 1.55;
+		color: var(--color-text-secondary);
+		line-height: 1.6;
+		margin: 0;
+	}
+
+	/* ── Step Cards (Index 1-4) ── */
+	.card-inner-step {
+		height: 100%;
+		width: 100%;
+		padding: var(--space-10) var(--space-10);
+		display: flex;
+		align-items: flex-start; /* Both cols start at top, matching Figma */
+		gap: var(--space-6);
+	}
+
+	.step-left {
+		flex: 1;
+		display: flex;
+		align-items: flex-start;
+		gap: var(--space-4);
+		min-width: 0;
+	}
+
+	.number-block {
+		width: 30px;
+		height: 30px;
+		border-radius: var(--radius-md);
+		background: rgba(255, 255, 255, 0.1);
+		border: 1px solid var(--color-border-card); /* Fallback */
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: var(--font-body);
+		font-size: var(--text-xs);
+		font-weight: 700;
+		flex-shrink: 0;
+	}
+
+	.title-block {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2); /* 8px — matches Figma gap between title and subtitle */
+	}
+
+	.step-title {
+		font-family: var(--font-headline);
+		font-size: var(--text-2xl); /* matches Figma h-3/size: 40px at desktop */
+		font-weight: 700;
+		color: var(--color-white);
+		line-height: 48px;          /* matches Figma h-3/line-height: 48px */
+		margin: 0;
+	}
+
+	.step-subtitle {
+		font-family: var(--font-headline);
+		font-size: var(--text-xs);
+		font-weight: 400;
+		letter-spacing: 1.2px;
+		text-transform: uppercase;
+		opacity: 0.85;
+	}
+
+	.step-right {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start; /* Align to top, matching Figma */
+	}
+
+	.step-desc {
+		font-family: var(--font-body);
+		font-size: var(--text-sm);
+		font-weight: 400;
+		color: var(--color-text-secondary);
+		line-height: 23px;
 		margin: 0;
 	}
 
@@ -443,63 +492,55 @@
 		}
 
 		.card-stack {
-			height: clamp(300px, 55vh, 350px);
+			height: clamp(300px, 35vh, 320px); /* Tighter height to eliminate empty whitespace at bottom */
 		}
 
-		.card-inner {
-			padding: 28px 24px;
-		}
-
-		.card-content-wrapper {
-			flex-direction: column;
-			align-items: flex-start;
+		.card-inner-top {
+			padding: var(--space-8) var(--space-6);
 			gap: 16px;
 		}
 
-		.card-left {
-			gap: 8px;
-			width: 100%;
+		.card-inner-step {
+			padding: var(--space-8) var(--space-6);
+			flex-direction: column;
+			gap: 20px;
 		}
 
-		.card-title {
+		.top-inner {
+			flex-direction: column;
+			gap: 16px;
+		}
+
+		.step-left, .top-left {
+			width: 100%;
+			flex: none; /* Prevent flex-grow from pushing the description to the bottom */
+		}
+
+		.step-right, .top-right {
+			width: 100%;
+			flex: none;
+			justify-content: flex-start;
+		}
+
+		.top-title, .step-title {
 			font-size: 26px;
-			line-height: 1.15;
-			font-weight: 700;
+			line-height: 1.2;
 			letter-spacing: -0.015em;
-		}
-
-		.card-right {
-			max-width: 100%;
-			width: 100%;
-			align-items: flex-start;
-			margin-bottom: 0;
-		}
-
-		.card-desc {
-			font-size: 15px;
-			line-height: 1.5;
-			color: rgba(212, 216, 228, 0.9);
 		}
 	}
 
 	@media (max-width: 480px) {
 		.card-stack {
-			height: 310px;
+			height: 330px; /* Snug fit for wrapped text without massive bottom gap */
 		}
 
-		.card-inner {
-			padding: 22px 20px;
-			gap: 12px;
+		.card-inner-top, .card-inner-step {
+			padding: var(--space-6) var(--space-5);
 		}
 
-		.card-title {
+		.top-title, .step-title {
 			font-size: 22px;
 			line-height: 1.2;
-		}
-
-		.card-desc {
-			font-size: 14px;
-			line-height: 1.45;
 		}
 	}
 </style>

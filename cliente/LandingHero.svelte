@@ -136,7 +136,7 @@
 	}
 
 	.accent-green {
-		color: var(--color-audit-accent);
+		color: var(--color-accent-primary);
 	}
 
 	/* Subtitle */
@@ -144,7 +144,7 @@
 		font-family: var(--font-body);
 		font-size: var(--text-lg);
 		font-weight: 400;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		line-height: 1.6;
 		margin: 0;
 		max-width: 100%;
@@ -188,7 +188,7 @@
 		padding: 16px 24px;
 		min-height: 44px;
 		border-radius: var(--radius-full);
-		background: var(--color-audit-surface);
+		background: var(--color-surface-base);
 		border: 1px solid var(--color-border-outline);
 		color: var(--color-white);
 		font-family: var(--font-body);
@@ -224,7 +224,7 @@
 		height: 28px;
 		border-radius: 50%;
 		background: var(--color-card-green-1);
-		color: #191e31;
+		color: var(--color-surface-base);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -235,7 +235,7 @@
 		font-family: var(--font-body);
 		font-size: 20px;
 		font-weight: 400;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		line-height: 24px;
 		white-space: nowrap;
 	}

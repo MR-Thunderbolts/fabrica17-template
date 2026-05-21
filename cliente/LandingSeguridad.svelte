@@ -58,7 +58,7 @@
 <style>
 	.seguridad-section {
 		padding: var(--section-pad-md) var(--gutter);
-		background: var(--color-audit-surface);
+		background: var(--color-surface-base);
 		display: flex;
 		justify-content: center;
 		width: 100%;
@@ -92,14 +92,14 @@
 	}
 
 	.badge-pill :global(svg) {
-		color: var(--color-audit-accent);
+		color: var(--color-accent-primary);
 	}
 
 	.badge-pill span {
 		font-family: var(--font-headline);
 		font-size: var(--text-xs);
 		font-weight: 400;
-		color: var(--color-audit-accent);
+		color: var(--color-accent-primary);
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 	}
@@ -117,7 +117,7 @@
 		font-family: var(--font-body);
 		font-size: var(--text-lg);
 		font-weight: 400;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		line-height: 1.5;
 		margin: 0;
 	}
@@ -133,8 +133,8 @@
 	.seg-card {
 		padding: 36px 40px;
 		border: 1px solid var(--color-border-card);
-		border-radius: 28px;
-		background: #11162c;
+		border-radius: var(--radius-xl);
+		background: var(--color-surface-base);
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -160,7 +160,7 @@
 	/* Purple themes */
 	.seg-card.purple .seg-card-icon {
 		background: rgba(215, 144, 240, 0.15);
-		color: #d790f0;
+		color: var(--color-primary);
 	}
 	.seg-card.purple:hover {
 		box-shadow: 0 12px 32px rgba(215, 144, 240, 0.04);
@@ -169,7 +169,7 @@
 	/* Yellow themes */
 	.seg-card.yellow .seg-card-icon {
 		background: rgba(253, 241, 211, 0.15);
-		color: #fdf1d3;
+		color: var(--color-card-warning);
 	}
 	.seg-card.yellow:hover {
 		box-shadow: 0 12px 32px rgba(253, 241, 211, 0.04);
@@ -178,7 +178,7 @@
 	/* Green themes */
 	.seg-card.green .seg-card-icon {
 		background: rgba(214, 244, 122, 0.15);
-		color: #d6f47a;
+		color: var(--color-accent-primary);
 	}
 	.seg-card.green:hover {
 		box-shadow: 0 12px 32px rgba(214, 244, 122, 0.04);
@@ -187,7 +187,7 @@
 	/* Blue/Silver themes */
 	.seg-card.blue .seg-card-icon {
 		background: rgba(224, 231, 255, 0.15);
-		color: #e0e7ff;
+		color: var(--color-card-blue);
 	}
 	.seg-card.blue:hover {
 		box-shadow: 0 12px 32px rgba(224, 231, 255, 0.04);
@@ -204,7 +204,7 @@
 	.seg-card-desc {
 		font-family: var(--font-body);
 		font-size: 15px;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		line-height: 1.55;
 		margin: 0;
 		opacity: 0.9;
@@ -222,7 +222,7 @@
 		}
 
 		.seg-subtitle {
-			font-size: 16px;
+			font-size: var(--text-base);
 			line-height: 24px;
 		}
 
@@ -238,7 +238,7 @@
 		}
 
 		.seg-card-title {
-			font-size: 18px;
+			font-size: var(--text-lg);
 		}
 
 		.seg-card-desc {

@@ -294,7 +294,7 @@
 	/* ── Modal card ── */
 	.modal-content {
 		position: relative;
-		background: var(--color-audit-surface);
+		background: var(--color-surface-base);
 		border: 1px solid var(--color-border-card);
 		border-radius: 24px;
 		width: 100%;
@@ -315,7 +315,7 @@
 		border-radius: 50%;
 		background: rgba(255, 255, 255, 0.05);
 		border: none;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -380,7 +380,7 @@
 		font-family: var(--font-body);
 		font-size: 20px;
 		line-height: 28px;
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		margin: 0;
 	}
 
@@ -398,7 +398,7 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 24px 16px;
-		border-radius: 8px;
+		border-radius: var(--radius-md);
 		border: 1px solid var(--color-border-card);
 		background: transparent;
 		cursor: pointer;
@@ -499,7 +499,7 @@
 		color: var(--color-white);
 		background: transparent;
 		border: 1px solid var(--color-border-card);
-		border-radius: 4px;
+		border-radius: var(--radius-sm);
 		padding: 12px;
 		outline: none;
 		transition: border-color var(--dur-fast) var(--ease-out-expo);
@@ -522,7 +522,7 @@
 		color: var(--color-white);
 		background: transparent;
 		border: 1px solid var(--color-border-card);
-		border-radius: 4px;
+		border-radius: var(--radius-sm);
 		padding: 12px;
 		outline: none;
 		resize: none;
@@ -574,7 +574,7 @@
 		border-radius: 9999px;
 		background: rgba(215, 144, 240, 0.6);
 		border: none;
-		color: #141827;
+		color: var(--color-bg-base);
 		font-family: var(--font-body);
 		font-size: 14px;
 		line-height: 20px;
@@ -614,8 +614,8 @@
 	.success-check {
 		width: 88px;
 		height: 88px;
-		border-radius: 50%;
-		background: linear-gradient(135deg, #34d399, #10b981);
+		border-radius: var(--radius-full);
+		background: var(--color-accent-primary);
 		color: var(--color-white);
 		display: flex;
 		align-items: center;
@@ -647,7 +647,7 @@
 		border-radius: var(--radius-full);
 		background: transparent;
 		border: 1px solid var(--color-border-card);
-		color: var(--color-audit-fg);
+		color: var(--color-text-secondary);
 		font-family: var(--font-body);
 		font-size: var(--text-sm);
 		font-weight: 500;
