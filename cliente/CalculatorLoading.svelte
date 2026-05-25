@@ -90,12 +90,12 @@
 		height: 100%;
 		border-radius: 50%;
 		border: 2.5px solid rgba(255, 255, 255, 0.08);
-		border-top-color: var(--color-audit-accent);
+		border-top-color: var(--color-accent-primary);
 		animation: spin 1.2s linear infinite;
 	}
 
 	.spinner-icon {
-		color: var(--color-audit-fg);
+		color: var(--color-accent-primary);
 		animation: pulse 2s ease-in-out infinite;
 	}
 
@@ -162,7 +162,7 @@
 	.dot.done {
 		width: 10px;
 		height: 10px;
-		background: var(--color-audit-accent);
+		background: var(--color-accent-primary);
 		box-shadow: 0 0 8px rgba(214, 244, 122, 0.4);
 	}
 

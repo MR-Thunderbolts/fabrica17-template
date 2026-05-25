@@ -16,9 +16,34 @@
 		copiaEmail: false
 	});
 
+	let touched = $state({ nombre: false, email: false, sitio: false });
+
+	const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+	let errors = $derived({
+		nombre: touched.nombre && formData.nombre.trim().length < 2,
+		email:  touched.email  && !EMAIL_RE.test(formData.email),
+		sitio:  touched.sitio  && formData.sitio.trim().length < 4
+	});
+
+	function markTouched(field: keyof typeof touched) {
+		touched[field] = true;
+	}
+
+	function isValid() {
+		return formData.nombre.trim().length >= 2 &&
+		       EMAIL_RE.test(formData.email) &&
+		       formData.sitio.trim().length >= 4;
+	}
+
 	function handleSubmit(e: Event) {
 		e.preventDefault();
-		if (!formData.nombre || !formData.sitio) return;
+		if (!isValid()) {
+			touched.nombre = true;
+			touched.email = true;
+			touched.sitio = true;
+			return;
+		}
 		onSubmit(formData);
 	}
 </script>
@@ -36,21 +61,27 @@
 			<p class="form-subtitle">El mejor inicio para optimizar un sitio web<br>es medir el performance y el impacto.</p>
 		</div>
 
-		<form class="intake-card" onsubmit={handleSubmit}>
-			<div class="field">
+		<form class="intake-card" onsubmit={handleSubmit} novalidate>
+			<div class="field" class:has-error={errors.nombre}>
 				<label for="calc-nombre">
 					<IconUser width="14" height="14" />
-					Nombre y apellido <span class="req">(Requerido)</span>
+					Nombre y apellido <span class="required-mark" aria-hidden="true">*</span>
 				</label>
-				<input type="text" id="calc-nombre" bind:value={formData.nombre} required placeholder="Escribe tu nombre" />
+				<input type="text" id="calc-nombre" bind:value={formData.nombre} required placeholder="Escribe tu nombre" onblur={() => markTouched('nombre')} />
+				{#if errors.nombre}
+					<span class="field-error" role="alert">Ingresa tu nombre completo</span>
+				{/if}
 			</div>
 
-			<div class="field">
+			<div class="field" class:has-error={errors.email}>
 				<label for="calc-email">
 					<IconMail width="14" height="14" />
-					Correo electrónico
+					Correo electrónico <span class="required-mark" aria-hidden="true">*</span>
 				</label>
-				<input type="email" id="calc-email" bind:value={formData.email} placeholder="Escribe tu correo" />
+				<input type="email" id="calc-email" bind:value={formData.email} required placeholder="Tu correo aquí" onblur={() => markTouched('email')} />
+				{#if errors.email}
+					<span class="field-error" role="alert">Ingresa un correo válido</span>
+				{/if}
 			</div>
 
 			<div class="field">
@@ -58,25 +89,30 @@
 					<IconPhone width="14" height="14" />
 					Teléfono
 				</label>
-				<input type="tel" id="calc-tel" bind:value={formData.telefono} placeholder="Escribe tu teléfono" />
+				<input type="tel" id="calc-tel" bind:value={formData.telefono} placeholder="+56 9 1234 5678" />
 			</div>
 
-			<div class="field">
+			<div class="field" class:has-error={errors.sitio}>
 				<label for="calc-sitio">
 					<IconGlobe width="14" height="14" />
-					Sitio Web
+					Sitio Web <span class="required-mark" aria-hidden="true">*</span>
 				</label>
-				<input type="url" id="calc-sitio" bind:value={formData.sitio} required placeholder="URL de tu sitio web" />
+				<input type="text" id="calc-sitio" bind:value={formData.sitio} required placeholder="ej: midominio.com" onblur={() => markTouched('sitio')} />
+				{#if errors.sitio}
+					<span class="field-error" role="alert">Ingresa la dirección de tu sitio web</span>
+				{/if}
 			</div>
 
-			<button type="submit" class="btn-submit">
+			<button type="submit" class="btn-submit" disabled={!isValid()}>
 				<IconCheck width="18" height="18" />
 				<span>Quiero mi auditoría gratuita</span>
 			</button>
 
 			<label class="checkbox-row">
-				<input type="checkbox" bind:checked={formData.copiaEmail} />
-				<IconCheck width="14" height="14" class="check-icon" />
+				<div class="checkbox-wrapper">
+					<input type="checkbox" bind:checked={formData.copiaEmail} />
+					<IconCheck width="12" height="12" class="check-icon" />
+				</div>
 				<span>Quiero recibir una copia del informe por correo.</span>
 			</label>
 		</form>
@@ -171,13 +207,14 @@
 	}
 
 	.field label :global(svg) {
-		color: var(--color-text-muted);
+		color: var(--color-accent-primary);
 	}
 
-	.req {
-		font-weight: 400;
-		color: var(--color-text-muted);
-		font-size: 12px;
+	.required-mark {
+		color: var(--color-accent-primary);
+		font-size: 14px;
+		line-height: 1;
+		margin-left: 1px;
 	}
 
 	.field input {
@@ -195,11 +232,48 @@
 	}
 
 	.field input:focus {
-		border-color: var(--color-primary);
+		border-color: var(--color-accent-primary);
+		box-shadow: 0 0 0 3px rgba(214, 244, 122, 0.12);
 	}
 
 	.field input::placeholder {
 		color: rgba(255, 255, 255, 0.25);
+	}
+
+	/* Estado de error */
+	.field.has-error input {
+		border-color: var(--color-error);
+		box-shadow: 0 0 0 3px var(--color-error-bg);
+	}
+
+	/* Borde de éxito (campo completado y válido) */
+	.field:not(.has-error) input:not(:placeholder-shown):not(:focus) {
+		border-color: var(--color-success-border);
+	}
+
+	.field-error {
+		font-family: var(--font-body);
+		font-size: var(--text-xs);
+		color: var(--color-error);
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		margin-top: 2px;
+		animation: fadeSlide 0.18s ease-out;
+	}
+	.field-error::before {
+		content: '!';
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		background: var(--color-error);
+		color: #fff;
+		font-size: 9px;
+		font-weight: 700;
+		flex-shrink: 0;
 	}
 
 	.btn-submit {
@@ -209,60 +283,80 @@
 		gap: 10px;
 		height: 48px;
 		border-radius: var(--radius-full);
-		background: var(--color-audit-accent);
+		background: var(--color-accent-primary);
 		border: none;
-		color: var(--color-on-primary);
+		color: var(--color-surface-dark);
 		font-family: var(--font-body);
 		font-size: 15px;
-		font-weight: 600;
+		font-weight: 700;
 		cursor: pointer;
 		transition: transform var(--dur-fast) var(--ease-out-expo), box-shadow var(--dur-fast) var(--ease-out-expo);
 		margin-top: 4px;
 	}
 
-	.btn-submit:hover {
+	.btn-submit:hover:not(:disabled) {
 		transform: translateY(-2px);
 		box-shadow: 0 0 20px rgba(214, 244, 122, 0.4);
+	}
+
+	.btn-submit:disabled {
+		background: rgba(214, 244, 122, 0.12);
+		color: rgba(214, 244, 122, 0.5);
+		box-shadow: none;
+		cursor: not-allowed;
+		transform: none;
 	}
 
 	.checkbox-row {
 		display: flex;
 		align-items: center;
-		gap: 8px;
+		gap: 10px;
 		cursor: pointer;
 		font-family: var(--font-body);
 		font-size: 13px;
 		color: var(--color-text-muted);
 	}
 
-	.checkbox-row input[type="checkbox"] {
-		appearance: none;
-		-webkit-appearance: none;
+	.checkbox-wrapper {
+		position: relative;
 		width: 18px;
 		height: 18px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	.checkbox-wrapper input[type="checkbox"] {
+		appearance: none;
+		-webkit-appearance: none;
+		position: absolute;
+		inset: 0;
+		margin: 0;
+		width: 100%;
+		height: 100%;
 		border: 1.5px solid var(--color-border-card);
 		border-radius: 4px;
 		background: transparent;
 		cursor: pointer;
-		flex-shrink: 0;
-		position: relative;
 		transition: background var(--dur-fast) var(--ease-out-expo), border-color var(--dur-fast) var(--ease-out-expo);
 	}
 
-	.checkbox-row input[type="checkbox"]:checked {
-		background: var(--color-audit-accent);
-		border-color: var(--color-audit-accent);
+	.checkbox-wrapper input[type="checkbox"]:checked {
+		background: var(--color-accent-primary);
+		border-color: var(--color-accent-primary);
 	}
 
-	.checkbox-row :global(.check-icon) {
+	.checkbox-wrapper :global(.check-icon) {
+		position: relative;
+		z-index: 1;
+		color: var(--color-surface-dark);
+		pointer-events: none;
 		display: none;
 	}
 
-	.checkbox-row input[type="checkbox"]:checked ~ :global(.check-icon) {
+	.checkbox-wrapper input[type="checkbox"]:checked ~ :global(.check-icon) {
 		display: block;
-		position: absolute;
-		left: 2px;
-		color: var(--color-on-primary);
 	}
 
 	/* Mobile */
@@ -289,5 +383,10 @@
 			padding: 24px 20px;
 			gap: 16px;
 		}
+	}
+
+	@keyframes fadeSlide {
+		from { opacity: 0; transform: translateX(8px); }
+		to   { opacity: 1; transform: translateX(0); }
 	}
 </style>

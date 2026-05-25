@@ -1,5 +1,6 @@
 <script lang="ts">
 	import IconGlobe from "~icons/ph/globe";
+	import Tooltip from "./Tooltip.svelte";
 
 	let { url, date, scores } = $props<{
 		url: string;
@@ -23,13 +24,16 @@
 
 <section class="section-perfodigital">
 	<div class="score-card main-score">
-		<div class="score-circle-wrapper">
+		<div class="score-circle-wrapper {getScoreColorClass(scores.main)}">
 			<div class="score-circle">
 				{scores.main}
 			</div>
 		</div>
 		<div class="score-details">
-			<div class="status-label {scores.status === 'Optimo' ? 'status-success' : 'status-warning'}">
+			<div class="status-label {
+				scores.status === 'Optimo' ? 'status-success' :
+				scores.status === 'Mejorable' ? 'status-warning' : 'status-error'
+			}">
 				{scores.status}
 			</div>
 			<h4 class="score-title">
@@ -67,13 +71,19 @@
 <section class="section-perfoscores">
 	<div class="section-header">
 		<IconGlobe width="20" height="20" class="icon-accent" />
-		<h3 class="section-title">Performance digital</h3>
+		<h3 class="section-title">Resumen Performance</h3>
 		<span class="section-site">{url}</span>
 	</div>
 	
 	<div class="scores-grid">
 		<!-- Rendimiento -->
 		<div class="score-item-card">
+			<Tooltip 
+				title="Rendimiento" 
+				description="Mide el desempeño técnico de tu sitio web analizando tiempos de carga, bloqueos de renderizado y el peso de los recursos. Un rendimiento óptimo aumenta la retención y conversión de usuarios."
+				learnMoreUrl="#"
+				absolute={true}
+			/>
 			<div class="circular-chart {getScoreColorClass(scores.performance)}">
 				<span class="chart-value">{scores.performance}</span>
 			</div>
@@ -131,14 +141,40 @@
 		width: 155px;
 		height: 156px;
 		border-radius: 1000px;
-		background: rgba(222, 246, 149, 0.22);
 		backdrop-filter: blur(2px);
-		border: 8px solid var(--color-accent-primary);
-		box-shadow: 0px 0px 16px 0px var(--color-accent-primary);
+		border: 8px solid;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
+	}
+
+	/* Dynamic color variants for the hero score ring */
+	.score-circle-wrapper.color-success {
+		background: var(--color-success-bg);
+		border-color: var(--color-success);
+		box-shadow: 0px 0px 20px 0px var(--color-success-glow);
+	}
+	.score-circle-wrapper.color-success .score-circle {
+		color: var(--color-success);
+	}
+
+	.score-circle-wrapper.color-warning {
+		background: rgba(243, 186, 37, 0.12);
+		border-color: var(--color-warning);
+		box-shadow: 0px 0px 20px 0px rgba(243, 186, 37, 0.35);
+	}
+	.score-circle-wrapper.color-warning .score-circle {
+		color: var(--color-warning);
+	}
+
+	.score-circle-wrapper.color-error {
+		background: var(--color-error-bg);
+		border-color: var(--color-error);
+		box-shadow: 0px 0px 20px 0px rgba(255, 107, 107, 0.35);
+	}
+	.score-circle-wrapper.color-error .score-circle {
+		color: var(--color-error);
 	}
 
 	.score-circle {
@@ -146,7 +182,7 @@
 		font-weight: 700;
 		font-size: 60px;
 		line-height: 72px;
-		color: var(--color-accent-primary);
+		/* color is set by parent .color-* class */
 	}
 
 	.score-details {
@@ -176,6 +212,11 @@
 	.status-warning {
 		background: var(--color-warning-bg);
 		color: var(--color-warning);
+	}
+
+	.status-error {
+		background: var(--color-error-bg);
+		color: var(--color-error);
 	}
 
 	:global(.score-title), :global(.score-title *) {
@@ -308,6 +349,7 @@
 		align-items: center;
 		justify-content: center;
 		gap: 16px;
+		position: relative;
 	}
 
 	.circular-chart {
@@ -326,12 +368,17 @@
 	}
 
 	.circular-chart.color-warning {
-		border-color: var(--color-accent-primary);
+		border-color: var(--color-warning);
 	}
 
 	.circular-chart.color-error {
 		border-color: var(--color-error);
 	}
+
+	/* Tint the number to match its ring color */
+	.circular-chart.color-success .chart-value { color: var(--color-success); }
+	.circular-chart.color-warning .chart-value { color: var(--color-warning); }
+	.circular-chart.color-error .chart-value   { color: var(--color-error); }
 
 	.chart-value {
 		color: var(--color-white);

@@ -12,10 +12,6 @@
 			<p class="proximo-desc">
 				En 30 minutos te mostramos las opciones que posees para mejorar la conversión y rendimiento de tu sitio.
 			</p>
-			
-			<div class="brand-watermark">
-				<span class="brand-text">Ciclo17</span>
-			</div>
 		</div>
 		
 		<div class="proximo-widget">
@@ -64,7 +60,7 @@
 	}
 
 	.proximo-label {
-		color: var(--color-audit-accent);
+		color: var(--color-accent-primary);
 		font-family: var(--font-headline);
 		font-size: var(--text-xs);
 		font-weight: 700;
@@ -82,7 +78,7 @@
 	}
 
 	.text-accent {
-		color: var(--color-audit-accent);
+		color: var(--color-accent-primary);
 	}
 
 	.proximo-desc {
@@ -93,18 +89,7 @@
 		margin: 0;
 	}
 
-	.brand-watermark {
-		margin-top: auto;
-		padding-top: 32px;
-	}
 
-	.brand-text {
-		color: rgba(255, 255, 255, 0.1);
-		font-family: var(--font-headline);
-		font-size: var(--text-3xl);
-		font-weight: 800;
-		letter-spacing: -0.02em;
-	}
 
 	.proximo-widget {
 		/* Fake glass effect for the inner widget box */
@@ -151,8 +136,8 @@
 	}
 
 	.btn-agendar {
-		background: var(--color-audit-accent);
-		color: var(--color-audit-bg);
+		background: var(--color-accent-primary);
+		color: var(--color-bg-base);
 		border: none;
 		border-radius: 1000px;
 		padding: 16px;

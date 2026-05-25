@@ -23,7 +23,7 @@
 
 <style>
 	.text-accent {
-		color: var(--color-audit-accent);
+		color: var(--color-accent-primary);
 	}
 
 	.section-hero {
@@ -44,27 +44,27 @@
 	}
 
 	:global(.btn-volver) {
-		background: rgba(255, 255, 255, 0.05) !important;
-		border: 1px solid rgba(255, 255, 255, 0.1) !important;
+		background: transparent !important;
+		border: none !important;
 		color: var(--color-white) !important;
-		border-radius: 48px !important;
-		padding: 8px 16px !important;
+		border-radius: 0 !important;
+		padding: 0 !important;
 		font-family: var(--font-body) !important;
 		font-size: var(--text-sm) !important;
 		font-weight: 600 !important;
 		display: flex !important;
 		align-items: center !important;
 		gap: 8px !important;
-		transition: background var(--dur-fast) var(--ease-out-expo) !important;
+		transition: opacity var(--dur-fast) var(--ease-out-expo) !important;
 		cursor: pointer;
 	}
 
 	:global(.btn-volver:hover) {
-		background: rgba(255, 255, 255, 0.1) !important;
+		opacity: 0.7 !important;
 	}
 
 	.report-label {
-		color: var(--color-audit-accent);
+		color: var(--color-accent-primary);
 		font-family: var(--font-headline);
 		font-size: 12px;
 		font-weight: 700;

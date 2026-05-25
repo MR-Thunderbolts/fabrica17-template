@@ -1,7 +1,6 @@
 <script lang="ts">
 	import logoCiclo from "./assets/Logo-Ciclo17.svg?raw";
-	import IconArrowRight from "~icons/ph-bold/arrow-right";
-	import IconLeaf from "~icons/ph/leaf";
+	import certSeal from "./assets/Certification_Seal.svg?raw";
 	import { reveal } from "./reveal";
 </script>
 
@@ -10,44 +9,40 @@
 	<div class="cta-wrapper">
 		<div class="cta-card">
 			<div class="cta-content">
-				<h2 class="cta-title">Audita online tu sitio y comienza a convertir</h2>
-				<p class="cta-subtitle">Descubre el impacto real de tu web en menos de 1 minuto. Totalmente gratis.</p>
-				<a href="/reporte" class="btn-primary">
-					<span>Auditoría gratuita</span>
-					<IconArrowRight width="20" height="20" />
+				<span class="cta-badge">AUDITORÍA GRATUITA</span>
+				<h2 class="cta-title">Audita online tu sitio<br>y comienza a convertir</h2>
+				<p class="cta-subtitle">Nuestra calculadora digital enfocada en el performance de tu sitio,<br>te entregará datos de velocidad, experiencia de usuari@ y sustentabilidad digital</p>
+				<a href="/reporte" class="btn-cta">
+					Auditoría gratuita
 				</a>
 			</div>
 			<div class="cta-bg-glow"></div>
 		</div>
 	</div>
 
-	<!-- Footer Bottom -->
-	<div class="footer-bottom">
-		<div class="footer-container">
-			<div class="footer-cert">
-				<h3 class="cert-title">Consigue nuestras certificaciones</h3>
-				<div class="cert-badges">
-					<div class="co2-seal">
-						<span class="co2-text">0.02g</span>
-						<span class="co2-label">CO₂ por visita</span>
-					</div>
-					<div class="green-energy">
-						<IconLeaf width="18" height="18" class="leaf-icon" />
-						<span>Sitio impulsado por energía renovable</span>
-					</div>
-				</div>
-			</div>
+	<!-- Certifications -->
+	<div class="cert-section">
+		<h3 class="cert-heading">Consigue nuestras certificaciones</h3>
+		<p class="cert-subheading">Tu sitio puede contar con ellas.</p>
 
-			<div class="footer-brand">
-				<div class="footer-logo">
-					{@html logoCiclo}
-				</div>
-				<p class="footer-disclaimer">
-					© 2026 Ciclo17. Todos los derechos reservados.<br>
-					Impulsando la sustentabilidad digital.
-				</p>
+		<div class="cert-cards">
+			<!-- CO2 Certification Seal -->
+			<div class="cert-seal">{@html certSeal}</div>
+
+			<!-- Green Hosting Badge -->
+			<div class="cert-row">
+				<img src="/footnote-image.png" alt="Green Hosting — ciclo17.cl hosted by Infomaniak — Green Web Foundation" class="green-badge-img" />
+				<p class="green-text">Este sitio funciona con energía<br>100% renovable certificada.</p>
 			</div>
 		</div>
+	</div>
+
+	<!-- Brand Footer -->
+	<div class="footer-brand">
+		<a href="/" class="footer-logo" aria-label="Ir a la página principal">{@html logoCiclo}</a>
+		<p class="footer-footnote">
+			<a href="/">Ciclo17</a> diseñó y desarrolló este sitio para minimizar su impacto ambiental.
+		</p>
 	</div>
 </footer>
 
@@ -59,7 +54,7 @@
 		width: 100%;
 	}
 
-	/* CTA Card */
+	/* ── CTA Card ── */
 	.cta-wrapper {
 		padding: var(--section-pad-lg) var(--gutter) var(--section-pad-md);
 		display: flex;
@@ -71,39 +66,26 @@
 		width: 100%;
 		max-width: 1128px;
 		background: var(--color-surface-base);
-		border-radius: var(--radius-md);
+		border-radius: 28px;
 		padding: 64px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		text-align: center;
 		overflow: hidden;
-		border: 1px solid rgba(215, 144, 240, 0.3);
-		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-	}
-
-	.cta-card::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		border-radius: inherit;
-		padding: 2px;
-		background: linear-gradient(135deg, rgba(215, 144, 240, 0.8), rgba(214, 244, 122, 0.8));
-		-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-		-webkit-mask-composite: xor;
-		mask-composite: exclude;
-		pointer-events: none;
+		border: 1px solid rgba(255, 255, 255, 0.08);
 	}
 
 	.cta-bg-glow {
 		position: absolute;
-		top: 50%;
+		bottom: -120px;
 		left: 50%;
-		transform: translate(-50%, -50%);
+		transform: translateX(-50%);
 		width: 600px;
-		height: 600px;
-		background: radial-gradient(circle, rgba(215, 144, 240, 0.15) 0%, transparent 60%);
+		height: 400px;
+		background: radial-gradient(ellipse at center, rgba(215, 144, 240, 0.25) 0%, transparent 70%);
 		pointer-events: none;
+		filter: blur(60px);
 	}
 
 	.cta-content {
@@ -112,8 +94,17 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 24px;
+		gap: 20px;
 		max-width: 600px;
+	}
+
+	.cta-badge {
+		font-family: var(--font-headline);
+		font-size: var(--text-xs);
+		font-weight: 600;
+		color: var(--color-accent-primary);
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
 	}
 
 	.cta-title {
@@ -127,139 +118,150 @@
 
 	.cta-subtitle {
 		font-family: var(--font-body);
-		font-size: var(--text-lg);
+		font-size: var(--text-base);
 		font-weight: 400;
 		color: var(--color-text-secondary);
-		line-height: 1.5;
+		line-height: 1.6;
 		margin: 0;
 	}
 
-	.btn-primary {
-		display: flex;
+	.btn-cta {
+		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: 8px;
-		padding: 16px 32px;
+		padding: 16px 40px;
 		border-radius: var(--radius-full);
 		background: var(--color-primary);
-		border: 1px solid var(--color-primary);
 		color: var(--color-on-primary);
 		font-family: var(--font-body);
-		font-size: 18px;
+		font-size: 16px;
 		font-weight: 700;
 		text-decoration: none;
-		box-shadow: 0 0 16px var(--color-primary-glow);
+		box-shadow: 0 0 24px var(--color-primary-glow), 0 4px 16px rgba(0, 0, 0, 0.3);
 		transition: transform var(--dur-fast) var(--ease-out-expo), box-shadow var(--dur-fast) var(--ease-out-expo);
-		margin-top: 16px;
+		margin-top: 8px;
 	}
 
-	.btn-primary:hover {
+	.btn-cta:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 0 24px var(--color-primary-glow);
+		box-shadow: 0 0 40px var(--color-primary-glow), 0 8px 24px rgba(0, 0, 0, 0.4);
 	}
 
-	/* Footer Bottom */
-	.footer-bottom {
-		border-top: 1px solid rgba(255, 255, 255, 0.05);
-		padding: var(--section-pad-sm) var(--gutter);
-	}
-
-	.footer-container {
-		max-width: 1128px;
-		margin: 0 auto;
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		gap: 40px;
-	}
-
-	.footer-cert {
+	/* ── Certifications ── */
+	.cert-section {
+		padding: var(--section-pad-md) var(--gutter);
 		display: flex;
 		flex-direction: column;
-		gap: 24px;
+		align-items: center;
+		text-align: center;
+		gap: 16px;
 	}
 
-	.cert-title {
+	.cert-heading {
 		font-family: var(--font-headline);
-		font-size: 16px;
-		font-weight: 600;
+		font-size: var(--text-xl);
+		font-weight: 700;
 		color: var(--color-white);
 		margin: 0;
 	}
 
-	.cert-badges {
+	.cert-subheading {
+		font-family: var(--font-body);
+		font-size: var(--text-base);
+		color: var(--color-text-secondary);
+		margin: 0 0 16px 0;
+	}
+
+	.cert-cards {
 		display: flex;
 		flex-direction: column;
-		gap: 16px;
+		align-items: center;
+		gap: 32px;
 	}
 
-	.co2-seal {
+	/* CO2 Certification Seal (inline SVG) */
+	.cert-seal {
 		display: flex;
 		align-items: center;
-		gap: 12px;
-		padding: 8px 16px;
-		border-radius: var(--radius-full);
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		width: fit-content;
+		justify-content: center;
 	}
 
-	.co2-text {
-		font-family: var(--font-headline);
-		font-size: 20px;
-		font-weight: 700;
-		color: var(--color-accent-primary);
+	.cert-seal :global(svg) {
+		width: auto;
+		height: 80px;
 	}
 
-	.co2-label {
+	/* Green Hosting row */
+	.cert-row {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+	}
+
+	.green-badge-img {
+		height: 80px;
+		width: auto;
+		border-radius: 8px;
+	}
+
+	.green-text {
 		font-family: var(--font-body);
-		font-size: 14px;
-		font-weight: 500;
+		font-size: var(--text-base);
 		color: var(--color-text-secondary);
+		line-height: 1.5;
+		margin: 0;
+		text-align: left;
 	}
 
-	.green-energy {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		color: var(--color-accent-primary);
-		font-family: var(--font-body);
-		font-size: 14px;
-		font-weight: 500;
-	}
-
-	:global(.leaf-icon) {
-		color: var(--color-accent-primary);
-	}
-
+	/* ── Brand Footer ── */
 	.footer-brand {
 		display: flex;
 		flex-direction: column;
-		align-items: flex-end;
-		gap: 24px;
-		text-align: right;
+		align-items: center;
+		gap: 16px;
+		padding: var(--section-pad-sm) var(--gutter) 40px;
+		text-align: center;
+	}
+
+	.footer-logo {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: opacity var(--dur-fast) var(--ease-out-expo);
+	}
+
+	.footer-logo:hover {
+		opacity: 0.75;
 	}
 
 	.footer-logo :global(svg) {
-		height: 28px;
+		height: 32px;
 		width: auto;
-		opacity: 0.8;
 	}
 
-	.footer-disclaimer {
+	.footer-footnote {
 		font-family: var(--font-body);
 		font-size: 14px;
-		font-weight: 400;
 		color: var(--color-text-secondary);
 		opacity: 0.7;
 		line-height: 20px;
 		margin: 0;
 	}
 
+	.footer-footnote a {
+		color: var(--color-text-secondary);
+		text-decoration: underline;
+		transition: color var(--dur-fast);
+	}
+
+	.footer-footnote a:hover {
+		color: var(--color-white);
+	}
+
 	/* ── Mobile ── */
 	@media (max-width: 768px) {
 		.cta-wrapper {
-			padding: 60px 20px 40px;
+			padding: var(--section-pad-sm) var(--gutter);
 		}
 
 		.cta-card {
@@ -267,27 +269,33 @@
 		}
 
 		.cta-title {
-			font-size: 32px;
-			line-height: 40px;
+			font-size: 28px;
+			line-height: 1.2;
 		}
 
 		.cta-subtitle {
-			font-size: 16px;
-			line-height: 24px;
+			font-size: 14px;
 		}
 
-		.footer-bottom {
-			padding: 40px 20px;
+		.cta-subtitle br {
+			display: none;
 		}
 
-		.footer-container {
+		.cert-section {
+			padding: var(--section-pad-sm) var(--gutter);
+		}
+
+		.cert-row {
 			flex-direction: column;
-			gap: 48px;
+			gap: 16px;
+		}
+
+		.green-text {
+			text-align: center;
 		}
 
 		.footer-brand {
-			align-items: flex-start;
-			text-align: left;
+			padding: 40px var(--gutter) 32px;
 		}
 	}
 </style>

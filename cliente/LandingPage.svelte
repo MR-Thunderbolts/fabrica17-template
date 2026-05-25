@@ -46,7 +46,7 @@
 
 <style>
 	.page-landing {
-		background: var(--color-audit-bg);
+		background: var(--color-bg-base);
 		min-height: 100vh;
 		min-height: 100dvh;
 		overflow-x: hidden;

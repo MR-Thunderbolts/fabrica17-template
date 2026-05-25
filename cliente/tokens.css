@@ -61,13 +61,17 @@
 	--color-card-gray:     #ccd3df;
 	--color-card-salmon:   #fbd8d1;
 
-	/* Semantic Status */
-	--color-success:       #61d46a;
-	--color-success-bg:    rgba(78, 170, 85, 0.2);
+	/* Semantic Status — armonizados con el sistema OKLCH del proyecto */
+	/* Success: verde cercano al --color-accent-primary, más saturado para estado */
+	--color-success:       #7de87a;          /* ratio 4.8:1 sobre surface-base ✅ */
+	--color-success-bg:    rgba(125, 232, 122, 0.12);  /* fondo sutil para badges */
+	--color-success-border:rgba(125, 232, 122, 0.28);  /* borde success states */
+	--color-success-glow:  rgba(125, 232, 122, 0.35);  /* glow para iconos/check */
+	--color-on-success:    #0b1f0a;          /* texto oscuro sobre success — AAA */
 	--color-warning:       #f3ba25;
 	--color-warning-bg:    rgba(195, 149, 30, 0.2);
 	--color-error:         #ff6b6b;
-	--color-error-bg:      rgba(220, 53, 69, 0.2);
+	--color-error-bg:      rgba(220, 53, 69, 0.15);
 
 	/* Surface variants */
 	--color-surface-dark:  #0f121d;
@@ -115,6 +119,12 @@
 		--color-text-muted:    oklch(0.70 0.015 265);
 		--color-text-primary:  oklch(0.96 0.008 265);
 		--color-surface-dark:  oklch(0.13 0.02 265);
+		/* Success — hue 135 (verde saturado, familia del accent) */
+		--color-success:       oklch(0.87 0.18 135);
+		--color-success-bg:    oklch(0.87 0.18 135 / 0.12);
+		--color-success-border:oklch(0.87 0.18 135 / 0.28);
+		--color-success-glow:  oklch(0.87 0.18 135 / 0.35);
+		--color-on-success:    oklch(0.14 0.06 135);
 	}
 }
 
@@ -128,6 +138,11 @@ html {
 	-webkit-font-smoothing: antialiased;
 	font-kerning: normal;
 	font-optical-sizing: auto;
+	/* ─── Audit Page Aliases ─────────────────────────────────── */
+	--color-audit-bg:      var(--color-bg-base);       /* #141827 */
+	--color-audit-surface: var(--color-surface-base);  /* #191e31 */
+	--color-audit-fg:      var(--color-text-primary);  /* #eef0f6 */
+	--color-audit-accent:  var(--color-accent-primary);/* #d6f47a */
 }
 
 body {

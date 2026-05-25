@@ -65,7 +65,7 @@
 	.painpoints-section {
 		position: relative;
 		z-index: 10;
-		padding: var(--section-pad-sm) var(--gutter);
+		padding: var(--section-pad-lg) var(--gutter);
 		width: 100%;
 		background: transparent;
 	}
@@ -184,7 +184,7 @@
 
 	@media (max-width: 768px) {
 		.painpoints-section {
-			padding: var(--section-pad-md) var(--gutter);
+			padding: var(--section-pad-sm) var(--gutter);
 		}
 
 		.painpoints-heading {

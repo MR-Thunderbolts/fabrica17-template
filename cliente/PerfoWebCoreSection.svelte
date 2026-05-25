@@ -75,11 +75,11 @@
 	}
 
 	:global(.icon-accent) {
-		color: var(--color-audit-accent) !important;
+		color: var(--color-accent-primary) !important;
 	}
 	:global(.icon-accent svg) {
-		stroke: var(--color-audit-accent) !important;
-		color: var(--color-audit-accent) !important;
+		stroke: var(--color-accent-primary) !important;
+		color: var(--color-accent-primary) !important;
 	}
 
 	:global(.section-title), :global(.section-title *) {
@@ -106,7 +106,7 @@
 	}
 
 	:global(.metric-card) {
-		background: #191e31;
+		background: var(--color-surface-base);
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-radius: 28px;
 		padding: 33px;
@@ -159,13 +159,13 @@
 	}
 
 	.status-success {
-		background: rgba(78, 170, 85, 0.2);
-		color: #61d46a;
+		background: var(--color-success-bg);
+		color: var(--color-success);
 	}
 
 	.status-warning {
-		background: rgba(195, 149, 30, 0.2);
-		color: #f3ba25;
+		background: var(--color-warning-bg);
+		color: var(--color-warning);
 	}
 
 	/* ── Sprint R3: Mobile Responsive ── */

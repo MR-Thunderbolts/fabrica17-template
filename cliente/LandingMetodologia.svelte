@@ -200,15 +200,28 @@
 		let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 		const scrollEndHandler = () => {
 			if (!isMobile || !cardStackEl) return;
-			const firstCard = cardStackEl.querySelector('.stack-card') as HTMLElement | null;
-			if (!firstCard) return;
-			const cardW = firstCard.offsetWidth + 12;
-			activeCarouselIndex = Math.round(cardStackEl.scrollLeft / cardW);
+			// Calculamos qué tarjeta está más cerca del centro del contenedor
+			const cards = Array.from(cardStackEl.querySelectorAll('.stack-card')) as HTMLElement[];
+			if (!cards.length) return;
+			const containerCenter = cardStackEl.scrollTop + (cardStackEl.clientHeight / 2);
+			
+			let minDiff = Infinity;
+			let activeIndex = 0;
+			
+			cards.forEach((card, idx) => {
+				const cardCenter = card.offsetTop + (card.offsetHeight / 2);
+				const diff = Math.abs(cardCenter - containerCenter);
+				if (diff < minDiff) {
+					minDiff = diff;
+					activeIndex = idx;
+				}
+			});
+			activeCarouselIndex = activeIndex;
 		};
 		const scrollFallbackHandler = () => {
 			if (!isMobile) return;
 			if (debounceTimer) clearTimeout(debounceTimer);
-			debounceTimer = setTimeout(scrollEndHandler, 150);
+			debounceTimer = setTimeout(scrollEndHandler, 100);
 		};
 		cardStackEl?.addEventListener('scrollend', scrollEndHandler);
 		cardStackEl?.addEventListener('scroll', scrollFallbackHandler, { passive: true });
@@ -238,7 +251,7 @@
 
 	<!-- Card Stack / Carousel -->
 	<div class="card-stack" bind:this={cardStackEl}>
-		<!-- Peek ghost cards — desktop only, always behind real cards (z-index: 0 < real cards 1+) -->
+		<!-- Peek ghost cards — desktop only -->
 		<div class="peek-ghost peek-ghost--near" aria-hidden="true"></div>
 		<div class="peek-ghost peek-ghost--far" aria-hidden="true"></div>
 
@@ -280,16 +293,18 @@
 		{/each}
 	</div>
 
-	<!-- Mobile: dot pagination indicators (pure CSS circles, no text) -->
+	<!-- Mobile: dot pagination indicators -->
 	<div class="carousel-indicators" role="tablist" aria-label="Pasos de metodología">
 		{#each cards as _, i}
-			<div
-				class="carousel-indicator"
-				class:active={activeCarouselIndex === i}
-				role="tab"
-				aria-selected={activeCarouselIndex === i}
-				aria-label={i === 0 ? 'Introducción' : `Paso ${i}`}
-			></div>
+			<div class="indicator-slot">
+				<div
+					class="carousel-indicator"
+					class:active={activeCarouselIndex === i}
+					role="tab"
+					aria-selected={activeCarouselIndex === i}
+					aria-label={i === 0 ? 'Introducción' : `Paso ${i}`}
+				></div>
+			</div>
 		{/each}
 	</div>
 </section>
@@ -298,8 +313,6 @@
 	.meto-section {
 		position: relative;
 		width: 100%;
-		height: 100vh;
-		height: 100dvh;
 		background: var(--color-surface-dark);
 		overflow: hidden;
 		display: flex;
@@ -307,9 +320,7 @@
 		align-items: center;
 		justify-content: center;
 		gap: var(--space-6);
-		padding: var(--section-pad-md) var(--gutter);
-		padding-top: max(80px, env(safe-area-inset-top, 80px));
-		padding-bottom: max(80px, env(safe-area-inset-bottom, 80px));
+		padding: var(--section-pad-lg) var(--gutter);
 	}
 
 	.ambient-glow {
@@ -539,30 +550,48 @@
 		}
 	}
 
-	/* ── Mobile (<768px): Horizontal scroll-snap carousel ────────────── */
+	/* ── Mobile (<768px): Vertical scroll-snap carousel ─────────────── */
 	@media (max-width: 768px) {
 		.meto-section {
-			padding: max(56px, env(safe-area-inset-top)) 0 max(var(--space-8), env(safe-area-inset-bottom));
-			justify-content: center; /* Cards + dots grouped in the middle, no space-between gap */
+			padding: max(56px, env(safe-area-inset-top)) var(--gutter) max(var(--space-8), env(safe-area-inset-bottom));
+			justify-content: flex-start;
 			gap: var(--space-5);
+			overflow: hidden; /* clipear el ambient glow */
 		}
 
-		/* Horizontal snap carousel */
+		/* Vertical snap carousel: card-stack is the scroll viewport */
 		.card-stack {
 			display: flex;
-			flex-direction: row;
-			overflow-x: scroll;
-			overflow-y: visible;
-			scroll-snap-type: x mandatory;
+			flex-direction: column;
+			overflow-y: scroll;
+			overflow-x: hidden;
+			scroll-snap-type: y mandatory;
 			-webkit-overflow-scrolling: touch;
 			scrollbar-width: none;
-			height: auto;
-			padding: 0 20px 4px; /* side padding creates peek effect for adjacent cards */
-			gap: 12px;
+			height: 70dvh;
 			width: 100%;
 			max-width: 100%;
 			flex-shrink: 0;
+			/* Gap and large padding so the first card can scroll into the center */
+			gap: 16px;
+			padding: 25dvh 0;
+			/* Fade suave en bordes superior e inferior */
+			-webkit-mask-image: linear-gradient(
+				to bottom,
+				transparent 0%,
+				black 10%,
+				black 90%,
+				transparent 100%
+			);
+			mask-image: linear-gradient(
+				to bottom,
+				transparent 0%,
+				black 10%,
+				black 90%,
+				transparent 100%
+			);
 		}
+
 		.card-stack::-webkit-scrollbar {
 			display: none;
 		}
@@ -571,15 +600,17 @@
 			display: none;
 		}
 
-		/* Cards are full-width snap items */
+		/* Cards size to their content */
 		.stack-card {
 			position: static !important;
 			transform: none !important;
 			opacity: 1 !important;
 			filter: none !important;
-			flex: 0 0 calc(100vw - 72px);
+			flex: 0 0 auto;
+			width: calc(100% - 24px); /* Espacio para el indicador */
 			height: auto;
 			scroll-snap-align: center;
+			scroll-snap-stop: always;
 			pointer-events: auto;
 			will-change: auto;
 		}
@@ -624,38 +655,50 @@
 			line-height: 1.2;
 		}
 
-		/* Dot indicators */
+		/* Dot indicators — centered relative to section */
 		.carousel-indicators {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 6px;
+			position: absolute;
+			right: 16px;
+			top: 50%;
+			transform: translateY(-50%);
+			z-index: 2;
+			width: 6px;
+		}
+
+		/* Slot de altura fija: evita que el dot activo desplace a los vecinos */
+		.indicator-slot {
+			width: 6px;
+			height: 20px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			gap: var(--space-2);
-			z-index: 1;
-			flex-shrink: 0;
 		}
 
 		.carousel-indicator {
 			width: 6px;
 			height: 6px;
-			border-radius: var(--radius-full);
-			background: var(--color-text-muted);
-			opacity: 0.35;
+			border-radius: 999px;
+			background: rgba(255, 255, 255, 0.3);
 			transition:
-				width 0.25s ease,
-				opacity 0.25s ease,
+				height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
 				background 0.25s ease;
 		}
 
 		.carousel-indicator.active {
-			width: 20px;
+			height: 20px;
 			background: var(--color-accent-primary);
-			opacity: 1;
 		}
 	}
 
 	@media (max-width: 480px) {
 		.stack-card {
-			flex: 0 0 calc(100vw - 48px);
+			flex: 0 0 auto;
+			width: 100%;
 		}
 		.card-inner-top,
 		.card-inner-step {

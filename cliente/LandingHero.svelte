@@ -5,11 +5,15 @@
 	import IconGlobe from "~icons/ph/globe";
 	import IconArrowRight from "~icons/ph-bold/arrow-right";
 	import { reveal } from "./reveal";
+	import logoBg from "./assets/Logo_BG.svg?raw";
 </script>
 
 <section class="hero-section" use:reveal>
-	<!-- Decorative background glow -->
-	<div class="hero-bg-glow"></div>
+	<!-- Decorative background glow and logo watermark -->
+	<div class="hero-bg-gradient"></div>
+	<div class="hero-bg-logo">
+		{@html logoBg}
+	</div>
 
 	<div class="hero-content">
 		<!-- Tag pill -->
@@ -71,19 +75,33 @@
 		scroll-snap-align: start;
 	}
 
-	.hero-bg-glow {
+	.hero-bg-gradient {
 		position: absolute;
-		top: -28px;
-		right: -160px;
-		width: 1283px;
-		height: 807px;
-		background: radial-gradient(ellipse at 30% 40%,
-			rgba(214, 244, 122, 0.06) 0%,
-			rgba(47, 33, 91, 0.08) 40%,
-			transparent 70%
-		);
+		bottom: -150px;
+		right: -250px;
+		width: 1000px;
+		height: 1000px;
+		background: radial-gradient(circle at center, rgba(135, 78, 203, 0.25) 0%, transparent 60%);
 		pointer-events: none;
 		z-index: 0;
+		filter: blur(80px);
+	}
+
+	.hero-bg-logo {
+		position: absolute;
+		top: -100px;
+		right: -250px;
+		width: 1100px;
+		height: auto;
+		opacity: 0.2;
+		pointer-events: none;
+		z-index: 0;
+		overflow: hidden;
+	}
+
+	.hero-bg-logo :global(svg) {
+		width: 100%;
+		height: 100%;
 	}
 
 	.hero-content {
@@ -282,10 +300,19 @@
 			white-space: normal;
 		}
 
-		.hero-bg-glow {
-			width: 100%;
-			right: -50%;
-			top: 0;
+		.hero-bg-gradient {
+			width: 600px;
+			height: 600px;
+			right: -200px;
+			bottom: -100px;
+			background: radial-gradient(circle at center, rgba(135, 78, 203, 0.2) 0%, transparent 70%);
+		}
+
+		.hero-bg-logo {
+			width: 600px;
+			right: -150px;
+			top: 50px;
+			opacity: 0.15;
 		}
 	}
 </style>

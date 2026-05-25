@@ -53,8 +53,14 @@
 
 		// Simulate analysis time (matches loading animation)
 		setTimeout(() => {
-			reportData.scores.main = Math.floor(Math.random() * 40) + 60;
-			reportData.scores.status = reportData.scores.main > 89 ? "Optimo" : "Mejorable";
+			const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+			const score = rand(40, 99);
+			reportData.scores.main        = score;
+			reportData.scores.status      = score >= 90 ? "Optimo" : score >= 50 ? "Mejorable" : "Deficiente";
+			reportData.scores.performance = rand(30, 99);
+			reportData.scores.quality     = rand(40, 99);
+			reportData.scores.efficiency  = rand(50, 100);
+			reportData.scores.satisfaction= rand(20, 99);
 			step = "results";
 		}, 5000);
 	}
@@ -79,8 +85,9 @@
 			</a>
 
 			<div class="nav-actions">
-				<button class="nav-btn nav-btn-icon" aria-label="Descargar reporte">
-					<IconDownload width="18" height="18" />
+				<button class="nav-btn nav-btn-text" aria-label="Descargar resultados">
+					<IconDownload width="16" height="16" />
+					<span>Descargar resultados</span>
 				</button>
 			</div>
 		</nav>
@@ -198,18 +205,22 @@
 		cursor: pointer;
 	}
 
-	.nav-btn-icon {
-		width: 44px;
-		padding: 0;
+	.nav-btn-text {
+		padding: 0 16px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
+		gap: 8px;
 		background: transparent;
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		color: var(--color-white);
+		font-family: var(--font-body);
+		font-size: var(--text-sm);
+		font-weight: 500;
+		transition: background var(--dur-fast) var(--ease-out-expo);
 	}
 
-	.nav-btn-icon:hover {
+	.nav-btn-text:hover {
 		background: rgba(255, 255, 255, 0.05);
 	}
 

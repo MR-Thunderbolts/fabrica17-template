@@ -62,7 +62,7 @@
 <style>
 	.plan-section {
 		position: relative;
-		padding: var(--section-pad-md) var(--gutter);
+		padding: var(--section-pad-lg) var(--gutter);
 		background: var(--color-surface-base);
 		overflow: hidden;
 		width: 100%;
@@ -143,27 +143,26 @@
 
 	/* Timeline */
 	.plan-timeline {
-		display: flex;
-		align-items: flex-start;
-		justify-content: center;
-		gap: clamp(16px, 3vw, 40px);
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: clamp(40px, 5vw, 64px) clamp(20px, 3vw, 40px);
 		width: 100%;
+		max-width: 900px;
+		margin: 0 auto;
 	}
 
 	.timeline-step {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 16px;
-		flex: 1;
-		min-width: 100px;
-		max-width: 156px;
+		gap: 24px;
+		width: 100%;
 	}
 
 	.step-blob {
 		position: relative;
-		width: 92px;
-		height: 92px;
+		width: 132px;
+		height: 132px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -199,7 +198,7 @@
 		position: relative;
 		z-index: 1;
 		font-family: var(--font-headline);
-		font-size: 36px;
+		font-size: 52px;
 		font-weight: 700;
 		color: var(--color-surface-base);
 		line-height: 1;
@@ -207,7 +206,7 @@
 
 	.step-label {
 		font-family: var(--font-headline);
-		font-size: 16px;
+		font-size: 22px;
 		font-weight: 600;
 		color: var(--color-white);
 		line-height: 1.3;
@@ -270,6 +269,30 @@
 		letter-spacing: 0.01em;
 	}
 
+	/* ── Tablet ── */
+	@media (max-width: 1024px) and (min-width: 769px) {
+		.plan-timeline {
+			gap: 40px 24px;
+		}
+
+		.timeline-step {
+			gap: 20px;
+		}
+
+		.step-blob {
+			width: 100px;
+			height: 100px;
+		}
+
+		.blob-number {
+			font-size: 40px;
+		}
+
+		.step-label {
+			font-size: 18px;
+		}
+	}
+
 	/* ── Mobile ── */
 	@media (max-width: 768px) {
 		.plan-section {
@@ -286,29 +309,28 @@
 		}
 
 		.plan-timeline {
-			flex-wrap: wrap;
-			gap: 16px;
-			justify-content: center;
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 32px 16px;
 		}
 
 		.timeline-step {
-			width: calc(33.33% - 16px);
-			min-width: 90px;
-			max-width: none;
+			gap: 16px;
 		}
 
 		.step-blob {
-			width: 72px;
-			height: 72px;
+			width: 80px;
+			height: 80px;
 		}
 
 		.blob-number {
-			font-size: 26px;
+			font-size: 32px;
 		}
 
 		.step-label {
-			font-size: 12px;
-			line-height: 16px;
+			font-size: 14px;
+			line-height: 1.2;
+			min-height: auto;
 		}
 	}
 </style>

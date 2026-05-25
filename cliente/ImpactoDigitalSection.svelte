@@ -2,6 +2,7 @@
 	import IconLeaf from "~icons/ph/leaf";
 	import IconServerBroken from "~icons/ph/cloud-x";
 	import IconCheck from "~icons/ph/check-circle";
+	import Tooltip from "./Tooltip.svelte";
 
 	let { url, impact, issues } = $props<{
 		url: string;
@@ -18,6 +19,24 @@
 	}>();
 
 	const classes = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+	function getStatus(grade: string) {
+		if (grade === 'A' || grade === 'B') return 'OPTIMO';
+		if (grade === 'C' || grade === 'D') return 'MEJORABLE';
+		return 'DEFICIENTE';
+	}
+
+	function getStatusClass(status: string) {
+		if (status === 'OPTIMO') return 'status-success';
+		if (status === 'MEJORABLE') return 'status-warning';
+		return 'status-error';
+	}
+
+	let co2Status = $derived(getStatus(impact.co2Class));
+	let co2StatusClass = $derived(getStatusClass(co2Status));
+	
+	let greenStatus = $derived(impact.greenHosting ? 'OPTIMO' : 'DEFICIENTE');
+	let greenStatusClass = $derived(getStatusClass(greenStatus));
 </script>
 
 <section class="section-impactodigital">
@@ -30,13 +49,24 @@
 	<div class="metrics-grid">
 		<!-- Clase Digital CO2 -->
 		<div class="metric-card">
-			<div class="status-label {impact.co2Class === 'A' || impact.co2Class === 'B' ? 'status-success' : 'status-warning'}">
-				{impact.co2Class}
+			<div class="status-label {co2StatusClass}">
+				{co2Status}
 			</div>
 			<h2 class="metric-value">{impact.co2Class}</h2>
 			<div class="metric-text">
-				<strong class="metric-name">Clase digital CO₂</strong>
-				<p class="metric-desc">Tu sitio tiene una calificación buena. Basado en el modelo de Sustainable Web Design.</p>
+				<div class="metric-name-row">
+					<strong class="metric-name">Clase digital CO₂</strong>
+					<Tooltip title="Clase digital CO₂" description="Tu calificación se basa en los estándares de Sustainable Web Design para medir la eficiencia ambiental de tu web." position="top" />
+				</div>
+				<p class="metric-desc">
+					{#if co2Status === 'OPTIMO'}
+						Tu sitio tiene una calificación buena. Basado en el modelo de Sustainable Web Design.
+					{:else if co2Status === 'MEJORABLE'}
+						Tu sitio tiene una calificación regular. Hay oportunidades de mejora en el modelo de Sustainable Web Design.
+					{:else}
+						Tu sitio tiene una calificación deficiente. Requiere optimización urgente según el modelo de Sustainable Web Design.
+					{/if}
+				</p>
 			</div>
 			<div class="class-scale">
 				{#each classes as cls}
@@ -49,8 +79,8 @@
 
 		<!-- Huella de Carbono -->
 		<div class="metric-card">
-			<div class="status-label status-success">
-				Bajo impacto
+			<div class="status-label {co2StatusClass}">
+				{co2Status}
 			</div>
 			<div class="metric-value-group">
 				<h2 class="metric-value">{impact.carbonFootprint}</h2>
@@ -60,20 +90,28 @@
 				<strong class="metric-name">Huella de carbono</strong>
 				<p class="metric-desc">Tu sitio genera {impact.carbonFootprint} de CO₂ por cada visita a tu página.</p>
 			</div>
+			{#if co2Status === 'OPTIMO'}
+				<div class="status-label status-success badge-small" style="display: inline-flex; gap: 6px; margin-top: auto;">
+					<IconLeaf width="12" height="12" /> Más limpio que el 66% de la web
+				</div>
+			{:else if co2Status === 'MEJORABLE'}
+				<div class="status-label status-warning badge-small" style="display: inline-flex; gap: 6px; margin-top: auto;">
+					<IconLeaf width="12" height="12" /> Promedio de la web
+				</div>
+			{/if}
 		</div>
 
 		<!-- Green Hosting -->
 		<div class="metric-card">
-			<div class="status-label {impact.greenHosting ? 'status-success' : 'status-error'}">
-				{impact.greenHosting ? 'Certificado' : 'No certificado'}
+			<div class="status-label {greenStatusClass}">
+				{greenStatus}
 			</div>
 			<div class="metric-value-group">
 				{#if impact.greenHosting}
 					<IconCheck width="40" height="40" class="icon-success" />
 					<h2 class="metric-value-small">Detectado</h2>
 				{:else}
-					<IconServerBroken width="40" height="40" class="icon-error" />
-					<h2 class="metric-value-small">No detectado</h2>
+					<h2 class="metric-value">No detectado</h2>
 				{/if}
 			</div>
 			<div class="metric-text">
@@ -97,12 +135,12 @@
 		<div class="issues-grid">
 			{#each issues as issue}
 				<div class="issue-item">
-					<div class="status-label {issue.type === 'error' ? 'status-error' : 'status-warning'}">
-						<!-- Icon placeholder if needed -->
-					</div>
+					<div class="issue-dot {issue.type === 'error' ? 'error' : 'warning'}"></div>
 					<div class="issue-text">
 						<strong class="issue-name">{issue.title}</strong>
-						<span class="issue-impact">{issue.impact}</span>
+						<div class="issue-impact {issue.type === 'error' ? 'error' : 'warning'}">
+							{issue.impact}
+						</div>
 					</div>
 				</div>
 			{/each}
@@ -204,6 +242,12 @@
 		flex-direction: column;
 		gap: 6px;
 		flex: 1;
+	}
+
+	.metric-name-row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
 	}
 
 	.metric-name {
@@ -319,42 +363,52 @@
 		gap: 20px;
 	}
 
-	.issue-item {
-		background: rgba(255, 255, 255, 0.02);
-		border: 1px solid rgba(255, 255, 255, 0.05);
-		border-radius: 16px;
-		padding: 16px;
-		display: flex;
-		gap: 12px;
-		align-items: flex-start;
+	.badge-small {
+		font-size: 10px;
+		padding: 4px 10px;
+		white-space: nowrap;
+		letter-spacing: 0.05em;
 	}
 
-	.issue-item .status-label {
-		padding: 6px;
-		border-radius: 50%;
+	.issue-item {
+		background: rgba(255, 255, 255, 0.04);
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		border-radius: 20px;
+		padding: 16px 20px;
+		display: flex;
+		flex-direction: row;
+		gap: 12px;
+		align-items: center;
+	}
+
+	.issue-dot {
 		width: 8px;
 		height: 8px;
-		min-width: unset;
-		margin-top: 4px;
+		border-radius: 50%;
+		flex-shrink: 0;
 	}
+	.issue-dot.error { background: var(--color-error); }
+	.issue-dot.warning { background: var(--color-warning); }
 
 	.issue-text {
 		display: flex;
 		flex-direction: column;
-		gap: 4px;
+		gap: 2px;
 	}
 
 	.issue-name {
 		color: var(--color-white);
 		font-family: var(--font-body);
-		font-size: var(--text-base);
+		font-size: var(--text-sm);
 		font-weight: 600;
 	}
 
 	.issue-impact {
-		color: var(--color-text-secondary);
-		font-size: var(--text-sm);
+		font-family: var(--font-body);
+		font-size: var(--text-xs);
 	}
+	.issue-impact.error { color: var(--color-error); }
+	.issue-impact.warning { color: var(--color-warning); }
 
 	/* ── Sprint R4: Mobile Responsive ── */
 	@media (max-width: 768px) {

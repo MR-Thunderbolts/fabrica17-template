@@ -57,7 +57,7 @@
 
 <style>
 	.seguridad-section {
-		padding: var(--section-pad-md) var(--gutter);
+		padding: var(--section-pad-lg) var(--gutter);
 		background: var(--color-surface-base);
 		display: flex;
 		justify-content: center;

@@ -267,13 +267,14 @@
 	}
 
 	.btn-card.accent {
-		background: var(--color-card-green-2);
-		border: 1px solid var(--color-accent-primary);
+		background: var(--color-accent-primary);
+		color: var(--color-bg-base);
+		border: none;
 	}
 
 	.btn-card.accent:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 0 16px rgba(214, 244, 122, 0.4);
+		box-shadow: 0 4px 16px rgba(214, 244, 122, 0.3);
 	}
 
 	/* ── Mobile ── */
