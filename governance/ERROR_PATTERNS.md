@@ -40,3 +40,20 @@ Este archivo es el registro histórico de fallos en la Fábrica Base. Debe ser c
 - **Síntoma**: `</Component> attempted to close an element that was not open`.
 - **Causa**: Olvido de cierre de bloque `{#snippet}` dentro de un componente que acepta múltiples fragmentos.
 - **Solución (Failsafe)**: Antes de declarar un nuevo `{#snippet}` dentro del mismo componente padre, verificar que el anterior esté cerrado con `{/snippet}`.
+
+## 7. THE "SUB-PIXEL HOVER JITTER" ERROR (UI/Transitions)
+- **Síntoma**: Iconos o texto dentro de un botón (`.btn-primary`, `.nav-cta`) o tarjeta (`.seg-card`, `.pain-card`) vibran, tiemblan o se desplazan 1px relative al fondo durante una animación de transición en hover (como `translateY(-2px)`).
+- **Causa**: Al transicionar la propiedad `transform` sin un estado inicial declarado, el navegador promueve dinámicamente el elemento a una capa compositada de GPU. Esto cambia el antialiasing de subpíxel a escala de grises para el texto y las formas vectoriales del SVG de forma independiente, provocando micro-desplazamientos y un glitch visual.
+- **Solución (Failsafe)**:
+  1. Declarar el estado inicial explícitamente: `transform: translateY(0) translateZ(0);` y `transform-style: preserve-3d;` en el elemento animado.
+  2. Promover los elementos hijos directamente a la GPU: `transform: translate3d(0, 0, 0); will-change: transform; backface-visibility: hidden;` en `> :global(*)` para estabilizarlos de forma pre-acelerada.
+
+## 8. THE "SVG PATH CLIPPING" ERROR (CSS/Icon Selectors)
+- **Síntoma**: Los iconos vectoriales (como SVGs de MynaUI o Phosphor) dentro de un badge o círculo se reducen a líneas diminutas rotas o se cortan en la esquina superior izquierda.
+- **Causa**: El uso del selector descendente global `.tag-badge :global(*)` para posicionar absolutamente y dar un tamaño de `16x16` al SVG acaba aplicando estas propiedades de forma no intencionada también a todas las etiquetas internas del SVG (`<path>`, `<rect>`, `<circle>`), destruyendo sus sistemas de coordenadas internas.
+- **Solución (Failsafe)**: Usar siempre el selector de hijo directo `>` para delimitar las propiedades de alineación absoluta únicamente a la raíz del icono: `.tag-badge > :global(*)`.
+
+## 9. THE "VITE HMR 500 DESYNC" ERROR (Dev Server/Caching)
+- **Síntoma**: El servidor de desarrollo lanza una pantalla roja de `500 Internal Server Error` o un error inesperado al importar iconos o modificar masivamente archivos en caliente.
+- **Causa**: Al realizar cambios simultáneos de imports de dependencias dinámicas (como en una migración de librerías) en más de una decena de archivos, el HMR (Hot Module Replacement) de Vite se desincroniza al re-calcular el árbol en caliente.
+- **Solución (Failsafe)**: Reiniciar el servidor de desarrollo local (`bun run dev`) o refrescar la página en el navegador para borrar la caché de Vite y forzar una resolución limpia de dependencias. Ejecutar `bun run check` y `bun run build` estáticamente para garantizar la sanidad del código.
