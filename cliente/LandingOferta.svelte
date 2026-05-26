@@ -34,7 +34,7 @@
 					<li>Aumentamos tu velocidad</li>
 				</ul>
 			</div>
-			<a href="/reporte" class="btn-card primary">
+			<a href="#auditoria" class="btn-card primary">
 				Auditoría gratuita
 			</a>
 		</div>

@@ -9,16 +9,25 @@
 	import LandingFAQ from "./LandingFAQ.svelte";
 	import LandingFooter from "./LandingFooter.svelte";
 	import LandingQuoteForm from "./LandingQuoteForm.svelte";
+	import LandingAuditModal from "./LandingAuditModal.svelte";
 
 	let isQuoteFormOpen = $state(false);
+	let isAuditFormOpen = $state(false);
 
 	function handleGlobalClick(e: MouseEvent) {
 		const target = e.target as HTMLElement;
 		const link = target.closest('a');
-		if (link && link.getAttribute('href') === '#cotizar') {
-			e.preventDefault();
-			isQuoteFormOpen = true;
-			history.pushState("", document.title, window.location.pathname + window.location.search);
+		if (link) {
+			const href = link.getAttribute('href');
+			if (href === '#cotizar') {
+				e.preventDefault();
+				isQuoteFormOpen = true;
+				history.pushState("", document.title, window.location.pathname + window.location.search);
+			} else if (href === '#auditoria') {
+				e.preventDefault();
+				isAuditFormOpen = true;
+				history.pushState("", document.title, window.location.pathname + window.location.search);
+			}
 		}
 	}
 </script>
@@ -41,7 +50,9 @@
 	<LandingFAQ />
 	<LandingFooter />
 	<span id="cotizar" style="display:none;" aria-hidden="true"></span>
+	<span id="auditoria" style="display:none;" aria-hidden="true"></span>
 	<LandingQuoteForm isOpen={isQuoteFormOpen} onClose={() => isQuoteFormOpen = false} />
+	<LandingAuditModal isOpen={isAuditFormOpen} onClose={() => isAuditFormOpen = false} />
 </main>
 
 <style>

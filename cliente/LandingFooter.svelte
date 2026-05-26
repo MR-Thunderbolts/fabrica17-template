@@ -12,7 +12,7 @@
 				<span class="cta-badge">AUDITORÍA GRATUITA</span>
 				<h2 class="cta-title">Audita online tu sitio<br>y comienza a convertir</h2>
 				<p class="cta-subtitle">Nuestra calculadora digital enfocada en el performance de tu sitio,<br>te entregará datos de velocidad, experiencia de usuari@ y sustentabilidad digital</p>
-				<a href="/reporte" class="btn-cta">
+				<a href="#auditoria" class="btn-cta">
 					Auditoría gratuita
 				</a>
 			</div>

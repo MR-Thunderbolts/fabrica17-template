@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from "svelte";
 	import "./tokens.css";
 	import IconDownload from "~icons/mynaui/download";
 
@@ -64,6 +65,19 @@
 			step = "results";
 		}, 5000);
 	}
+
+	onMount(() => {
+		const params = new URLSearchParams(window.location.search);
+		const sitio = params.get("sitio");
+		const nombre = params.get("nombre");
+		const email = params.get("email");
+		const telefono = params.get("telefono") || "";
+		const copiaEmail = params.get("copiaEmail") === "true";
+
+		if (sitio && nombre && email) {
+			handleFormSubmit({ sitio, nombre, email, telefono, copiaEmail });
+		}
+	});
 </script>
 
 <svelte:head>

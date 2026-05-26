@@ -6,7 +6,7 @@
 	<a href="/" class="nav-brand" aria-label="Ir al inicio">
 		{@html logoCiclo}
 	</a>
-	<a href="/reporte" class="nav-cta">
+	<a href="#auditoria" class="nav-cta">
 		<span>Auditoría gratuita</span>
 		<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path d="M3.33 8h9.34M8.67 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
