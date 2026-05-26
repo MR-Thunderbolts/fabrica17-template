@@ -39,8 +39,6 @@
 <div 
 	class="tooltip-container"
 	class:is-absolute={absolute}
-	onmouseleave={() => isOpen = false} 
-	onmouseenter={() => isOpen = true}
 	bind:this={tooltipRef}
 >
 	<button 
@@ -54,6 +52,8 @@
 	</button>
 
 	{#if isOpen}
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 		<div class="tooltip-popup {position}" role="tooltip" onclick={(e) => e.stopPropagation()}>
 			<div class="tooltip-header">
 				<strong class="tooltip-title">{title}</strong>

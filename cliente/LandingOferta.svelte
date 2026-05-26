@@ -130,6 +130,7 @@
 		font-weight: 700;
 		color: var(--color-white);
 		line-height: 1.15;
+		letter-spacing: -0.01em;
 		margin: 0;
 	}
 

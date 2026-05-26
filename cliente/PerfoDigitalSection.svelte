@@ -31,16 +31,16 @@
 		</div>
 		<div class="score-details">
 			<div class="status-label {
-				scores.status === 'Optimo' ? 'status-success' :
+				scores.status === 'Óptimo' ? 'status-success' :
 				scores.status === 'Mejorable' ? 'status-warning' : 'status-error'
 			}">
 				{scores.status}
 			</div>
 			<h4 class="score-title">
-				Tu sitio puede<br>rendir mucho mejor
+				Tu sitio tiene margen<br>para rendir mucho mejor
 			</h4>
 			<p class="score-desc">
-				Este score refleja el rendimiento real de tu sitio considerando velocidad, interacción, estabilidad y eficiencia digital.
+				Esta puntuación refleja el rendimiento real de tu sitio considerando velocidad, interacción, estabilidad y eficiencia digital.
 			</p>
 		</div>
 	</div>
@@ -57,7 +57,7 @@
 			</div>
 			<div class="details-row">
 				<span>Tipo</span>
-				<strong>Gratuita</strong>
+				<strong class="color-success">Gratuita</strong>
 			</div>
 			<div class="details-row">
 				<span>Métricas</span>
@@ -91,6 +91,12 @@
 		</div>
 		<!-- Calidad -->
 		<div class="score-item-card">
+			<Tooltip 
+				title="Calidad" 
+				description="Evalúa las mejores prácticas de desarrollo web, incluyendo seguridad HTTPS, ausencia de errores de consola, optimización de imágenes y cumplimiento de estándares. Una alta calidad mejora la confianza del usuario y el SEO."
+				learnMoreUrl="#"
+				absolute={true}
+			/>
 			<div class="circular-chart {getScoreColorClass(scores.quality)}">
 				<span class="chart-value">{scores.quality}</span>
 			</div>
@@ -98,6 +104,12 @@
 		</div>
 		<!-- Eficiencia -->
 		<div class="score-item-card">
+			<Tooltip 
+				title="Eficiencia" 
+				description="Mide cuántos recursos computacionales consume tu sitio: CPU, memoria, ancho de banda. Un sitio eficiente carga más rápido, consume menos batería en móviles y genera menor huella de carbono digital."
+				learnMoreUrl="#"
+				absolute={true}
+			/>
 			<div class="circular-chart {getScoreColorClass(scores.efficiency)}">
 				<span class="chart-value">{scores.efficiency}</span>
 			</div>
@@ -105,6 +117,12 @@
 		</div>
 		<!-- Satisfacción -->
 		<div class="score-item-card">
+			<Tooltip 
+				title="Satisfacción" 
+				description="Refleja la experiencia percibida del usuario: accesibilidad, legibilidad, navegación intuitiva y cumplimiento de expectativas de interacción. Una alta satisfacción se traduce en menor tasa de rebote y más conversiones."
+				learnMoreUrl="#"
+				absolute={true}
+			/>
 			<div class="circular-chart {getScoreColorClass(scores.satisfaction)}">
 				<span class="chart-value">{scores.satisfaction}</span>
 			</div>

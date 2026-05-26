@@ -8,9 +8,9 @@
 <section class="section-hero">
 	<div class="hero-top">
 		<button type="button" class="btn-volver" onclick={() => history.back()}>
-			<IconArrowLeft width="16" height="16" /> Volver
+			<IconArrowLeft width="16" height="16" /> Volver al inicio
 		</button>
-		<span class="report-label">reporte de auditoria</span>
+		<span class="report-badge">AUDITORÍA GRATUITA</span>
 	</div>
 	<h2 class="hero-title">
 		Reporte de performance<br>
@@ -63,10 +63,13 @@
 		opacity: 0.7 !important;
 	}
 
-	.report-label {
-		color: var(--color-accent-primary);
+	.report-badge {
+		color: var(--color-bg-base);
+		background: var(--color-accent-primary);
+		padding: 4px 10px;
+		border-radius: var(--radius-full);
 		font-family: var(--font-headline);
-		font-size: 12px;
+		font-size: 11px;
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 1.2px;

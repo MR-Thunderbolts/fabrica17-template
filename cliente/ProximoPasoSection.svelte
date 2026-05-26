@@ -10,7 +10,7 @@
 				<span class="text-accent">informe completo gratis?</span>
 			</h2>
 			<p class="proximo-desc">
-				En 30 minutos te mostramos las opciones que posees para mejorar la conversión y rendimiento de tu sitio.
+				En 30 minutos te mostramos las opciones que tienes para mejorar la conversión y el rendimiento de tu sitio.
 			</p>
 		</div>
 		

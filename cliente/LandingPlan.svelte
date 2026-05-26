@@ -19,7 +19,7 @@
 		{ number: "3", label: "Contenido",                      bg: "var(--color-card-purple)", svg: shape12 },
 		{ number: "4", label: "Diseño Web",                     bg: "var(--color-card-warning)", svg: shape3  },
 		{ number: "5", label: "Desarrollo &\nTesting",          bg: "var(--color-card-salmon)", svg: shape21 },
-		{ number: "6", label: "Entrega &\nPostventa",           bg: "var(--color-card-green-1)", svg: shape22 }
+		{ number: "6", label: "Entrega &\nPostventa",           bg: "var(--color-card-blue-2)", svg: shape22 }
 	];
 </script>
 
@@ -128,6 +128,7 @@
 		font-weight: 700;
 		color: var(--color-white);
 		line-height: 1.15;
+		letter-spacing: -0.01em;
 		margin: 0;
 	}
 

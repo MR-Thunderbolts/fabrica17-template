@@ -87,10 +87,11 @@
 
 	.painpoints-title {
 		font-family: var(--font-headline);
-		font-size: var(--text-3xl);
+		font-size: var(--text-2xl);
 		font-weight: 700;
 		color: var(--color-white);
 		line-height: 1.15;
+		letter-spacing: -0.01em;
 		margin: 0;
 	}
 

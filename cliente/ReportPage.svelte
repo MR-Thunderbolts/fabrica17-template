@@ -31,9 +31,9 @@
 			loadTime: "2.9s",
 			loadTimeStatus: "Mejorable",
 			responseTime: "130ms",
-			responseTimeStatus: "Optimo",
+			responseTimeStatus: "Óptimo",
 			visualStability: "0.015",
-			visualStabilityStatus: "Optimo"
+			visualStabilityStatus: "Óptimo"
 		},
 		impact: {
 			co2Class: "B",
@@ -56,7 +56,7 @@
 			const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 			const score = rand(40, 99);
 			reportData.scores.main        = score;
-			reportData.scores.status      = score >= 90 ? "Optimo" : score >= 50 ? "Mejorable" : "Deficiente";
+			reportData.scores.status      = score >= 90 ? "Óptimo" : score >= 50 ? "Mejorable" : "Deficiente";
 			reportData.scores.performance = rand(30, 99);
 			reportData.scores.quality     = rand(40, 99);
 			reportData.scores.efficiency  = rand(50, 100);
@@ -67,7 +67,7 @@
 </script>
 
 <svelte:head>
-	<title>Calculadora Ciclo17</title>
+	<title>Tu Reporte de Performance | Ciclo17</title>
 </svelte:head>
 
 <main class="page-reporte">
@@ -162,7 +162,8 @@
 		margin: 0 auto;
 		width: calc(100% - 48px);
 		max-width: 1128px;
-		padding: 8px 16px;
+		/* var(--space-2)=8px top/right/bottom • var(--space-5)=20px left (logo breathing room) */
+		padding: var(--space-2) var(--space-2) var(--space-2) var(--space-5);
 		position: absolute;
 		top: 16px;
 		left: 50%;
@@ -206,11 +207,13 @@
 	}
 
 	.nav-btn-text {
-		padding: 0 16px;
+		/* var(--space-4)=16px horizontal padding */
+		padding: 0 var(--space-4);
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: 8px;
+		/* var(--space-2)=8px gap */
+		gap: var(--space-2);
 		background: transparent;
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		color: var(--color-white);
@@ -218,6 +221,7 @@
 		font-size: var(--text-sm);
 		font-weight: 500;
 		transition: background var(--dur-fast) var(--ease-out-expo);
+		text-box: trim-both cap alphabetic;
 	}
 
 	.nav-btn-text:hover {
@@ -236,7 +240,8 @@
 
 		.report-nav {
 			width: calc(100% - 32px);
-			padding: 6px 12px;
+			/* var(--space-1)=4px top/right/bottom • var(--space-3)=12px left */
+			padding: var(--space-1) var(--space-1) var(--space-1) var(--space-3);
 		}
 	}
 </style>

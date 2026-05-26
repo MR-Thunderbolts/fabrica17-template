@@ -35,7 +35,7 @@
 		},
 		{
 			stepNumber: "04",
-			pillColor: "var(--color-primary)",
+			pillColor: "var(--color-card-blue-2)",
 			title: "Desarrollo limpio",
 			subtitle: "GREEN CODING",
 			desc: "Codificamos u optimizamos tu sitio, con foco en el rendimiento y la eficiencia. Nuestro stack tecnológico apunta hacia un código eficiente, escalable y liviano que genere resultados y el menor impacto ambiental digital.",
@@ -394,9 +394,9 @@
 		gap: var(--space-4);
 		background-image: linear-gradient(
 			170.7deg,
-			rgba(218, 147, 255, 0.2) 0%,
-			rgba(218, 147, 255, 0) 50%,
-			rgba(222, 246, 149, 0.3) 100%
+			rgba(215, 144, 240, 0.35) 0%,
+			rgba(215, 144, 240, 0) 50%,
+			rgba(214, 244, 122, 0.45) 100%
 		);
 	}
 
@@ -422,7 +422,7 @@
 		font-family: var(--font-headline);
 		font-size: var(--text-xs);
 		font-weight: 400;
-		color: var(--color-accent-primary);
+		color: var(--color-primary);
 		letter-spacing: 1.2px;
 		text-transform: uppercase;
 	}
@@ -487,7 +487,7 @@
 
 	.step-title {
 		font-family: var(--font-headline);
-		font-size: var(--text-2xl);
+		font-size: var(--text-xl);
 		font-weight: 700;
 		color: var(--color-white);
 		line-height: 1.15;
@@ -544,9 +544,11 @@
 		.card-inner-step {
 			gap: var(--space-6);
 		}
-		.top-title,
-		.step-title {
+		.top-title {
 			font-size: var(--text-xl);
+		}
+		.step-title {
+			font-size: var(--text-lg);
 		}
 	}
 
@@ -649,10 +651,13 @@
 			width: 100%;
 		}
 
-		.top-title,
-		.step-title {
-			font-size: var(--text-xl);
+		.top-title {
+			font-size: var(--text-2xl);
 			line-height: 1.2;
+		}
+		.step-title {
+			font-size: var(--text-lg);
+			line-height: 1.25;
 		}
 
 		/* Dot indicators — centered relative to section */
@@ -704,9 +709,11 @@
 		.card-inner-step {
 			padding: var(--space-6) var(--space-5);
 		}
-		.top-title,
-		.step-title {
+		.top-title {
 			font-size: var(--text-lg);
+		}
+		.step-title {
+			font-size: var(--text-sm);
 		}
 	}
 </style>

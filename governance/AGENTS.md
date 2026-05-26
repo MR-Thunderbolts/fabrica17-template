@@ -50,7 +50,10 @@ Agents inherit rules in this priority order:
 👉 **[TESTING.md](./TESTING.md)** — Pre-flight checks, self-healing loops.
 
 ### Version Control
-👉 **[GIT.md](./GIT.md)** — Conventional Commits.
+👉 **[GIT.md](./GIT.md)** — Branching Strategy, PR Workflow, Conventional Commits.
+
+### Onboarding & Training
+👉 **[ONBOARDING.md](./ONBOARDING.md)** — Team induction guide, role mapping, training plan.
 
 ### Error Memory
 👉 **[ERROR_PATTERNS.md](./ERROR_PATTERNS.md)** — Curator's playbook of known failures.

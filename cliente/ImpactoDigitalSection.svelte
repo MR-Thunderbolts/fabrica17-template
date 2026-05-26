@@ -21,13 +21,13 @@
 	const classes = ['A', 'B', 'C', 'D', 'E', 'F'];
 
 	function getStatus(grade: string) {
-		if (grade === 'A' || grade === 'B') return 'OPTIMO';
+		if (grade === 'A' || grade === 'B') return 'ÓPTIMO';
 		if (grade === 'C' || grade === 'D') return 'MEJORABLE';
 		return 'DEFICIENTE';
 	}
 
 	function getStatusClass(status: string) {
-		if (status === 'OPTIMO') return 'status-success';
+		if (status === 'ÓPTIMO') return 'status-success';
 		if (status === 'MEJORABLE') return 'status-warning';
 		return 'status-error';
 	}
@@ -35,7 +35,7 @@
 	let co2Status = $derived(getStatus(impact.co2Class));
 	let co2StatusClass = $derived(getStatusClass(co2Status));
 	
-	let greenStatus = $derived(impact.greenHosting ? 'OPTIMO' : 'DEFICIENTE');
+	let greenStatus = $derived(impact.greenHosting ? 'ÓPTIMO' : 'DEFICIENTE');
 	let greenStatusClass = $derived(getStatusClass(greenStatus));
 </script>
 
@@ -56,15 +56,15 @@
 			<div class="metric-text">
 				<div class="metric-name-row">
 					<strong class="metric-name">Clase digital CO₂</strong>
-					<Tooltip title="Clase digital CO₂" description="Tu calificación se basa en los estándares de Sustainable Web Design para medir la eficiencia ambiental de tu web." position="top" />
+					<Tooltip title="Clase Digital CO₂" description="Tu sitio recibió la clase {impact.co2Class}. Las clases van de A (más eficiente) a F (más contaminante). Esta calificación refleja cuánta energía consume tu sitio por visita según el modelo Sustainable Web Design." absolute={true} />
 				</div>
 				<p class="metric-desc">
-					{#if co2Status === 'OPTIMO'}
-						Tu sitio tiene una calificación buena. Basado en el modelo de Sustainable Web Design.
+					{#if co2Status === 'ÓPTIMO'}
+						Tu sitio tiene una clasificación eficiente según el modelo Sustainable Web Design.
 					{:else if co2Status === 'MEJORABLE'}
-						Tu sitio tiene una calificación regular. Hay oportunidades de mejora en el modelo de Sustainable Web Design.
+						Tu sitio tiene clasificación regular. Hay oportunidades de mejora ambiental.
 					{:else}
-						Tu sitio tiene una calificación deficiente. Requiere optimización urgente según el modelo de Sustainable Web Design.
+						Tu sitio requiere optimización urgente según el modelo Sustainable Web Design.
 					{/if}
 				</p>
 			</div>
@@ -88,9 +88,9 @@
 			</div>
 			<div class="metric-text">
 				<strong class="metric-name">Huella de carbono</strong>
-				<p class="metric-desc">Tu sitio genera {impact.carbonFootprint} de CO₂ por cada visita a tu página.</p>
+				<p class="metric-desc">Tu sitio emite {impact.carbonFootprint} de CO₂ por cada visita.</p>
 			</div>
-			{#if co2Status === 'OPTIMO'}
+			{#if co2Status === 'ÓPTIMO'}
 				<div class="status-label status-success badge-small" style="display: inline-flex; gap: 6px; margin-top: auto;">
 					<IconLeaf width="12" height="12" /> Más limpio que el 66% de la web
 				</div>
@@ -118,8 +118,8 @@
 				<strong class="metric-name">Green Hosting</strong>
 				<p class="metric-desc">
 					{impact.greenHosting 
-						? 'Tu sitio web está alojado en un servidor certificado que consume energía renovable.' 
-						: 'Tu sitio web no está alojado en un servidor certificado que consume energía renovable.'}
+						? 'Tu sitio está alojado en un servidor certificado de energía renovable.' 
+						: 'Tu sitio no está alojado en un servidor de energía renovable certificado.'}
 				</p>
 			</div>
 		</div>
@@ -205,6 +205,7 @@
 		gap: 16px;
 		flex: 1;
 		min-width: 316px;
+		position: relative;
 	}
 
 	.metric-value {

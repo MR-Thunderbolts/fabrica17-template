@@ -24,35 +24,35 @@
 	<div class="metrics-grid">
 		<!-- Velocidad de carga -->
 		<div class="metric-card">
-			<div class="status-label {webCore.loadTimeStatus === 'Optimo' ? 'status-success' : 'status-warning'}">
+			<div class="status-label {webCore.loadTimeStatus === 'Óptimo' ? 'status-success' : 'status-warning'}">
 				{webCore.loadTimeStatus}
 			</div>
 			<h2 class="metric-value">{webCore.loadTime}</h2>
 			<div class="metric-text">
 				<strong class="metric-name">Velocidad de carga</strong>
-				<p class="metric-desc">Qué tan rápido tu sitio muestra contenido al usuario.</p>
+				<p class="metric-desc">¿Qué tan rápido muestra contenido tu sitio al usuario?</p>
 			</div>
 		</div>
 		<!-- Tiempo de respuesta -->
 		<div class="metric-card">
-			<div class="status-label {webCore.responseTimeStatus === 'Optimo' ? 'status-success' : 'status-warning'}">
+			<div class="status-label {webCore.responseTimeStatus === 'Óptimo' ? 'status-success' : 'status-warning'}">
 				{webCore.responseTimeStatus}
 			</div>
 			<h2 class="metric-value">{webCore.responseTime}</h2>
 			<div class="metric-text">
 				<strong class="metric-name">Tiempo de respuesta</strong>
-				<p class="metric-desc">Cuánto tarda tu sitio en estar listo para usarse.</p>
+				<p class="metric-desc">Cuánto tarda el servidor en responder la primera solicitud del navegador.</p>
 			</div>
 		</div>
 		<!-- Estabilidad visual -->
 		<div class="metric-card">
-			<div class="status-label {webCore.visualStabilityStatus === 'Optimo' ? 'status-success' : 'status-warning'}">
+			<div class="status-label {webCore.visualStabilityStatus === 'Óptimo' ? 'status-success' : 'status-warning'}">
 				{webCore.visualStabilityStatus}
 			</div>
 			<h2 class="metric-value">{webCore.visualStability}</h2>
 			<div class="metric-text">
 				<strong class="metric-name">Estabilidad visual</strong>
-				<p class="metric-desc">Qué tanto se mueven los elementos mientras la página carga.</p>
+				<p class="metric-desc">Cuánto se desplazan los elementos de la página mientras carga.</p>
 			</div>
 		</div>
 	</div>

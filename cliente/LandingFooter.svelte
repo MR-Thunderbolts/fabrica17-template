@@ -56,7 +56,7 @@
 
 	/* ── CTA Card ── */
 	.cta-wrapper {
-		padding: var(--section-pad-lg) var(--gutter) var(--section-pad-md);
+		padding: var(--section-pad-lg) var(--gutter) 0;
 		display: flex;
 		justify-content: center;
 	}
@@ -113,6 +113,7 @@
 		font-weight: 700;
 		color: var(--color-white);
 		line-height: 1.15;
+		letter-spacing: -0.01em;
 		margin: 0;
 	}
 
@@ -149,7 +150,7 @@
 
 	/* ── Certifications ── */
 	.cert-section {
-		padding: var(--section-pad-md) var(--gutter);
+		padding: var(--section-pad-md) var(--gutter) 0;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -174,9 +175,10 @@
 
 	.cert-cards {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		justify-content: center;
 		align-items: center;
-		gap: 32px;
+		gap: 64px;
 	}
 
 	/* CO2 Certification Seal (inline SVG) */
@@ -219,7 +221,7 @@
 		flex-direction: column;
 		align-items: center;
 		gap: 16px;
-		padding: var(--section-pad-sm) var(--gutter) 40px;
+		padding: var(--space-16) var(--gutter) 48px;
 		text-align: center;
 	}
 
@@ -261,7 +263,7 @@
 	/* ── Mobile ── */
 	@media (max-width: 768px) {
 		.cta-wrapper {
-			padding: var(--section-pad-sm) var(--gutter);
+			padding: var(--section-pad-sm) var(--gutter) 0;
 		}
 
 		.cta-card {
@@ -282,7 +284,12 @@
 		}
 
 		.cert-section {
-			padding: var(--section-pad-sm) var(--gutter);
+			padding: var(--section-pad-sm) var(--gutter) 0;
+		}
+
+		.cert-cards {
+			flex-direction: column;
+			gap: 32px;
 		}
 
 		.cert-row {
@@ -295,7 +302,7 @@
 		}
 
 		.footer-brand {
-			padding: 40px var(--gutter) 32px;
+			padding: 32px var(--gutter) 32px;
 		}
 	}
 </style>

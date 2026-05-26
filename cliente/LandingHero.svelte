@@ -77,23 +77,23 @@
 
 	.hero-bg-gradient {
 		position: absolute;
-		bottom: -150px;
-		right: -250px;
-		width: 1000px;
-		height: 1000px;
-		background: radial-gradient(circle at center, rgba(135, 78, 203, 0.25) 0%, transparent 60%);
+		bottom: -220px;
+		right: -220px;
+		width: 900px;
+		height: 900px;
+		background: radial-gradient(circle at center, rgba(215, 144, 240, 0.28) 0%, rgba(135, 78, 203, 0.12) 50%, transparent 75%);
 		pointer-events: none;
 		z-index: 0;
-		filter: blur(80px);
+		filter: blur(100px);
 	}
 
 	.hero-bg-logo {
 		position: absolute;
-		top: -100px;
-		right: -250px;
-		width: 1100px;
+		bottom: -200px;
+		right: -200px;
+		width: 850px;
 		height: auto;
-		opacity: 0.2;
+		opacity: 0.18;
 		pointer-events: none;
 		z-index: 0;
 		overflow: hidden;
@@ -101,7 +101,13 @@
 
 	.hero-bg-logo :global(svg) {
 		width: 100%;
-		height: 100%;
+		height: auto;
+		display: block;
+	}
+
+	.hero-bg-logo :global(svg path) {
+		stroke-width: 1.8px;
+		stroke-opacity: 1 !important;
 	}
 
 	.hero-content {
@@ -301,18 +307,22 @@
 		}
 
 		.hero-bg-gradient {
-			width: 600px;
-			height: 600px;
-			right: -200px;
-			bottom: -100px;
-			background: radial-gradient(circle at center, rgba(135, 78, 203, 0.2) 0%, transparent 70%);
+			width: 480px;
+			height: 480px;
+			right: -110px;
+			bottom: -110px;
+			background: radial-gradient(circle at center, rgba(215, 144, 240, 0.24) 0%, rgba(135, 78, 203, 0.1) 50%, transparent 75%);
+			top: auto;
+			transform: none;
 		}
 
 		.hero-bg-logo {
-			width: 600px;
-			right: -150px;
-			top: 50px;
-			opacity: 0.15;
+			width: 480px;
+			right: -110px;
+			bottom: -110px;
+			top: auto;
+			transform: none;
+			opacity: 0.06;
 		}
 	}
 </style>
