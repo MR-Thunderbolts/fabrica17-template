@@ -264,21 +264,23 @@
 	}
 
 	.tag-badge {
+		position: relative;
 		width: 28px;
 		height: 28px;
 		border-radius: 50%;
 		background: var(--color-card-green-1);
 		color: var(--color-surface-base);
-		display: grid;
-		place-items: center;
 		flex-shrink: 0;
-		line-height: 0;
-		font-size: 0;
 	}
 
-	.tag-badge :global(svg) {
+	.tag-badge :global(*) {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 16px;
+		height: 16px;
 		display: block;
-		flex-shrink: 0;
 		margin: 0;
 	}
 
