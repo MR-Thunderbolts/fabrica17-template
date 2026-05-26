@@ -561,7 +561,7 @@
 			gap: var(--space-6);
 		}
 		.top-title {
-			font-size: var(--text-xl);
+			font-size: var(--text-2xl);
 		}
 		.step-title {
 			font-size: var(--text-lg);
