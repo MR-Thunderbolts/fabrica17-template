@@ -170,8 +170,8 @@
 
 	/* Purple themes */
 	.seg-card.purple .seg-card-icon {
-		background: rgba(215, 144, 240, 0.15);
-		color: var(--color-primary);
+		background: var(--color-card-purple);
+		color: var(--color-bg-base);
 	}
 	.seg-card.purple:hover {
 		box-shadow: 0 12px 32px rgba(215, 144, 240, 0.04);
@@ -179,8 +179,8 @@
 
 	/* Yellow themes */
 	.seg-card.yellow .seg-card-icon {
-		background: rgba(253, 241, 211, 0.15);
-		color: var(--color-card-warning);
+		background: var(--color-card-warning);
+		color: var(--color-bg-base);
 	}
 	.seg-card.yellow:hover {
 		box-shadow: 0 12px 32px rgba(253, 241, 211, 0.04);
@@ -188,8 +188,8 @@
 
 	/* Green themes */
 	.seg-card.green .seg-card-icon {
-		background: rgba(214, 244, 122, 0.15);
-		color: var(--color-accent-primary);
+		background: var(--color-card-green-2);
+		color: var(--color-bg-base);
 	}
 	.seg-card.green:hover {
 		box-shadow: 0 12px 32px rgba(214, 244, 122, 0.04);
@@ -197,8 +197,8 @@
 
 	/* Blue/Silver themes */
 	.seg-card.blue .seg-card-icon {
-		background: rgba(224, 231, 255, 0.15);
-		color: var(--color-card-blue);
+		background: var(--color-card-blue-2);
+		color: var(--color-bg-base);
 	}
 	.seg-card.blue:hover {
 		box-shadow: 0 12px 32px rgba(224, 231, 255, 0.04);
