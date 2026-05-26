@@ -52,6 +52,7 @@
 	let isMobile = $state(false);
 	let activeCarouselIndex = $state(0);
 	let unlockTime = 0;
+	let isAnimating = $derived(progress > 0 && progress < 1);
 
 	// Glow index: driven by scroll progress on desktop, snap index on mobile
 	let activeGlowIndex = $derived(
@@ -120,8 +121,14 @@
 			}
 		}
 
+		// Keep font rendering perfectly crisp when card is completely static at rest (translateY is 0, scale is 1)
+		// by using transform: none, which prevents the browser from promoting it to a GPU layer.
+		const transformStr = (translateY === 0 && scale === 1)
+			? 'none'
+			: `translateY(${translateY}%) scale(${scale}) translateZ(${zIndex}px)`;
+
 		return `
-			transform: translateY(${translateY}%) scale(${scale});
+			transform: ${transformStr};
 			opacity: ${opacity};
 			filter: brightness(${brightness});
 			z-index: ${zIndex};
@@ -256,7 +263,7 @@
 		<div class="peek-ghost peek-ghost--far" aria-hidden="true"></div>
 
 		{#each cards as card, i}
-			<div class="stack-card" style={isMobile ? '' : getCardStyle(i)}>
+			<div class="stack-card" class:is-animating={isAnimating} style={isMobile ? '' : getCardStyle(i)}>
 				{#if i === 0}
 					<div class="card-inner-top">
 						<span class="top-pill">{card.pill}</span>
@@ -375,11 +382,16 @@
 		box-shadow:
 			inset 0 1px 0 rgba(255, 255, 255, 0.07),
 			0 4px 24px rgba(0, 0, 0, 0.2);
-		will-change: transform, opacity, filter;
+		will-change: auto;
 		pointer-events: none;
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
+		transform-style: preserve-3d;
+	}
+
+	.stack-card.is-animating {
+		will-change: transform, opacity, filter;
 	}
 
 	/* ── Top Card (Index 0) ──────────────────────────────────────────── */
@@ -434,6 +446,8 @@
 		color: var(--color-white);
 		line-height: 1.15;
 		margin: 0;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 	}
 
 	.top-desc {
@@ -492,6 +506,8 @@
 		color: var(--color-white);
 		line-height: 1.15;
 		margin: 0;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 	}
 
 	.step-subtitle {

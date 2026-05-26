@@ -23,15 +23,16 @@
 
 		<!-- Main heading -->
 		<h1 class="hero-heading">
-			Sitios web que<br>
-			<span class="accent-green">convierten</span> y<br>
+			Sitios web que<br />
+			<span class="accent-green">convierten</span> y<br />
 			cuidan el planeta.
 		</h1>
 
 		<!-- Subtitle -->
 		<p class="hero-subtitle">
-			Creamos experiencias digitales que generan más visitas convertidas en clientes,<br>
-			lo que a vez logra menor impacto ambiental digital.
+			Creamos experiencias digitales que generan más visitas convertidas
+			en clientes,<br />
+			lo que a la vez logra menor impacto ambiental digital.
 		</p>
 
 		<!-- CTA buttons -->
@@ -40,27 +41,33 @@
 				<span>Ir a auditoría gratuita</span>
 				<IconArrowRight width="20" height="20" />
 			</a>
-			<a href="#cotizar" class="btn-outline">
-				Cotizar un sitio web
-			</a>
+			<a href="#cotizar" class="btn-outline"> Cotizar un sitio web </a>
 		</div>
 
 		<!-- Benefit tags -->
 		<div class="hero-tags">
 			<div class="hero-tag-item">
-				<div class="tag-badge"><IconLightning width="16" height="16" /></div>
+				<div class="tag-badge">
+					<IconLightning width="16" height="16" />
+				</div>
 				<span class="tag-label">Más velocidad</span>
 			</div>
 			<div class="hero-tag-item">
-				<div class="tag-badge"><IconHeart width="16" height="16" /></div>
+				<div class="tag-badge">
+					<IconHeart width="16" height="16" />
+				</div>
 				<span class="tag-label">Mejor experiencia</span>
 			</div>
 			<div class="hero-tag-item">
-				<div class="tag-badge"><IconDollar width="16" height="16" /></div>
+				<div class="tag-badge">
+					<IconDollar width="16" height="16" />
+				</div>
 				<span class="tag-label">Más conversión</span>
 			</div>
 			<div class="hero-tag-item">
-				<div class="tag-badge"><IconGlobe width="16" height="16" /></div>
+				<div class="tag-badge">
+					<IconGlobe width="16" height="16" />
+				</div>
 				<span class="tag-label">Menos CO₂ por visita</span>
 			</div>
 		</div>
@@ -70,7 +77,8 @@
 <style>
 	.hero-section {
 		position: relative;
-		padding: calc(var(--section-pad-lg) + 40px) var(--gutter) var(--section-pad-md);
+		padding: calc(var(--section-pad-lg) + 40px) var(--gutter)
+			var(--section-pad-md);
 		width: 100%;
 		scroll-snap-align: start;
 	}
@@ -81,7 +89,12 @@
 		right: -220px;
 		width: 900px;
 		height: 900px;
-		background: radial-gradient(circle at center, rgba(215, 144, 240, 0.28) 0%, rgba(135, 78, 203, 0.12) 50%, transparent 75%);
+		background: radial-gradient(
+			circle at center,
+			rgba(215, 144, 240, 0.28) 0%,
+			rgba(135, 78, 203, 0.12) 50%,
+			transparent 75%
+		);
 		pointer-events: none;
 		z-index: 0;
 		filter: blur(100px);
@@ -197,7 +210,9 @@
 		font-weight: 600;
 		text-decoration: none;
 		box-shadow: 0 0 8px var(--color-primary-glow);
-		transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s var(--ease-out-expo);
+		transition:
+			transform 0.3s var(--ease-out-expo),
+			box-shadow 0.3s var(--ease-out-expo);
 		transform: translateY(0) translateZ(0);
 		will-change: transform;
 		backface-visibility: hidden;
@@ -230,7 +245,9 @@
 		font-weight: 600;
 		text-decoration: none;
 		text-align: center;
-		transition: transform var(--dur-normal) var(--ease-out-expo), border-color var(--dur-fast) var(--ease-out-expo);
+		transition:
+			transform var(--dur-normal) var(--ease-out-expo),
+			border-color var(--dur-fast) var(--ease-out-expo);
 		transform: translateY(0) translateZ(0);
 		will-change: transform;
 		backface-visibility: hidden;
@@ -296,7 +313,8 @@
 	/* ── Mobile ── */
 	@media (max-width: 768px) {
 		.hero-section {
-			padding: calc(var(--section-pad-md) + 48px) var(--gutter) var(--section-pad-sm);
+			padding: calc(var(--section-pad-md) + 48px) var(--gutter)
+				var(--section-pad-sm);
 		}
 
 		.hero-heading {
@@ -319,7 +337,8 @@
 			align-items: stretch;
 		}
 
-		.btn-primary, .btn-outline {
+		.btn-primary,
+		.btn-outline {
 			width: 100%;
 		}
 
@@ -340,7 +359,12 @@
 			height: 480px;
 			right: -110px;
 			bottom: -110px;
-			background: radial-gradient(circle at center, rgba(215, 144, 240, 0.24) 0%, rgba(135, 78, 203, 0.1) 50%, transparent 75%);
+			background: radial-gradient(
+				circle at center,
+				rgba(215, 144, 240, 0.24) 0%,
+				rgba(135, 78, 203, 0.1) 50%,
+				transparent 75%
+			);
 			top: auto;
 			transform: none;
 		}
