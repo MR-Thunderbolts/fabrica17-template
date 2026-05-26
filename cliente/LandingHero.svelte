@@ -273,7 +273,7 @@
 		flex-shrink: 0;
 	}
 
-	.tag-badge :global(*) {
+	.tag-badge > :global(*) {
 		position: absolute;
 		top: 50%;
 		left: 50%;
