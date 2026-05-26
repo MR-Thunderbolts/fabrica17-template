@@ -37,7 +37,7 @@
 
 		<!-- CTA buttons -->
 		<div class="hero-cta-group">
-			<a href="#auditoria" class="btn-primary">
+			<a href="/reporte" class="btn-primary">
 				<span>Ir a auditoría gratuita</span>
 				<IconArrowRight width="20" height="20" />
 			</a>
