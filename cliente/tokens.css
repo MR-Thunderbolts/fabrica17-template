@@ -40,10 +40,15 @@
 
 	/* ── Brand Palette ── */
 	/* Surface */
+	--color-bg-deep:       #0c0f1a;
 	--color-bg-base:       #141827;
 	--color-surface-base:  #191e31;
 	--color-text-secondary:#d4d8e4;
 	--color-accent-primary:#d6f47a;
+
+	/* Glow tokens semánticos reutilizables */
+	--glow-purple:         radial-gradient(ellipse at 50% 40%, rgba(215, 144, 240, 0.08) 0%, transparent 65%);
+	--glow-blue:           radial-gradient(ellipse at 50% 60%, rgba(100, 140, 255, 0.06) 0%, transparent 65%);
 
 	/* Primary (Purple) */
 	--color-primary:       #d790f0;
@@ -108,6 +113,7 @@
 /* ─── OKLCH Palette (progressive enhancement) ────────────── */
 @supports (color: oklch(0.5 0.1 0)) {
 	:root {
+		--color-bg-deep:       oklch(0.12 0.02 265);
 		--color-bg-base:       oklch(0.16 0.025 265);
 		--color-surface-base:  oklch(0.19 0.027 264);
 		--color-text-secondary:oklch(0.87 0.012 265);

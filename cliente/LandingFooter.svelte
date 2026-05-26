@@ -48,14 +48,44 @@
 
 <style>
 	.footer-section {
-		background: var(--color-surface-dark);
+		position: relative;
+		background: var(--color-bg-deep);
 		display: flex;
 		flex-direction: column;
 		width: 100%;
+		overflow: hidden;
+	}
+
+	.footer-section::before {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 1200px;
+		height: 600px;
+		background: radial-gradient(ellipse at center, rgba(215, 144, 240, 0.05) 0%, transparent 70%);
+		pointer-events: none;
+		z-index: 0;
+		filter: blur(50px);
+	}
+
+	.footer-section::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: 600px;
+		height: 400px;
+		background: radial-gradient(circle at 100% 100%, rgba(214, 244, 122, 0.03) 0%, transparent 70%);
+		pointer-events: none;
+		z-index: 0;
 	}
 
 	/* ── CTA Card ── */
 	.cta-wrapper {
+		position: relative;
+		z-index: 1;
 		padding: var(--section-pad-lg) var(--gutter) 0;
 		display: flex;
 		justify-content: center;
@@ -65,7 +95,9 @@
 		position: relative;
 		width: 100%;
 		max-width: 1128px;
-		background: var(--color-surface-base);
+		background: rgba(25, 30, 49, 0.7);
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
 		border-radius: 28px;
 		padding: 64px;
 		display: flex;
@@ -74,6 +106,13 @@
 		text-align: center;
 		overflow: hidden;
 		border: 1px solid rgba(255, 255, 255, 0.08);
+		transition: border-color 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo), transform 0.4s var(--ease-out-expo);
+	}
+
+	.cta-card:hover {
+		border-color: rgba(215, 144, 240, 0.25);
+		box-shadow: 0 12px 36px rgba(215, 144, 240, 0.05);
+		transform: translateY(-2px);
 	}
 
 	.cta-bg-glow {
@@ -150,6 +189,8 @@
 
 	/* ── Certifications ── */
 	.cert-section {
+		position: relative;
+		z-index: 1;
 		padding: var(--section-pad-md) var(--gutter) 0;
 		display: flex;
 		flex-direction: column;
@@ -217,6 +258,8 @@
 
 	/* ── Brand Footer ── */
 	.footer-brand {
+		position: relative;
+		z-index: 1;
 		display: flex;
 		flex-direction: column;
 		align-items: center;

@@ -4,16 +4,17 @@
 	import IconCpu from "~icons/mynaui/microchip";
 	import IconFloppyDisk from "~icons/mynaui/save";
 	import IconLeaf from "~icons/mynaui/leaf";
+	import BadgePill from "./BadgePill.svelte";
 	import { reveal } from "./reveal";
 </script>
 
 <section class="seguridad-section" use:reveal>
 	<div class="seg-container">
 		<div class="seg-heading">
-			<div class="badge-pill">
-				<IconShieldCheck width="16" height="16" />
-				<span>SEGURIDAD</span>
-			</div>
+			<BadgePill color="var(--color-accent-primary)">
+				{#snippet icon()}<IconShieldCheck />{/snippet}
+				SEGURIDAD
+			</BadgePill>
 			<h2 class="seg-title">Tu sitio web protegido y certificado</h2>
 			<p class="seg-subtitle">Implementamos las mejores prácticas de seguridad y rendimiento para que tu sitio funcione sin interrupciones.</p>
 		</div>
@@ -57,14 +58,32 @@
 
 <style>
 	.seguridad-section {
+		position: relative;
 		padding: var(--section-pad-lg) var(--gutter);
-		background: var(--color-surface-base);
+		background: var(--color-bg-deep);
 		display: flex;
 		justify-content: center;
 		width: 100%;
+		overflow: hidden;
+	}
+
+	.seguridad-section::before {
+		content: "";
+		position: absolute;
+		bottom: -200px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 1000px;
+		height: 500px;
+		background: radial-gradient(ellipse at 50% 100%, rgba(214, 244, 122, 0.08) 0%, rgba(100, 140, 255, 0.05) 50%, transparent 75%);
+		pointer-events: none;
+		z-index: 0;
+		filter: blur(40px);
 	}
 
 	.seg-container {
+		position: relative;
+		z-index: 1;
 		display: flex;
 		flex-direction: column;
 		gap: 48px;
@@ -80,29 +99,7 @@
 		max-width: 600px;
 	}
 
-	.badge-pill {
-		display: inline-flex;
-		align-items: center;
-		gap: 6px;
-		padding: 5px 13px;
-		border-radius: var(--radius-lg);
-		background: var(--color-surface-tag);
-		border: 1px solid var(--color-border-card);
-		width: fit-content;
-	}
 
-	.badge-pill :global(svg) {
-		color: var(--color-accent-primary);
-	}
-
-	.badge-pill span {
-		font-family: var(--font-headline);
-		font-size: var(--text-xs);
-		font-weight: 400;
-		color: var(--color-accent-primary);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-	}
 
 	.seg-title {
 		font-family: var(--font-headline);

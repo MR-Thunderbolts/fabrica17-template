@@ -5,6 +5,8 @@
 	import shape3  from "./assets/shape-3.svg?raw";  // arco
 	import shape21 from "./assets/shape-21.svg?raw"; // arch (screenshot 5)
 	import shape22 from "./assets/shape-22.svg?raw"; // quatrefoil (screenshot 6)
+	import BadgePill from "./BadgePill.svelte";
+	import { reveal } from "./reveal";
 
 	// Recolor each SVG: replace hardcoded fill with solid pastel background
 	function recolor(raw: string, bg: string): string {
@@ -23,15 +25,17 @@
 	];
 </script>
 
-<section class="plan-section">
+<section class="plan-section" use:reveal>
 	<div class="plan-bg-glow"></div>
 
 	<div class="plan-container">
 		<div class="plan-heading">
-			<div class="badge-pill">
-				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-				<span>PLAN DE TRABAJO</span>
-			</div>
+			<BadgePill>
+				{#snippet icon()}
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+				{/snippet}
+				PLAN DE TRABAJO
+			</BadgePill>
 			<h2 class="plan-title">6 pasos para transformar tu sitio web</h2>
 			<p class="plan-subtitle">Nuestro proceso está diseñado para entregar resultados medibles en el menor tiempo posible.</p>
 		</div>
@@ -99,28 +103,7 @@
 		text-align: center;
 	}
 
-	.badge-pill {
-		display: inline-flex;
-		align-items: center;
-		gap: 6px;
-		padding: 5px 13px;
-		border-radius: var(--radius-lg);
-		background: var(--color-surface-tag);
-		border: 1px solid var(--color-border-card);
-	}
 
-	.badge-pill svg {
-		color: var(--color-primary);
-	}
-
-	.badge-pill span {
-		font-family: var(--font-headline);
-		font-size: var(--text-xs);
-		font-weight: 400;
-		color: var(--color-primary);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-	}
 
 	.plan-title {
 		font-family: var(--font-headline);

@@ -320,7 +320,7 @@
 	.meto-section {
 		position: relative;
 		width: 100%;
-		background: var(--color-surface-dark);
+		background: var(--color-bg-deep);
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;

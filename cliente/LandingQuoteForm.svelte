@@ -10,7 +10,11 @@
 	import IconEnvelope from "~icons/mynaui/envelope";
 	import IconTelephoneCall from "~icons/mynaui/telephone-call";
 
-	let { isOpen = false, onClose } = $props<{ isOpen: boolean; onClose: () => void }>();
+	let { isOpen = false, onClose, preselectedPlan = null } = $props<{
+		isOpen: boolean;
+		onClose: () => void;
+		preselectedPlan?: string | null;
+	}>();
 
 	let currentStep = $state(1);
 	const totalSteps = 5;
@@ -81,6 +85,16 @@
 			document.body.style.overflow = "";
 			window.removeEventListener("keydown", handleKeydown);
 		};
+	});
+
+	$effect(() => {
+		if (isOpen) {
+			if (preselectedPlan === "landing") {
+				formData.servicio = "onepage";
+			} else if (preselectedPlan === "sitio") {
+				formData.servicio = "medida";
+			}
+		}
 	});
 
 	const serviceOptions = [
@@ -180,6 +194,15 @@
 				{#if currentStep === 1}
 					<div class="step-body" id="modal-title">
 						<div class="step-header">
+							{#if preselectedPlan === 'landing'}
+								<div class="modal-header-badge">
+									<span class="badge-dot"></span> Landing Page · $300.000 CLP
+								</div>
+							{:else if preselectedPlan === 'sitio'}
+								<div class="modal-header-badge custom">
+									<span class="badge-dot"></span> Sitio Web · Cotización personalizada
+								</div>
+							{/if}
 							<h2 class="step-title">¿Qué tipo de sitio necesitas?</h2>
 							<p class="step-subtitle">Selecciona el tipo de proyecto.</p>
 						</div>
@@ -375,6 +398,41 @@
 {/if}
 
 <style>
+	/* ── Header Badge ── */
+	.modal-header-badge {
+		align-self: flex-start;
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 4px 12px;
+		border-radius: var(--radius-full);
+		background: rgba(214, 244, 122, 0.08);
+		border: 1px solid rgba(214, 244, 122, 0.15);
+		color: var(--color-accent-primary);
+		font-family: var(--font-headline);
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.03em;
+		margin-bottom: 8px;
+	}
+
+	.modal-header-badge .badge-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--color-accent-primary);
+	}
+
+	.modal-header-badge.custom {
+		background: rgba(215, 144, 240, 0.08);
+		border: 1px solid rgba(215, 144, 240, 0.15);
+		color: var(--color-primary);
+	}
+
+	.modal-header-badge.custom .badge-dot {
+		background: var(--color-primary);
+	}
+
 	/* ── Backdrop ── */
 	.modal-backdrop {
 		position: fixed;

@@ -13,6 +13,7 @@
 
 	let isQuoteFormOpen = $state(false);
 	let isAuditFormOpen = $state(false);
+	let selectedPlan = $state<string | null>(null);
 
 	function handleGlobalClick(e: MouseEvent) {
 		const target = e.target as HTMLElement;
@@ -21,6 +22,7 @@
 			const href = link.getAttribute('href');
 			if (href === '#cotizar') {
 				e.preventDefault();
+				selectedPlan = link.getAttribute('data-plan') || null;
 				isQuoteFormOpen = true;
 				history.pushState("", document.title, window.location.pathname + window.location.search);
 			} else if (href === '#auditoria') {
@@ -51,7 +53,7 @@
 	<LandingFooter />
 	<span id="cotizar" style="display:none;" aria-hidden="true"></span>
 	<span id="auditoria" style="display:none;" aria-hidden="true"></span>
-	<LandingQuoteForm isOpen={isQuoteFormOpen} onClose={() => isQuoteFormOpen = false} />
+	<LandingQuoteForm isOpen={isQuoteFormOpen} onClose={() => isQuoteFormOpen = false} preselectedPlan={selectedPlan} />
 	<LandingAuditModal isOpen={isAuditFormOpen} onClose={() => isAuditFormOpen = false} />
 </main>
 

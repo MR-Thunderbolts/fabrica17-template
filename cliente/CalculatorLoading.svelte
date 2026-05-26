@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconRefresh from "~icons/mynaui/refresh";
+	import logoCiclo from "./assets/Logo-Ciclo17.svg?raw";
 
 	let { url = "" } = $props<{ url?: string }>();
 
@@ -18,7 +18,7 @@
 			if (stage < stages.length - 1) {
 				stage++;
 			}
-		}, 700);
+		}, 1200); // 1.2s per stage for a smoother, high-quality transition
 		return () => clearInterval(interval);
 	});
 </script>
@@ -28,12 +28,12 @@
 	<div class="loading-content">
 		<div class="spinner-container">
 			<div class="spinner-ring"></div>
-			<div class="spinner-icon">
-				<IconRefresh width="28" height="28" />
+			<div class="spinner-icon logo-center">
+				{@html logoCiclo}
 			</div>
 		</div>
 
-		<h2 class="loading-title">Conectando con tu sitio</h2>
+		<h2 class="loading-title">{stages[stage]}</h2>
 		<p class="loading-hint">Esta acción puede tardar entre 20 a 60 segundos</p>
 
 		<ul class="progress-list">
@@ -95,8 +95,15 @@
 	}
 
 	.spinner-icon {
-		color: var(--color-accent-primary);
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		animation: pulse 2s ease-in-out infinite;
+	}
+
+	.logo-center :global(svg) {
+		height: 28px;
+		width: auto;
 	}
 
 	.loading-title {

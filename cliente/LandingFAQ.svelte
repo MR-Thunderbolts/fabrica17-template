@@ -1,6 +1,7 @@
 <script lang="ts">
 	import IconQuestion from "~icons/mynaui/question-circle";
 	import IconChevronDown from "~icons/mynaui/chevron-down";
+	import BadgePill from "./BadgePill.svelte";
 	import { reveal } from "./reveal";
 
 	const faqs = [
@@ -37,10 +38,10 @@
 <section class="faq-section" use:reveal>
 	<div class="faq-container">
 		<div class="faq-left">
-			<div class="badge-pill">
-				<IconQuestion width="16" height="16" />
-				<span>PREGUNTAS FRECUENTES</span>
-			</div>
+			<BadgePill>
+				{#snippet icon()}<IconQuestion />{/snippet}
+				PREGUNTAS FRECUENTES
+			</BadgePill>
 			<h2 class="faq-title">Resolvamos tus dudas</h2>
 		</div>
 
@@ -89,28 +90,6 @@
 		align-items: flex-start;
 	}
 
-	.badge-pill {
-		display: inline-flex;
-		align-items: center;
-		gap: 6px;
-		padding: 5px 13px;
-		border-radius: var(--radius-lg);
-		background: var(--color-surface-tag);
-		border: 1px solid var(--color-border-card);
-	}
-
-	.badge-pill :global(svg) {
-		color: var(--color-primary);
-	}
-
-	.badge-pill span {
-		font-family: var(--font-headline);
-		font-size: var(--text-xs);
-		font-weight: 400;
-		color: var(--color-primary);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-	}
 
 	.faq-title {
 		font-family: var(--font-headline);
