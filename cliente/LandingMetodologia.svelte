@@ -19,11 +19,11 @@
 		},
 		{
 			stepNumber: "02",
-			pillColor: "var(--color-accent-primary)",
+			pillColor: "var(--color-card-blue-2)",
 			title: "Descubrimiento",
 			subtitle: "INVESTIGACIÓN & ARQUITECTURA",
 			desc: "Con los objetivos de negocio claros, nos enfocamos en entender el mercado, tus clientes, organizamos la información de tu sitio y trazamos la mejor experiencia antes diseñar una pantalla ó tocar un línea de código.",
-			glowColor: "rgba(214, 244, 122, 0.15)"
+			glowColor: "rgba(200, 217, 255, 0.15)"
 		},
 		{
 			stepNumber: "03",
@@ -35,11 +35,11 @@
 		},
 		{
 			stepNumber: "04",
-			pillColor: "var(--color-card-blue-2)",
+			pillColor: "var(--color-accent-primary)",
 			title: "Desarrollo limpio",
 			subtitle: "GREEN CODING",
 			desc: "Codificamos u optimizamos tu sitio, con foco en el rendimiento y la eficiencia. Nuestro stack tecnológico apunta hacia un código eficiente, escalable y liviano que genere resultados y el menor impacto ambiental digital.",
-			glowColor: "rgba(215, 144, 240, 0.20)"
+			glowColor: "rgba(214, 244, 122, 0.15)"
 		}
 	];
 
