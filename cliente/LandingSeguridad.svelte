@@ -141,10 +141,20 @@
 		align-items: flex-start;
 		gap: 16px;
 		transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo), border-color 0.4s var(--ease-out-expo);
+		transform: translateY(0) translateZ(0);
+		will-change: transform;
+		backface-visibility: hidden;
+		transform-style: preserve-3d;
+	}
+
+	.seg-card > :global(*) {
+		will-change: transform;
+		backface-visibility: hidden;
+		transform: translate3d(0, 0, 0);
 	}
 
 	.seg-card:hover {
-		transform: translateY(-4px);
+		transform: translateY(-4px) translateZ(0);
 		border-color: rgba(255, 255, 255, 0.15);
 	}
 

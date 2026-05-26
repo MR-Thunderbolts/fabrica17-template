@@ -112,7 +112,6 @@
 		gap: 24px;
 	}
 
-	/* ── Cards ── */
 	.pain-card {
 		border-radius: var(--radius-lg);
 		padding: 40px;
@@ -121,10 +120,20 @@
 		min-height: 400px;
 		transition: transform 0.4s var(--ease-out-expo);
 		color: #191e31;
+		transform: translateY(0) translateZ(0);
+		will-change: transform;
+		backface-visibility: hidden;
+		transform-style: preserve-3d;
+	}
+
+	.pain-card > :global(*) {
+		will-change: transform;
+		backface-visibility: hidden;
+		transform: translate3d(0, 0, 0);
 	}
 
 	.pain-card:hover {
-		transform: translateY(-4px);
+		transform: translateY(-4px) translateZ(0);
 	}
 
 	.pain-icon {
