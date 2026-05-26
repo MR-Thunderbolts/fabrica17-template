@@ -1,6 +1,6 @@
 <script lang="ts">
 
-	import IconGlobe from "~icons/ph/globe";
+	import IconGlobe from "~icons/mynaui/globe";
 
 	let { url, webCore } = $props<{
 		url: string;

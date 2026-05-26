@@ -45,7 +45,7 @@
 
 ### 4. Icon Strategy
 - Icons are served as discrete, optimized SVGs via `unplugin-icons`.
-- **NEVER** import a full icon package. Import individual icons: `import IconSearch from '~icons/material-symbols/search'`.
+- **NEVER** import a full icon package. Import individual icons: `import IconSearch from '~icons/mynaui/search'`.
 - **NEVER** use icon font CDNs (Font Awesome CDN, etc.).
 
 ### 5. Zero External HTTP Requests (Strict)

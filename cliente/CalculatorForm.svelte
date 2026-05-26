@@ -1,10 +1,10 @@
 <script lang="ts">
-	import IconUser from "~icons/ph/user";
-	import IconMail from "~icons/ph/envelope";
-	import IconPhone from "~icons/ph/phone";
-	import IconGlobe from "~icons/ph/globe";
-	import IconCheck from "~icons/ph/check";
-	import IconArrowLeft from "~icons/ph-bold/arrow-left";
+	import IconUser from "~icons/mynaui/user";
+	import IconMail from "~icons/mynaui/envelope";
+	import IconPhone from "~icons/mynaui/telephone";
+	import IconGlobe from "~icons/mynaui/globe";
+	import IconCheck from "~icons/mynaui/check";
+	import IconArrowLeft from "~icons/mynaui/arrow-left";
 
 	let { onSubmit } = $props<{ onSubmit: (data: { nombre: string; email: string; telefono: string; sitio: string; copiaEmail: boolean }) => void }>();
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import IconInfo from "~icons/ph/info";
-	import IconX from "~icons/ph-bold/x";
+	import IconInfo from "~icons/mynaui/info-circle";
+	import IconX from "~icons/mynaui/x";
 
 	let { title, description, learnMoreUrl, position = "top", absolute = false } = $props<{
 		title: string;

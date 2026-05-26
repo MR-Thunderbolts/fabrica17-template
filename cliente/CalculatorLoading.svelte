@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconRefresh from "~icons/ph/arrows-clockwise";
+	import IconRefresh from "~icons/mynaui/refresh";
 
 	let { url = "" } = $props<{ url?: string }>();
 

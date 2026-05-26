@@ -1,7 +1,7 @@
 <script lang="ts">
-	import IconShootingStar from "~icons/ph/shooting-star";
-	import IconClock from "~icons/ph/clock";
-	import IconRocket from "~icons/ph/rocket-launch";
+	import IconShootingStar from "~icons/mynaui/star";
+	import IconClock from "~icons/mynaui/clock-circle";
+	import IconRocket from "~icons/mynaui/rocket";
 	import { reveal } from "./reveal";
 </script>
 

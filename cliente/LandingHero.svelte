@@ -1,9 +1,9 @@
 <script lang="ts">
-	import IconLightning from "~icons/ph/lightning";
-	import IconHeart from "~icons/ph/heart";
-	import IconDollar from "~icons/ph/currency-dollar";
-	import IconGlobe from "~icons/ph/globe";
-	import IconArrowRight from "~icons/ph-bold/arrow-right";
+	import IconLightning from "~icons/mynaui/lightning";
+	import IconHeart from "~icons/mynaui/heart";
+	import IconDollar from "~icons/mynaui/dollar";
+	import IconGlobe from "~icons/mynaui/globe";
+	import IconArrowRight from "~icons/mynaui/arrow-right";
 	import { reveal } from "./reveal";
 	import logoBg from "./assets/Logo_BG.svg?raw";
 </script>

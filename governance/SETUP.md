@@ -86,9 +86,13 @@ For each gap, the Developer Agent:
 - **Production:** Self-hosted, subsetted WOFF2 in `factory/assets/fonts/`.
 
 ### Icons
-- Use `unplugin-icons` with `@iconify-json/material-symbols`.
-- Import individually: `import IconSearch from '~icons/material-symbols/search'`.
-- **NEVER** import full icon packages.
+- **Default Official Collection:** Use `unplugin-icons` with `@iconify-json/mynaui` (MynaUI Icons). Import individually: `import IconLightning from '~icons/mynaui/lightning'`.
+- **Project Specificity:** Other collections (e.g. `@iconify-json/ph` for Phosphor, `@iconify-json/lucide` for Lucide) are allowed if the client's project specifically requires them.
+- **NEVER** import full icon packages in bundle; always import individually to preserve treeshaking.
+
+#### 👥 Protocolo Interactivo de Inicialización de Iconos (SETUP AGENT)
+Al configurar o inicializar un nuevo proyecto/cliente, el Agente de Setup **deberá formular interactivamente** al usuario la siguiente consulta para alinearse con sus requisitos específicos:
+> *"¿Este proyecto requiere una librería de iconos personalizada o específica? (Si la respuesta es afirmativa, indícame si deseas instalarla mediante un paquete de NPM, un enlace directo o si incluirás manualmente una carpeta con los SVGs en `/src` para configurarla)"*
 
 ### Images
 - WebP/AVIF only.

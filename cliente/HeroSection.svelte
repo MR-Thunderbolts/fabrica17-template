@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconArrowLeft from "~icons/lucide/arrow-left";
+	import IconArrowLeft from "~icons/mynaui/arrow-left";
 
 	let { url, date } = $props<{ url: string; date: string }>();
 </script>

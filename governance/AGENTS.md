@@ -70,9 +70,10 @@ Agents inherit rules in this priority order:
 
 **REGLA MECÁNICA (ALWAYS):** Before writing HTML for a new component, use `list_dir` on `factory/src/lib/components/`. If a compound namespace exists, IMPORT from it. NEVER duplicate.
 
-**REGLA DE ICONOS (STRICT):**
-- ❌ PROHIBIDO: Usar `~icons/mynaui/*`, `~icons/mdi/*` o SVGs inline ad-hoc no autorizados.
-- ✅ OBLIGATORIO: Usar únicamente la colección local Phosphor expuesta como `~icons/ph/<icon>` (para regular), `~icons/ph-bold/<icon>` (para bold/interactivos), `~icons/ph-fill/<icon>` (para estados activos), `~icons/ph-duotone/<icon>` (para decorativos), `~icons/ph-light/<icon>` y `~icons/ph-thin/<icon>`.
+**REGLA DE ICONOS:**
+- ❌ NO RECOMENDADO: Usar SVGs inline ad-hoc no estructurados (dificultan la sustentabilidad y consistencia).
+- ✅ RECOMENDADO: Usar la colección oficial **MynaUI Icons** expuesta como `~icons/mynaui/<icon>`. MynaUI es la librería estándar por defecto de la Fábrica y este proyecto.
+- 💡 FLEXIBILIDAD: Se permite plenamente el uso de otras librerías oficiales (como Phosphor `~icons/ph/*`, Lucide `~icons/lucide/*`, etc.) o colecciones personalizadas cuando los requerimientos específicos del proyecto del cliente lo exijan.
 
 **REGLA DE ENSAMBLAJE (NEVER):** NEVER use Figma Code Connect. Our flow is 100% **Semantic Match**.
 - Figma layer `Navbar.Standard` → `import * as Navbar from '$factory/components/navbar'`

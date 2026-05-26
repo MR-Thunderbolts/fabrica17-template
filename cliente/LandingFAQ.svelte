@@ -1,6 +1,6 @@
 <script lang="ts">
-	import IconQuestion from "~icons/ph/question";
-	import IconChevronDown from "~icons/ph-bold/caret-down";
+	import IconQuestion from "~icons/mynaui/question-circle";
+	import IconChevronDown from "~icons/mynaui/chevron-down";
 	import { reveal } from "./reveal";
 
 	const faqs = [

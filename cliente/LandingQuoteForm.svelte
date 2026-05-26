@@ -1,14 +1,14 @@
 <script lang="ts">
-	import IconX from "~icons/ph-bold/x";
-	import IconArrowLeft from "~icons/ph-bold/arrow-left";
-	import IconBriefcase from "~icons/ph/briefcase";
-	import IconCart from "~icons/ph/shopping-cart";
-	import IconLightning from "~icons/ph/lightning";
-	import IconSwatches from "~icons/ph/palette";
-	import IconFile from "~icons/ph/file";
-	import IconChatDots from "~icons/ph/chat-dots";
-	import IconEnvelope from "~icons/ph/envelope";
-	import IconTelephoneCall from "~icons/ph/phone-call";
+	import IconX from "~icons/mynaui/x";
+	import IconArrowLeft from "~icons/mynaui/arrow-left";
+	import IconBriefcase from "~icons/mynaui/briefcase";
+	import IconCart from "~icons/mynaui/cart";
+	import IconLightning from "~icons/mynaui/lightning";
+	import IconSwatches from "~icons/mynaui/paint";
+	import IconFile from "~icons/mynaui/file";
+	import IconChatDots from "~icons/mynaui/chat";
+	import IconEnvelope from "~icons/mynaui/envelope";
+	import IconTelephoneCall from "~icons/mynaui/telephone-call";
 
 	let { isOpen = false, onClose } = $props<{ isOpen: boolean; onClose: () => void }>();
 

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import IconShieldCheck from "~icons/ph/shield-check";
-	import IconLock from "~icons/ph/lock";
-	import IconCpu from "~icons/ph/cpu";
-	import IconFloppyDisk from "~icons/ph/floppy-disk";
-	import IconLeaf from "~icons/ph/leaf";
+	import IconShieldCheck from "~icons/mynaui/shield-check";
+	import IconLock from "~icons/mynaui/lock";
+	import IconCpu from "~icons/mynaui/microchip";
+	import IconFloppyDisk from "~icons/mynaui/save";
+	import IconLeaf from "~icons/mynaui/leaf";
 	import { reveal } from "./reveal";
 </script>
 

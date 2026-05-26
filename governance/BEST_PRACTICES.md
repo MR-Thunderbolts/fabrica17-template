@@ -59,15 +59,12 @@ This file captures proven patterns extracted from successful audits. The QA Agen
 **Pattern:** Root component uses `setContext()` with a getter for reactive state. Sub-components read via `getContext()`.
 **Why:** Eliminates prop drilling across 5 sub-components. State is always in sync.
 
-### 11. Icon Weight Convention
-**Source:** Sprint 0 Infrastructure Migration (Grade A+)
-**Pattern:** Use specific Phosphor icon weights depending on semantic context:
-- `~icons/ph/<icon>` (Regular) → General UI, supporting texts, normal cards.
-- `~icons/ph-bold/<icon>` (Bold) → Interactive elements, main CTAs, active accordion triggers.
-- `~icons/ph-fill/<icon>` (Fill) → Active/selected states, filled status signals.
-- `~icons/ph-duotone/<icon>` (Duotone) → Decorative backgrounds, illustrative card badges.
-- `~icons/ph-light/<icon>` / `~icons/ph-thin/<icon>` (Light/Thin) → Auxiliary labels, legal/small text.
-**Why:** Unifies the UI weight across components, ensuring a cohesive and professional appearance matching the design system.
+### 11. Icon Library & Style Convention
+**Source:** Sprint 3 Icon Library Simplification (Grade A+)
+**Pattern:** MynaUI Icons (`~icons/mynaui/*`) is established as the default, official icon library for both the factory components and standard client projects. Because MynaUI features highly refined, modern outline vectors with exceptionally consistent weights and rounded stroke caps, separate weight sub-collections (bold, light, thin) are no longer required.
+- **Default imports:** Always import directly from `~icons/mynaui/<icon>`.
+- **Project Specificity:** If the client's project specifications mandate a different collection (e.g. Phosphor `~icons/ph/*`, Lucide `~icons/lucide/*`, or a local custom SVG collection), it is fully permitted to use them to match the project requirements.
+**Why:** Simplifies the design workflow, maintains a sleek and modern cohesive aesthetic, and ensures absolute flexibility for custom client specifications.
 
 ---
 

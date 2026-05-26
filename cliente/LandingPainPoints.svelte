@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { reveal } from "./reveal";
-	import IconRefresh from "~icons/ph/arrows-clockwise";
-	import IconDollar from "~icons/ph/currency-dollar";
-	import IconHeartBroken from "~icons/ph/heart-break";
+	import IconRefresh from "~icons/mynaui/refresh";
+	import IconDollar from "~icons/mynaui/dollar";
+	import IconHeartBroken from "~icons/mynaui/heart-broken";
 </script>
 
 <section class="painpoints-section" use:reveal>

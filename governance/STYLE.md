@@ -76,4 +76,4 @@ import * as Dialog from '$factory/components/dialog';
 - ❌ Inline prop types (must be in `_shared/types.ts`)
 - ❌ Class-based conditional styling (use `data-*` attributes)
 - ❌ Direct `<slot>` usage (use Snippets)
-- ❌ `~icons/mynaui/*` or ad-hoc raw SVGs (must import from `~icons/ph/*` collection)
+- ❌ Ad-hoc raw inline SVGs without a unified library wrapper (must import from the standard `@iconify-json` packages or a configured local asset directory for consistency). MynaUI (`~icons/mynaui/*`) is the default library, but others are allowed as requested by clients.

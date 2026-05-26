@@ -1,7 +1,7 @@
 <script lang="ts">
-	import IconLeaf from "~icons/ph/leaf";
-	import IconServerBroken from "~icons/ph/cloud-x";
-	import IconCheck from "~icons/ph/check-circle";
+	import IconLeaf from "~icons/mynaui/leaf";
+	import IconServerBroken from "~icons/mynaui/cloud-off";
+	import IconCheck from "~icons/mynaui/check-circle";
 	import Tooltip from "./Tooltip.svelte";
 
 	let { url, impact, issues } = $props<{

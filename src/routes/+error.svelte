@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import IconArrowLeft from "~icons/ph-bold/arrow-left";
+	import IconArrowLeft from "~icons/mynaui/arrow-left";
 </script>
 
 <svelte:head>

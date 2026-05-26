@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconGlobe from "~icons/ph/globe";
+	import IconGlobe from "~icons/mynaui/globe";
 	import Tooltip from "./Tooltip.svelte";
 
 	let { url, date, scores } = $props<{

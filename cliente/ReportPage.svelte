@@ -1,6 +1,6 @@
 <script lang="ts">
 	import "./tokens.css";
-	import IconDownload from "~icons/ph/download";
+	import IconDownload from "~icons/mynaui/download";
 
 	import HeroSection from "./HeroSection.svelte";
 	import PerfoDigitalSection from "./PerfoDigitalSection.svelte";
