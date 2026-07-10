@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { navigating } from "$app/stores";
-	import logoCiclo from "./assets/Logo-Ciclo17.svg?raw";
 	import { fade } from "svelte/transition";
+
+	// Logo del cliente como SVG crudo (import con `?raw`). Sin logo, se muestra un pulso neutro.
+	let { logo }: { logo?: string } = $props();
 </script>
 
 {#if $navigating}
@@ -9,7 +11,11 @@
 		<div class="progress-bar"></div>
 		<div class="logo-wrapper">
 			<div class="logo-pulse">
-				{@html logoCiclo}
+				{#if logo}
+					{@html logo}
+				{:else}
+					<div class="logo-fallback"></div>
+				{/if}
 			</div>
 			<div class="loading-text">Cargando experiencia...</div>
 		</div>
@@ -54,6 +60,13 @@
 	.logo-pulse :global(svg) {
 		height: 48px;
 		width: auto;
+	}
+
+	.logo-fallback {
+		width: 48px;
+		height: 48px;
+		border-radius: var(--radius-full, 9999px);
+		background: var(--color-primary);
 	}
 
 	.loading-text {

@@ -1,14 +1,11 @@
-/* ─── Ciclo17 / Calculadora — Design Tokens ─────────────── */
-/* Self-contained: import this file inside any project to get
-   the full Ciclo17 brand system without external dependencies */
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+/* ─── Fábrica Base — Design Tokens (NEUTROS) ─────────────── */
+/* Paleta placeholder sin marca. Reemplazar con los tokens del cliente. */
 
 :root {
-	/* Typography */
-	--font-headline: 'Space Grotesk', sans-serif;
-	--font-body:     'DM Sans', sans-serif;
-	--font-mono:     'Space Mono', monospace;
+	/* Typography — stack de sistema, sin dependencias externas */
+	--font-headline: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--font-body:     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--font-mono:     ui-monospace, 'SF Mono', Menlo, monospace;
 
 	/* ── Type Scale (Major Third 1.25) ── */
 	--text-xs:   clamp(0.7rem, 0.68rem + 0.1vw, 0.75rem);
@@ -32,107 +29,68 @@
 	--section-pad-lg: clamp(72px, 9vw, 96px);
 
 	/* Radius */
-	--radius-sm:   6px;
-	--radius-md:   12px;
-	--radius-lg:   20px;
+	--radius-sm:   7px;
+	--radius-md:   10px;
+	--radius-lg:   16px;
 	--radius-xl:   28px;
 	--radius-full: 9999px;
 
-	/* ── Brand Palette ── */
-	/* Surface */
-	--color-bg-deep:       #0c0f1a;
-	--color-bg-base:       #141827;
-	--color-surface-base:  #191e31;
-	--color-text-secondary:#d4d8e4;
-	--color-accent-primary:#d6f47a;
+	/* ── Paleta Neutra (dark-first, acento violeta placeholder) ── */
+	/* Backgrounds */
+	--color-bg-deep:       #0D0E12;
+	--color-bg-dark:       #14161D;
+	--color-bg-base:       #0D0E12;
+	--color-bg-light:      #F5F5F7;
 
-	/* Glow tokens semánticos reutilizables */
-	--glow-purple:         radial-gradient(ellipse at 50% 40%, rgba(215, 144, 240, 0.08) 0%, transparent 65%);
-	--glow-blue:           radial-gradient(ellipse at 50% 60%, rgba(100, 140, 255, 0.06) 0%, transparent 65%);
+	/* Surfaces */
+	--color-surface-base:  #171922;
+	--color-surface-dark:  #10121A;
 
-	/* Primary (Purple) */
-	--color-primary:       #d790f0;
-	--color-primary-hover: #dfa6f3;
-	--color-primary-glow:  rgba(218, 147, 255, 0.8);
-	--color-on-primary:    #191e31;
+	/* Primary / Accent */
+	--color-primary:       #A78BFA;
+	--color-primary-hover: #C4B0FF;
+	--color-on-primary:    #0D0E12;
+	--color-accent-primary:#818CF8;
+	--color-white:         #FFFFFF;
 
-	/* Card Pastels */
-	--color-card-green-1:  #effbca;
-	--color-card-green-2:  #e6f8af;
-	--color-card-green-3:  #effbca;
-	--color-card-purple:   #f7e9fc;
-	--color-card-warning:  #fdf1d3;
-	--color-card-blue:     #e0e7ff;
-	--color-card-blue-2:   #c8d9ff;  /* Azul periwinkle suave - PRD #002 */
-	--color-card-gray:     #ccd3df;
-	--color-card-salmon:   #fbd8d1;
+	/* Text */
+	--color-text-dark:     #E8EAF2;
+	--color-text-body:     #A9AEC0;
+	--color-text-light:    #FEFFFB;
+	--color-text-muted:    #7C8194;
+	--color-text-primary:  #E8EAF2;
+	--color-text-secondary:#A9AEC0;
 
-	/* Semantic Status — armonizados con el sistema OKLCH del proyecto */
-	/* Success: verde cercano al --color-accent-primary, más saturado para estado */
-	--color-success:       #7de87a;          /* ratio 4.8:1 sobre surface-base ✅ */
-	--color-success-bg:    rgba(125, 232, 122, 0.12);  /* fondo sutil para badges */
-	--color-success-border:rgba(125, 232, 122, 0.28);  /* borde success states */
-	--color-success-glow:  rgba(125, 232, 122, 0.35);  /* glow para iconos/check */
-	--color-on-success:    #0b1f0a;          /* texto oscuro sobre success — AAA */
-	--color-warning:       #f3ba25;
+	/* Borders */
+	--color-border-tag:    rgba(167, 139, 250, 0.35);
+	--color-border-card:   rgba(169, 174, 192, 0.16);
+	--color-border-outline:#3A3E4E;
+
+	/* Semantic Status */
+	--color-success:       #4ADE80;
+	--color-success-glow:  rgba(74, 222, 128, 0.4);
+	--color-success-bg:    rgba(74, 222, 128, 0.12);
+	--color-success-border:rgba(74, 222, 128, 0.28);
+	--color-on-success:    #0D0E12;
+	--color-warning:       #F3BA25;
 	--color-warning-bg:    rgba(195, 149, 30, 0.2);
-	--color-error:         #ff6b6b;
+	--color-error:         #FF6B6B;
 	--color-error-bg:      rgba(220, 53, 69, 0.15);
 
-	/* Surface variants */
-	--color-surface-dark:  #0f121d;
-	--color-border-card:   rgba(255, 255, 255, 0.1);
-	--color-surface-tag:   rgba(255, 255, 255, 0.1);
-
-	/* Text semantic */
-	--color-text-muted:    #969fab;
-	--color-text-primary:  #eef0f6;
-	--color-border-outline: #949dbc;
-
-	/* Tinted white — never use pure #fff */
-	--color-white: #eef0f6;
-
 	/* ── Layout ── */
-	--content-max: 1128px;
-	--gutter: clamp(20px, 5vw, 156px);
+	--content-max: 1132px;
+	--gutter: clamp(20px, 12.5vw, 190px);
 
 	/* ── Motion Tokens ── */
-	/* Easing — exponential curves (Impeccable standard) */
-	--ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);      /* entering */
-	--ease-in-expo:   cubic-bezier(0.7, 0, 0.84, 0);      /* leaving */
-	--ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);      /* state toggles */
+	--ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+	--ease-in-expo:   cubic-bezier(0.7, 0, 0.84, 0);
+	--ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);
 
-	/* Durations (100/300/500 rule) */
-	--dur-instant: 100ms;     /* button press, toggle */
-	--dur-fast:    200ms;     /* hover, tooltip, color */
-	--dur-normal:  300ms;     /* menu, drawer, state */
-	--dur-slow:    500ms;     /* modal, layout change */
-	--dur-enter:   600ms;     /* entrance animation */
-}
-
-/* ─── OKLCH Palette (progressive enhancement) ────────────── */
-@supports (color: oklch(0.5 0.1 0)) {
-	:root {
-		--color-bg-deep:       oklch(0.12 0.02 265);
-		--color-bg-base:       oklch(0.16 0.025 265);
-		--color-surface-base:  oklch(0.19 0.027 264);
-		--color-text-secondary:oklch(0.87 0.012 265);
-		--color-accent-primary:oklch(0.92 0.16 125); /* Calibrated: P3 match for #D6F47A — hue 125 balances yellow-green shift */
-		/* --color-primary and --color-primary-hover intentionally NOT overridden here.
-		   Let the browser map #D790F0 (sRGB) → P3 natively. Any OKLCH override
-		   causes perceptual mismatch vs. the Figma design reference. */
-		--color-on-primary:    oklch(0.19 0.027 264);
-		--color-white:         oklch(0.96 0.008 265);
-		--color-text-muted:    oklch(0.70 0.015 265);
-		--color-text-primary:  oklch(0.96 0.008 265);
-		--color-surface-dark:  oklch(0.13 0.02 265);
-		/* Success — hue 135 (verde saturado, familia del accent) */
-		--color-success:       oklch(0.87 0.18 135);
-		--color-success-bg:    oklch(0.87 0.18 135 / 0.12);
-		--color-success-border:oklch(0.87 0.18 135 / 0.28);
-		--color-success-glow:  oklch(0.87 0.18 135 / 0.35);
-		--color-on-success:    oklch(0.14 0.06 135);
-	}
+	--dur-instant: 100ms;
+	--dur-fast:    200ms;
+	--dur-normal:  300ms;
+	--dur-slow:    500ms;
+	--dur-enter:   600ms;
 }
 
 /* ─── Base Reset ─────────────────────────────────────────── */
@@ -145,33 +103,27 @@ html {
 	-webkit-font-smoothing: antialiased;
 	font-kerning: normal;
 	font-optical-sizing: auto;
-	/* ─── Audit Page Aliases ─────────────────────────────────── */
-	--color-audit-bg:      var(--color-bg-base);       /* #141827 */
-	--color-audit-surface: var(--color-surface-base);  /* #191e31 */
-	--color-audit-fg:      var(--color-text-primary);  /* #eef0f6 */
-	--color-audit-accent:  var(--color-accent-primary);/* #d6f47a */
 }
 
 body {
 	background: var(--color-bg-base);
-	color: var(--color-text-secondary);
+	color: var(--color-text-body);
 	min-height: 100vh;
-	/* Light-on-dark compensation: +0.05 line-height, subtle tracking */
 	line-height: 1.55;
 	letter-spacing: 0.01em;
 }
 
 /* ─── Typography Polish ─────────────────────────────────── */
-h1, h2, h3, h4 { text-wrap: balance; }
+h1, h2, h3, h4 { text-wrap: balance; font-family: var(--font-headline); color: var(--color-text-dark); }
 article p, .prose p { text-wrap: pretty; }
 
 img, video, svg { display: block; max-width: 100%; }
 button { cursor: pointer; font-family: inherit; }
 
-/* Touch & Interaction — §2 tap-delay */
+/* Touch & Interaction */
 button, a, input, select, textarea { touch-action: manipulation; }
 
-/* Accessibility — §1 focus-states */
+/* Accessibility */
 :focus-visible {
 	outline: 2px solid var(--color-primary);
 	outline-offset: 2px;
@@ -179,7 +131,6 @@ button, a, input, select, textarea { touch-action: manipulation; }
 }
 
 /* ─── Scroll Reveal Animations ──────────────────────────── */
-/* Elements start hidden; `.revealed` is added by IntersectionObserver */
 .reveal-fade-up {
 	opacity: 0;
 	transform: translateY(24px);
@@ -193,14 +144,40 @@ button, a, input, select, textarea { touch-action: manipulation; }
 	transform: translateY(0);
 }
 
-/* Stagger children inside a parent that has .stagger-children */
 .stagger-children > .reveal-fade-up:nth-child(1) { transition-delay: 0ms; }
 .stagger-children > .reveal-fade-up:nth-child(2) { transition-delay: 80ms; }
 .stagger-children > .reveal-fade-up:nth-child(3) { transition-delay: 160ms; }
 .stagger-children > .reveal-fade-up:nth-child(4) { transition-delay: 240ms; }
 .stagger-children > .reveal-fade-up:nth-child(5) { transition-delay: 320ms; }
 
-/* Accessibility — §1 reduced-motion */
+/* ─── UX/UI Pro Max Utilities ───────────────────────────── */
+.shadow-elevation-1 {
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+.shadow-elevation-2 {
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+}
+.shadow-elevation-3 {
+	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+@keyframes pulse-skeleton {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.5; }
+}
+
+.skeleton-box {
+	background: linear-gradient(90deg, rgba(200,200,200,0.1) 0%, rgba(200,200,200,0.2) 50%, rgba(200,200,200,0.1) 100%);
+	background-size: 200% 100%;
+	animation: shimmer 2s infinite linear;
+	border-radius: var(--radius-md);
+}
+
+@keyframes shimmer {
+	0% { background-position: -200% 0; }
+	100% { background-position: 200% 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
 	*, *::before, *::after {
 		animation-duration: 0.01ms !important;
@@ -213,4 +190,3 @@ button, a, input, select, textarea { touch-action: manipulation; }
 		transform: none !important;
 	}
 }
-

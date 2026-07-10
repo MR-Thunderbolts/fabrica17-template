@@ -18,11 +18,12 @@
 		class: className,
 		...rest
 	}: WithChild<{
-		type?: 'text' | 'email' | 'password' | 'search' | 'tel' | 'url';
+		type?: 'text' | 'email' | 'password' | 'search' | 'tel' | 'url' | 'number';
 		placeholder?: string;
-		value?: string;
+		value?: string | number;
 		disabled?: boolean;
 		error?: string;
+		required?: boolean;
 	}> = $props();
 
 	const attrs = $derived({
@@ -48,6 +49,7 @@
 			bind:value
 			{disabled}
 			aria-invalid={error ? 'true' : undefined}
+			{...rest}
 		/>
 		{#if error}
 			<span class="input__error">{error}</span>

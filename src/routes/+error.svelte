@@ -25,12 +25,12 @@
 
 <style>
 	:global(.page-error) {
-		background-color: var(--color-audit-bg, #141827) !important;
+		background-color: var(--color-bg-deep) !important;
 		min-height: 100vh;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: var(--color-audit-fg, white) !important;
+		color: var(--color-text-light, white) !important;
 	}
 
 	.container {
@@ -63,23 +63,23 @@
 	}
 
 	.text-accent {
-		color: var(--color-audit-accent, #d6f47a);
+		color: var(--color-primary);
 	}
 
 	.error-desc {
 		font-family: var(--font-body);
 		font-size: 18px;
-		color: #d4d8e4;
+		color: var(--color-text-secondary);
 		margin: 0;
 		line-height: 1.5;
 	}
 
 	.btn-volver {
 		margin-top: 16px;
-		background: var(--color-audit-accent, #d6f47a);
-		color: var(--color-audit-bg, #141827);
+		background: var(--color-primary);
+		color: var(--color-on-primary);
 		border: none;
-		border-radius: 1000px;
+		border-radius: var(--radius-full, 1000px);
 		padding: 16px 32px;
 		font-family: var(--font-headline);
 		font-size: 16px;
@@ -93,6 +93,6 @@
 
 	.btn-volver:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 4px 16px rgba(214, 244, 122, 0.3);
+		box-shadow: 0 4px 16px color-mix(in srgb, var(--color-primary) 30%, transparent);
 	}
 </style>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import "../app.css";
+	import "../../cliente/tokens.css";
 	import type { Snippet } from "svelte";
 	import PageLoadingOverlay from "../../cliente/PageLoadingOverlay.svelte";
 

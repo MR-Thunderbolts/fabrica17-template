@@ -5,7 +5,7 @@
 	import PageLoadingOverlay from "../../cliente/PageLoadingOverlay.svelte";
 	import IconSparkles from "~icons/mynaui/sparkles";
 	import IconRocket from "~icons/mynaui/rocket";
-	import IconLayers from "~icons/mynaui/layers";
+	import IconLayers from "~icons/lucide/layers";
 	import IconArrowRight from "~icons/mynaui/arrow-right";
 	import { onMount } from "svelte";
 
@@ -35,7 +35,7 @@
 
 		<h1 class="title">Diseño de Alto Rendimiento para la Agencia</h1>
 		<p class="subtitle">
-			Esta es la página de inicio del template base. Los archivos específicos de la landing de Ciclo17 se han desacoplado con éxito. Ahora puedes usar este repo para construir experiencias ultra-rápidas en minutos.
+			Esta es la página de inicio del template base. Los archivos específicos del cliente anterior se han desacoplado con éxito. Ahora puedes usar este repo para construir experiencias ultra-rápidas en minutos.
 		</p>
 
 		<div class="cta-group">
@@ -64,16 +64,15 @@
 				</div>
 				<h3 class="card-title">BadgePill & Tooltip</h3>
 				<p class="card-desc">
-					Píldoras y globos informativos accesibles y calibrados con contraste óptimo en OKLCH.
+					Píldoras y globos informativos accesibles y calibrados con contraste óptimo.
 				</p>
-				<div class="demo-box">
-					<Tooltip content="Este es un tooltip interactivo">
-						<BadgePill color="var(--color-accent-primary)">
-							{#snippet children()}
-								<span>Hover para ver Tooltip</span>
-							{/snippet}
-						</BadgePill>
-					</Tooltip>
+				<div class="demo-box" style="gap: 12px;">
+					<BadgePill color="var(--color-accent-primary)">
+						{#snippet children()}
+							<span>Badge con información</span>
+						{/snippet}
+					</BadgePill>
+					<Tooltip title="Información" description="Este es un tooltip interactivo con detalles adicionales." />
 				</div>
 			</div>
 

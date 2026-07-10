@@ -25,16 +25,14 @@ Toda la identidad del cliente reside en el archivo de tokens. **No edites estilo
 1. Abre `cliente/tokens.css`.
 2. Modifica las variables de color del **Brand Palette**:
    - `--color-primary`: El color insignia de tu cliente (ej. un verde menta, naranja, violeta).
-   - `--color-bg-deep`: Color de fondo base para secciones oscuras (ej. `#0c0f1a`).
-   - `--color-bg-base`: Color de fondo intermedio (ej. `#141827`).
-   - `--color-surface-base`: Color para tarjetas y contenedores elevados (ej. `#191e31`).
+   - `--color-bg-deep`: Color de fondo base para secciones oscuras.
+   - `--color-bg-base`: Color de fondo intermedio.
+   - `--color-surface-base`: Color para tarjetas y contenedores elevados.
 3. Modifica las variables tipográficas:
-   - `--font-sans`: Define la tipografía base de marca (ej. `'Inter', sans-serif`).
+   - `--font-headline` y `--font-body`: Define las tipografías de marca (ej. `'Inter', sans-serif`).
 4. Si la marca requiere otras esquinas de botón o bordes:
    - Modifica `--radius-full` o los radios base.
 
-> [!TIP]
-> Si deseas aprovechar las capacidades modernas de renderizado de color, calibra los valores `oklch(...)` en la sección `@supports (color: oklch(...))` al final de `tokens.css`.
 
 ---
 
@@ -69,7 +67,7 @@ Antes de hacer cualquier commit o mandar a producción, ejecuta los verificadore
 
 1. **Chequeo de Integridad de la Fábrica**:
    ```bash
-   bun run check:factory
+   bun governance/integrity_check.ts
    ```
 2. **Chequeo de Tipos de Svelte/TypeScript**:
    ```bash
@@ -80,7 +78,7 @@ Antes de hacer cualquier commit o mandar a producción, ejecuta los verificadore
    bun run build
    ```
 
-Si alguno de estos comandos falla, consulta [governance/ERROR_PATTERNS.md](file:///Users/amarolatoja/Proyectos/Ciclo17/fabrica17/governance/ERROR_PATTERNS.md) para identificar la solución rápida antes de frustrarte.
+Si alguno de estos comandos falla, consulta [governance/ERROR_PATTERNS.md](governance/ERROR_PATTERNS.md) para identificar la solución rápida antes de frustrarte.
 
 ---
 

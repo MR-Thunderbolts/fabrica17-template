@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 const CRITICAL_FILES = [
+	'cliente/tokens.css',
 	'utils/tokens.css',
 	'utils/app.css',
 	'utils/client-brand.css',

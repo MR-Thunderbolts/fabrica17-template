@@ -17,6 +17,7 @@
 		background = 'default',
 		content,
 		sidebar,
+		children,
 		fullWidth = false,
 		class: className,
 		...rest
@@ -34,7 +35,11 @@
 	<div class="container" class:full-width={fullWidth}>
 		<div class="layout-grid" class:has-sidebar={!!sidebar}>
 			<div class="content-area">
-				{@render content()}
+				{#if content}
+					{@render content()}
+				{:else if children}
+					{@render children()}
+				{/if}
 			</div>
 
 			{#if sidebar}

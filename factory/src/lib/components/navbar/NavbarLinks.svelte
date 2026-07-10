@@ -14,7 +14,7 @@
 		variant = 'flat',
 		class: className,
 		...rest
-	}: WithChild<NavbarLinksProps & { variant?: 'flat' | 'pill' }> = $props();
+	}: WithChild<Omit<NavbarLinksProps, 'links'> & { links?: Array<{ label: string; href: string }>; variant?: 'flat' | 'pill' }> = $props();
 
 	const attrs = $derived({
 		...fabricaAttrs('navbar-links', { variant }),
