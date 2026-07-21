@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp *)",
+      "Bash(command -v claude)",
+      "Read(//usr/local/bin/**)",
+      "Bash(gh repo *)",
+      "Bash(bun install *)",
+      "Bash(git add *)"
+    ]
+  }
+}

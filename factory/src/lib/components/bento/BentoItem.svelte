@@ -4,8 +4,15 @@
 	 * @description Individual item within a Bento grid. Supports title, description,
 	 * icon, and custom content via children snippet.
 	 */
-	import type { WithChild, BentoItemProps } from '../_shared/types';
+	import type { WithChild } from '../_shared/types';
 	import { fabricaAttrs } from '../_shared/attrs';
+
+	interface BentoItemProps {
+		class?: string;
+		title?: string;
+		description?: string;
+		icon?: any;
+	}
 
 	let {
 		children,

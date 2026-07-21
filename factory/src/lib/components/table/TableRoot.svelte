@@ -3,8 +3,12 @@
 	 * @component TableRoot
 	 * @description Main card container for the table organism.
 	 */
-	import type { WithChild, TableRootProps } from '../_shared/types';
+	import type { WithChild } from '../_shared/types';
 	import { fabricaAttrs } from '../_shared/attrs';
+
+	interface TableRootProps {
+		class?: string;
+	}
 
 	let {
 		children,
