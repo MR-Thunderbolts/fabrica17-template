@@ -20,19 +20,21 @@
 
 ## 🎨 Paso 2: Personalizar el Branding (Tokens de Diseño)
 
-Toda la identidad del cliente reside en el archivo de tokens. **No edites estilos directamente en los componentes globales.**
+La fábrica arranca en **escala de grises neutra**: el baseline completo (primitivas + semánticos, temas light/dark) vive en `utils/tokens.css` y **no se edita**. Toda la identidad del cliente se inyecta como *overrides* en `cliente/tokens.css`. **No edites estilos directamente en los componentes globales.**
 
-1. Abre `cliente/tokens.css`.
-2. Modifica las variables de color del **Brand Palette**:
-   - `--color-primary`: El color insignia de tu cliente (ej. un verde menta, naranja, violeta).
-   - `--color-bg-deep`: Color de fondo base para secciones oscuras.
-   - `--color-bg-base`: Color de fondo intermedio.
-   - `--color-surface-base`: Color para tarjetas y contenedores elevados.
-3. Modifica las variables tipográficas:
-   - `--font-headline` y `--font-body`: Define las tipografías de marca (ej. `'Inter', sans-serif`).
+1. Abre `cliente/tokens.css` (trae un ejemplo comentado).
+2. Sobreescribe SOLO los tokens semánticos que la marca define, por ejemplo:
+   - `--color-primary` / `--color-primary-hover` / `--color-primary-foreground`: el color insignia de tu cliente y su texto de contraste.
+   - `--color-bg-deep`, `--color-bg-base`, `--color-surface-base`: fondos y superficies, si la marca no es neutra.
+   - `--color-accent-primary`: acento secundario si existe.
+3. Sobreescribe las variables tipográficas:
+   - `--font-headline` y `--font-body`: fuentes de marca **self-hosted** (woff2 subset en `cliente/assets/fonts/`), nunca vía CDN.
 4. Si la marca requiere otras esquinas de botón o bordes:
-   - Modifica `--radius-full` o los radios base.
+   - Sobreescribe `--radius-sm/md/lg/full` según el spec de Figma.
 
+> [!TIP]
+> Para colores de marca saturados, calibra los valores `oklch(...)` siguiendo [governance/OKLCH_CALIBRATION.md](governance/OKLCH_CALIBRATION.md) (los grises del baseline no necesitan calibración).
+> Si tienes `figma-tokens.json` extraído de Figma, `bun run tokens:sync` escribe los tokens mapeados automáticamente dentro del bloque FIGMA SYNC de `cliente/tokens.css`.
 
 ---
 
@@ -65,15 +67,11 @@ Esta es la separación de responsabilidades que debes mantener:
 
 Antes de hacer cualquier commit o mandar a producción, ejecuta los verificadores automáticos:
 
-1. **Chequeo de Integridad de la Fábrica**:
-   ```bash
-   bun governance/integrity_check.ts
-   ```
-2. **Chequeo de Tipos de Svelte/TypeScript**:
+1. **Chequeo completo** (tipos Svelte/TS + gates de arquitectura + paridad de tokens):
    ```bash
    bun run check
    ```
-3. **Build de Producción Estático**:
+2. **Build de Producción Estático**:
    ```bash
    bun run build
    ```
@@ -86,4 +84,4 @@ Si alguno de estos comandos falla, consulta [governance/ERROR_PATTERNS.md](gover
 
 * **Cero Placeholders**: Todos los elementos interactivos deben tener estados de carga (`SkeletonCard`, overlays o micro-animaciones).
 * **Consistencia Extrema**: Los botones deben usar consistentemente `var(--radius-full)` o el radio de marca acordado. Nunca uses píxeles fijos como `border-radius: 12px` de forma ad-hoc.
-* **Glow Premium**: Si implementas fondos con gradientes de brillo (glow effects), hazlo con los tokens `--glow-purple` y `--glow-blue` definidos semánticamente para mantener armonía visual.
+* **Efectos Semánticos**: Si implementas fondos con gradientes de brillo (glow effects), defínelos como tokens semánticos en `cliente/tokens.css` (ej. `--glow-primary`) — nunca gradientes ad-hoc repetidos por componente.

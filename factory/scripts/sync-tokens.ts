@@ -2,13 +2,21 @@
  * @script sync-tokens.ts
  * @description Ingestor automático de tokens de diseño desde Figma JSON a CSS Variables.
  * Elimina el error humano en la transferencia de identidad visual.
+ *
+ * Escribe SOLO dentro del bloque delimitado de cliente/tokens.css
+ * (entre FIGMA SYNC START y FIGMA SYNC END), preservando los
+ * overrides manuales del cliente fuera del bloque.
  */
 
 import { writeFileSync, readFileSync } from 'fs';
 import { join } from 'path';
+import { FIGMA_TO_CSS, normalizeValue } from './token-mapping.ts';
 
 const FIGMA_JSON_PATH = join(process.cwd(), 'figma-tokens.json');
-const BRAND_CSS_PATH = join(process.cwd(), 'utils', 'client-brand.css');
+const BRAND_CSS_PATH = join(process.cwd(), 'cliente', 'tokens.css');
+
+const SYNC_START = '/* ── FIGMA SYNC START (autogenerado — no editar este bloque) ── */';
+const SYNC_END = '/* ── FIGMA SYNC END ── */';
 
 interface FigmaVariables {
 	[key: string]: string;
@@ -16,47 +24,36 @@ interface FigmaVariables {
 
 function sync() {
 	try {
-		console.log("🚀 Iniciando sincronización de tokens...");
-		
+		console.log('🚀 Iniciando sincronización de tokens...');
+
 		const rawData = readFileSync(FIGMA_JSON_PATH, 'utf-8');
 		const tokens: FigmaVariables = JSON.parse(rawData);
 
-		// Mapeo Inteligente (Figma Name -> CSS Variable)
-		const mapping: Record<string, string> = {
-			'general/primary': '--color-primary',
-			'general/primary-foreground': '--color-primary-foreground',
-			'general/secondary': '--color-secondary',
-			'general/background': '--color-neutral-bg',
-			'general/foreground': '--color-text-primary',
-			'general/muted-foreground': '--color-text-muted',
-			'general/border': '--color-border-light',
-			'font definitions/font-family-body': '--font-body',
-			'rounded-lg': '--radius-md'
-		};
-
-		let cssContent = `/* ── AUTOGENERADO: NO EDITAR MANUALMENTE ── */\n:root {\n`;
-
-		for (const [figmaName, cssVar] of Object.entries(mapping)) {
+		// Mapeo compartido con verify-tokens.ts (fuente única: token-mapping.ts)
+		let block = `${SYNC_START}\n:root {\n`;
+		for (const [figmaName, cssVar] of Object.entries(FIGMA_TO_CSS)) {
 			if (tokens[figmaName]) {
-				let value = tokens[figmaName];
-				// Añadir 'px' si es un número puro como el radius
-				if (!isNaN(Number(value)) && cssVar.includes('radius')) {
-					value = `${value}px`;
-				}
-				cssContent += `	${cssVar}: ${value};\n`;
+				block += `\t${cssVar}: ${normalizeValue(cssVar, tokens[figmaName])};\n`;
 			}
 		}
+		block += `}\n${SYNC_END}`;
 
-		cssContent += `\n	/* Fallbacks y derivados automáticos */\n`;
-		cssContent += `	--button-radius: var(--radius-md);\n`;
-		cssContent += `	--font-headline: var(--font-body);\n`;
-		cssContent += `}\n`;
+		const css = readFileSync(BRAND_CSS_PATH, 'utf-8');
+		const startIdx = css.indexOf(SYNC_START);
+		const endIdx = css.indexOf(SYNC_END);
 
-		writeFileSync(BRAND_CSS_PATH, cssContent);
-		console.log("✅ client-brand.css actualizado con éxito desde Figma.");
+		let updated: string;
+		if (startIdx !== -1 && endIdx !== -1 && endIdx > startIdx) {
+			updated = css.slice(0, startIdx) + block + css.slice(endIdx + SYNC_END.length);
+		} else {
+			// Sin marcadores: anexar el bloque al final del archivo.
+			updated = `${css.trimEnd()}\n\n${block}\n`;
+		}
 
+		writeFileSync(BRAND_CSS_PATH, updated);
+		console.log('✅ cliente/tokens.css actualizado con éxito desde Figma.');
 	} catch (error) {
-		console.error("❌ Error en la sincronización:", error.message);
+		console.error('❌ Error en la sincronización:', (error as Error).message);
 		console.log("💡 Tip: Asegúrate de tener un archivo 'figma-tokens.json' en la raíz.");
 	}
 }

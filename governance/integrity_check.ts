@@ -2,10 +2,9 @@ import fs from 'fs';
 import path from 'path';
 
 const CRITICAL_FILES = [
-	'cliente/tokens.css',
 	'utils/tokens.css',
 	'utils/app.css',
-	'utils/client-brand.css',
+	'cliente/tokens.css',
 	'factory/src/lib/components/index.ts',
 	'factory/src/lib/components/_shared/types.ts',
 	'src/app.css'

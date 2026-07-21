@@ -70,7 +70,7 @@
 		color: var(--color-text-primary);
 	}
 	:global([data-bg="warm"]), :global([data-bg="muted"]) {
-		background: var(--color-neutral-warm, var(--color-neutral-bg));
+		background: var(--color-surface-muted, var(--color-neutral-bg));
 		color: var(--color-text-primary);
 	}
 	:global([data-bg="primary"]) {

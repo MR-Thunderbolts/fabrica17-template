@@ -107,3 +107,66 @@ Este archivo es el registro de lecciones aprendidas convertidas en patrones de f
 - Antes de escribir cualquier estilo en un componente nuevo, revisar la biblioteca de componentes y los tokens existentes. Si existe un patrón (`btn-primary`, `badge-pill`, etc.), usarlo directamente.
 - Al completar un componente nuevo, hacer un **visual audit** comparando el elemento en el navegador con los demás componentes equivalentes ya implementados en la misma página.
 - Los valores de forma (radius), color, tipografía y espaciado **nunca deben ser literales** en los archivos de componentes — siempre deben referenciar un token del sistema de diseño (`var(--radius-full)`, `var(--color-primary)`, etc.).
+- Los estados interactivos comunes (`:disabled`, `:hover`, `:active`) para elementos estandarizados (botones, inputs) deben heredarse de las clases globales (`.btn`, `.input-field`) y **no redeclararse aislados** en cada componente (evita drift tipo `rgba(...,0.12)` vs `0.14` entre componentes hermanos).
+
+---
+
+## 11. THE "MODAL BYPASS / ROUTE DRIFT" ERROR
+**Categoría**: Arquitectura de Conversión / Ruteo  
+**Síntoma**: Un CTA que debería abrir un modal (captura de leads, formulario) redirige a una ruta estática inexistente o lanza un 404, rompiendo el flujo.  
+**Causa raíz**: Cambiar el anclaje declarativo (`href="#auditoria"`) por una ruta URL dura (`href="/reporte"`), o dejar enlaces apuntando a rutas físicas transitorias que luego se dan de baja en el refinamiento.  
+**Failsafe Universal**:
+- Los elementos que disparan modales deben usar identificadores de anclaje (`href="#slug"`) y confiar en el manejador declarativo de clics (`e.preventDefault()`), no rutas físicas.
+- Al dar de baja una ruta física, realizar siempre un `grep` global de su URL en todo el proyecto para eliminar enlaces huérfanos antes de cerrar el cambio.
+
+---
+
+## 12. THE "MOBILE INDICATOR OVERLAP" ERROR
+**Categoría**: Layout / CSS / Mobile  
+**Síntoma**: Indicadores de carrusel (dots) u otros elementos flotantes fijos/absolutos se enciman o tocan los bordes de las tarjetas en resoluciones móviles pequeñas.  
+**Causa raíz**: Sobreescribir el ancho de una tarjeta con valores absolutos o `100%` en media queries específicas (`@media (max-width: 480px)`), eludiendo un `width: calc(100% - 24px)` previo que reservaba espacio para los indicadores laterales.  
+**Failsafe Universal**:
+- Respetar el espacio de elementos flotantes/absolutos laterales en **todas** las resoluciones móviles.
+- Si un componente móvil usa indicadores o controles laterales, declarar su ancho de forma relativa (`calc(100% - margin_seguro)`).
+- Evitar `width: 100%` en elementos que conviven con controles en la misma fila horizontal salvo que estén en capas separadas.
+
+---
+
+## 13. THE "MEDIA QUERY LISTENER TYPEERROR" ERROR
+**Categoría**: Compatibilidad / JavaScript / Mobile  
+**Síntoma**: La app crashea en móvil (error 500 de SvelteKit / fallo de hidratación) mientras en desktop funciona perfecto. Frecuente al abrir el sitio desde webviews empotrados (WhatsApp, Instagram) o iOS/Safari antiguos.  
+**Causa raíz**: Usar `mq.addEventListener('change', cb)` sobre un `MediaQueryList` de `window.matchMedia`. En motores móviles antiguos o webviews, ese objeto no hereda de `EventTarget` y carece de `.addEventListener`, lanzando un `TypeError` fatal que detiene la hidratación de Svelte.  
+**Failsafe Universal**:
+- Al añadir/remover listeners a un `MediaQueryList`, usar siempre comprobación de soporte con fallback a `addListener`/`removeListener`:
+  ```javascript
+  const mq = window.matchMedia('(max-width: 768px)');
+  if (mq.addEventListener) mq.addEventListener('change', callback);
+  else if (mq.addListener) mq.addListener(callback); // legacy webviews
+
+  // cleanup
+  if (mq.removeEventListener) mq.removeEventListener('change', callback);
+  else if (mq.removeListener) mq.removeListener(callback);
+  ```
+
+---
+
+## 14. THE "FIGMA SVG EXPORT DISTORTION" ERROR
+**Categoría**: Assets / Cross-Browser / Iconografía
+**Síntoma**: Un logo o ícono SVG exportado de Figma se ve estirado o aplastado (aspect-ratio roto) en Chrome/Brave, pero se ve bien en Safari/Firefox — o viceversa.
+**Causa raíz**: Figma exporta SVGs con `preserveAspectRatio="none"` combinado con `width="100%" height="100%"`. Cuando ese SVG se usa como `<img>` con una sola dimensión CSS fija (ej. `h-7 w-auto` / `height: 28px; width: auto;`), los motores Chromium ignoran el `viewBox` para calcular la dimensión libre y el SVG se distorsiona; Safari/Firefox lo resuelven bien. Ni `bun run check` ni `bun run build` lo detectan — es un bug puramente visual y cross-browser.
+**Failsafe Universal**:
+- Gate automatizado: `architecture-check.ts` (Gate 6) advierte sobre cualquier `.svg` en `cliente/` o `factory/` con `preserveAspectRatio="none"` + `100%`/`100%`. Revisar la advertencia antes de usar el asset con una sola dimensión fija.
+- Chequeo manual rápido: `grep -rl 'preserveAspectRatio="none"' cliente/assets/`.
+- Al incorporar un logo/ícono nuevo de Figma, abrirlo y comparar visualmente en al menos dos motores (Chromium + WebKit) antes de darlo por terminado — no alcanza con verlo en un solo navegador.
+- Este es un caso particular de una familia más amplia de bugs: los SVG exportados de Figma pueden traer metadata (aspect-ratio, contenido incorrecto por error de export) que rompe el uso fuera de Figma sin que ningún build lo detecte. Ver también el "GHOST TOKEN" (#3) para la misma lógica aplicada a tokens en vez de assets.
+
+---
+
+## 15. THE "SILENT DRIFT" ERROR
+**Categoría**: Design System / Arquitectura Multi-Agente
+**Síntoma**: Un componente de `factory/` existe y en teoría cubre un caso, pero el ensamblaje real de un cliente lo ignora y resuelve el caso con HTML/CSS inline o un override local — sin que quede registro de por qué.
+**Causa raíz**: La abstracción (`factory/`) y la implementación real se desincronizan con el tiempo porque nada obliga a registrar cuándo un agente decide no usar (o extender con un override) un componente compartido. Con el tiempo, la fábrica queda como "capa de papel" que nadie mantiene al día con lo que realmente corre en producción.
+**Failsafe Universal**:
+- Toda vez que esto ocurra, registrar la entrada en `DRIFT_LOG.md` el mismo día (ver formato ahí). Ver también la regla "Variante-antes-que-Override" en `AGENTS.md`.
+- 2ª ocurrencia sobre el mismo componente/patrón → deja de ser aceptable como override; se propone la variante de factory que lo resuelve (Tier 2 — diff + CONFIRM humano).
+- QA debe revisar `DRIFT_LOG.md` como parte del cierre de sprint, no solo `bun run check`.

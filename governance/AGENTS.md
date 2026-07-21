@@ -64,16 +64,27 @@ Agents inherit rules in this priority order:
 ### Client Setup Skill
 👉 **[SETUP.md](./SETUP.md)** — Scaffolding & assembly protocols.
 
+### Brief Contract Format
+👉 **[BRIEF_PROTOCOL.md](./BRIEF_PROTOCOL.md)** — How to write a verifiable brief, run it in batch, and log ambiguities.
+
+### Drift Registry
+👉 **[DRIFT_LOG.md](./DRIFT_LOG.md)** — Where factory ↔ implementation desyncs get logged instead of disappearing silently.
+
+### Color Protocol
+👉 **[OKLCH_CALIBRATION.md](./OKLCH_CALIBRATION.md)** — Hex-as-source-of-truth rule + P3 calibration.
+
 ---
 
 ## Quality Gates (STRICT)
 
 **REGLA MECÁNICA (ALWAYS):** Before writing HTML for a new component, use `list_dir` on `factory/src/lib/components/`. If a compound namespace exists, IMPORT from it. NEVER duplicate.
 
+**REGLA DE VARIANTE-ANTES-QUE-OVERRIDE (ALWAYS):** Si un componente de `factory/` casi cubre el caso pero no del todo, la respuesta correcta es agregarle una variante (prop, slot, data-attribute), NUNCA envolverlo en CSS/HTML local ad-hoc ni bifurcarlo copiando su código en `cliente/`. Toda vez que esto ocurra igual (por deadline, por alcance de la sesión, etc.), es **obligatorio** registrar la entrada en `DRIFT_LOG.md` el mismo día — ver ese archivo para el formato y el umbral de curación. Un override que no se registra es exactamente el modo en que la fábrica quedó como "capa de papel" en el pasado (ver `FABRICA_STATE_PLAYBOOK.md` §7).
+
 **REGLA DE ICONOS:**
 - ❌ NO RECOMENDADO: Usar SVGs inline ad-hoc no estructurados (dificultan la sustentabilidad y consistencia).
-- ✅ RECOMENDADO: Usar la colección oficial **MynaUI Icons** expuesta como `~icons/mynaui/<icon>`. MynaUI es la librería estándar por defecto de la Fábrica y este proyecto.
-- 💡 FLEXIBILIDAD: Se permite plenamente el uso de otras librerías oficiales (como Phosphor `~icons/ph/*`, Lucide `~icons/lucide/*`, etc.) o colecciones personalizadas cuando los requerimientos específicos del proyecto del cliente lo exijan.
+- ✅ RECOMENDADO: Usar las colecciones oficiales vía npm (`@iconify-json/*` + unplugin-icons): **MynaUI** `~icons/mynaui/<icon>` (estándar por defecto), **Lucide** `~icons/lucide/<icon>` y **Material Symbols** `~icons/material-symbols/<icon>`.
+- 💡 FLEXIBILIDAD: Se permite plenamente el uso de otras colecciones Iconify (como Phosphor `~icons/ph/*`) cuando los requerimientos específicos del proyecto del cliente lo exijan. No se versionan SVGs de colecciones en el repo: los iconos llegan por npm.
 
 **REGLA DE ENSAMBLAJE (NEVER):** NEVER use Figma Code Connect. Our flow is 100% **Semantic Match**.
 - Figma layer `Navbar.Standard` → `import * as Navbar from '$factory/components/navbar'`

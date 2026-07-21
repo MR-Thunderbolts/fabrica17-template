@@ -74,7 +74,7 @@
 		font-size: var(--text-base, 16px);
 		line-height: 1.5;
 		transition: border-color 0.2s;
-		border-radius: var(--radius-base, 0);
+		border-radius: var(--radius-md, 0);
 	}
 
 	.input__field::placeholder {
@@ -87,12 +87,12 @@
 	}
 
 	[data-error="true"] .input__field {
-		border-color: var(--color-error, #ef4444);
+		border-color: var(--color-danger, #ef4444);
 	}
 
 	.input__error {
 		font-size: var(--text-xs, 12px);
-		color: var(--color-error, #ef4444);
+		color: var(--color-danger, #ef4444);
 	}
 
 	.input__field:disabled {

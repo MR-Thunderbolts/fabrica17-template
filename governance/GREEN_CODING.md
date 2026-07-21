@@ -63,7 +63,7 @@ Theming MUST NOT depend on JavaScript runtime evaluation.
 ```css
 /* ✅ CORRECT — Pure CSS cascade */
 :root {
-  --color-primary: #171717;  /* Overridden by client-brand.css */
+  --color-primary: #171717;  /* Overridden by cliente/tokens.css */
 }
 
 .button { background: var(--color-primary); }

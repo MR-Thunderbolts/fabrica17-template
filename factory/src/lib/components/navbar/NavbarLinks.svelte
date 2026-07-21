@@ -62,7 +62,7 @@
 
 	/* Variant: Pill (Legacy/Optional) */
 	[data-variant="pill"] {
-		background: var(--color-neutral-warm, rgba(0,0,0,0.05));
+		background: var(--color-surface-muted, rgba(0,0,0,0.05));
 		padding: 4px;
 		border-radius: 100px;
 		border: 1px solid var(--color-border-light);

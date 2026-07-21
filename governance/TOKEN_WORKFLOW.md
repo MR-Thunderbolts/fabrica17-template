@@ -14,13 +14,13 @@ Copy and paste this prompt when you want the AI to verify tokens:
 >    - Font families
 > 4. If mismatches exist:
 >    - Update `figma-tokens.json`.
->    - Run `bun run scripts/sync-tokens.ts`.
+>    - Run `bun run factory/scripts/sync-tokens.ts`.
 >    - Report exactly what changed.
 
 ## 2. Automated Validation Script
 We can use a script to automate the comparison if the JSON structure becomes complex.
 
-### `scripts/verify-tokens.ts` (Planned)
+### `factory/scripts/verify-tokens.ts` (Planned)
 ```typescript
 // Proposed logic:
 // 1. Fetch live variables via MCP Tool (simulated or direct API)
@@ -30,7 +30,7 @@ We can use a script to automate the comparison if the JSON structure becomes com
 
 ## 3. Best Practices
 - **Atomic Selection**: Always select the **Root Frame** of a screen or the **Local Variables** panel in Figma before running the check.
-- **CamelCase Mapping**: Ensure Figma variable names are mapped correctly in `scripts/sync-tokens.ts`.
+- **CamelCase Mapping**: Ensure Figma variable names are mapped correctly in `factory/scripts/sync-tokens.ts`.
 - **Green Coding Check**: Verify that new tokens don't introduce heavy external assets (like new font weights).
 
 ## 4. Current Token Map

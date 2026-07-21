@@ -10,13 +10,11 @@
 <main class="page-error">
 	<div class="container">
 		<h1 class="error-code">{$page.status}</h1>
-		<h2 class="error-title">
-			<span class="text-accent">Algo salió mal</span>
-		</h2>
+		<h2 class="error-title">Algo salió mal</h2>
 		<p class="error-desc">
 			{$page.error?.message || "Lo sentimos, ha ocurrido un error interno en el servidor."}
 		</p>
-		
+
 		<button type="button" class="btn-volver" onclick={() => history.back()}>
 			<IconArrowLeft width="16" height="16" /> Volver atrás
 		</button>
@@ -24,13 +22,13 @@
 </main>
 
 <style>
-	:global(.page-error) {
-		background-color: var(--color-bg-deep) !important;
+	.page-error {
+		background-color: var(--color-neutral-bg);
 		min-height: 100vh;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: var(--color-text-light, white) !important;
+		color: var(--color-text-body);
 	}
 
 	.container {
@@ -38,16 +36,16 @@
 		flex-direction: column;
 		align-items: center;
 		text-align: center;
-		gap: 24px;
+		gap: var(--space-6);
 		max-width: 600px;
-		padding: 0 24px;
+		padding: 0 var(--space-6);
 	}
 
 	.error-code {
 		font-family: var(--font-headline);
 		font-size: 160px;
 		font-weight: 800;
-		color: rgba(255, 255, 255, 0.05);
+		color: var(--color-surface-dark);
 		margin: 0;
 		line-height: 1;
 		letter-spacing: -4px;
@@ -55,44 +53,40 @@
 
 	.error-title {
 		font-family: var(--font-headline);
-		font-size: 40px;
+		font-size: var(--text-2xl);
 		font-weight: 700;
-		color: white;
+		color: var(--color-text-heading);
 		margin: 0;
 		letter-spacing: -1px;
 	}
 
-	.text-accent {
-		color: var(--color-primary);
-	}
-
 	.error-desc {
 		font-family: var(--font-body);
-		font-size: 18px;
+		font-size: var(--text-md);
 		color: var(--color-text-secondary);
 		margin: 0;
 		line-height: 1.5;
 	}
 
 	.btn-volver {
-		margin-top: 16px;
+		margin-top: var(--space-4);
 		background: var(--color-primary);
-		color: var(--color-on-primary);
+		color: var(--color-primary-foreground);
 		border: none;
-		border-radius: var(--radius-full, 1000px);
-		padding: 16px 32px;
+		border-radius: var(--radius-full);
+		padding: var(--space-4) var(--space-8);
 		font-family: var(--font-headline);
-		font-size: 16px;
+		font-size: var(--text-base);
 		font-weight: 700;
 		display: flex;
 		align-items: center;
-		gap: 12px;
+		gap: var(--space-3);
 		cursor: pointer;
-		transition: transform 0.2s ease, box-shadow 0.2s ease;
+		transition: transform var(--dur-fast) var(--ease-in-out), box-shadow var(--dur-fast) var(--ease-in-out);
 	}
 
 	.btn-volver:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 4px 16px color-mix(in srgb, var(--color-primary) 30%, transparent);
+		box-shadow: var(--shadow-md);
 	}
 </style>

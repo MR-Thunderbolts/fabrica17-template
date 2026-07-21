@@ -4,6 +4,17 @@
 
 ---
 
+## 🔒 Regla de Autoría: Hex es la fuente de verdad, OKLCH es fallback/enhancement
+
+> Confirmado por el equipo (2026-07-20): **Figma no maneja valores OKLCH.** Los diseñadores trabajan y exportan en hex/sRGB, y `figma-tokens.json` (vía `get_variable_defs`) solo entrega hex. Por lo tanto:
+
+1. **Todo token de color se autora primero en hex**, en `:root` (`utils/tokens.css` para el baseline, `cliente/tokens.css` para overrides de marca). Este es el valor que `tokens:sync` escribe desde Figma y el que corre por defecto en cualquier navegador.
+2. **OKLCH nunca es el valor primario/único de un token.** Solo se agrega como segunda capa dentro de un bloque `@supports (color: oklch(...))` que sobreescribe el hex en navegadores compatibles con P3. Si un agente escribe `--color-x: oklch(...)` como única declaración de un token (fuera de `@supports`), es una violación de esta regla — no hay forma de sincronizarlo de vuelta con Figma.
+3. **Lectura correcta de "fallback":** el hex en `:root` es el fallback real (lo que ve cualquier navegador sin soporte P3, y lo que coincide 1:1 con el Figma-spec); el bloque `@supports` es la mejora progresiva opcional. No al revés.
+4. Consecuencia práctica: **ante cualquier duda o falta de tiempo para calibrar, es válido no definir el override OKLCH de un token** (dejar que el navegador use el hex) — nunca al revés (nunca dejar un token solo en OKLCH sin su hex base). Ver la tabla de la sección siguiente: los tokens `--color-primary` y `--color-primary-hover` del caso trabajado deliberadamente NO tienen entrada en `@supports` por esta misma razón.
+
+---
+
 ## El Problema
 
 ```
@@ -28,13 +39,17 @@ En pantallas P3, la chroma OKLCH se amplifica. Para que el color *se vea igual* 
 
 ---
 
-## Tabla de Tokens Calibrados (Ciclo17)
+## Baseline de la Fábrica: sin calibración necesaria
+
+El baseline de `utils/tokens.css` es **acromático** (`oklch(L 0 0)`, chroma 0): los grises no sufren amplificación P3, por lo que el bloque `@supports` del baseline usa conversión directa sin ajustes. **La calibración aplica cuando se inyecta la marca del cliente** (`cliente/tokens.css`) con colores saturados.
+
+### Ejemplo trabajado (caso real de un proyecto de cliente)
 
 | Token | Hex (sRGB base) | Estrategia OKLCH | Nota |
 |---|---|---|---|
-| `--color-audit-accent` | `#D6F47A` | `oklch(0.92 0.16 125)` ← definido | Requería ajuste: la conversión directa (~0.15 H115) daba verde amarillento. Hue corregido a 125. |
-| `--color-primary` | `#D790F0` | **No definido en `@supports`** | El browser hace mapeo sRGB→P3 nativo que coincide con Figma. Cualquier valor OKLCH resulta en mismatch perceptual. |
-| `--color-primary-hover` | `#DFA6F3` | **No definido en `@supports`** | Misma razón que primary. |
+| Accent lima | `#D6F47A` | `oklch(0.92 0.16 125)` ← definido | Requería ajuste: la conversión directa (~0.15 H115) daba verde amarillento. Hue corregido a 125. |
+| Primary violeta | `#D790F0` | **No definido en `@supports`** | El browser hace mapeo sRGB→P3 nativo que coincide con Figma. Cualquier valor OKLCH resulta en mismatch perceptual. |
+| Primary hover | `#DFA6F3` | **No definido en `@supports`** | Misma razón que primary. |
 
 > **Regla derivada de la experiencia**: Para colores donde el mapeo nativo del browser coincide con Figma, **no definir OKLCH**. Solo definir OKLCH cuando la conversión directa produce un resultado visualmente incorrecto y se puede ajustar con certeza.
 

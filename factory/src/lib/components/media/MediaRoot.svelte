@@ -46,7 +46,7 @@
 <style>
 	.media {
 		overflow: hidden;
-		border-radius: var(--radius-base, 0);
+		border-radius: var(--radius-md, 0);
 		background: var(--color-secondary, #f3f4f6);
 	}
 

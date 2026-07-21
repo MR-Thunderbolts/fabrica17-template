@@ -1,192 +1,29 @@
-/* ─── Fábrica Base — Design Tokens (NEUTROS) ─────────────── */
-/* Paleta placeholder sin marca. Reemplazar con los tokens del cliente. */
+/* ═══════════════════════════════════════════════════════════
+   CLIENTE — Identidad Visual (Override Layer)
+   ═══════════════════════════════════════════════════════════
+   Este es EL archivo de marca del cliente. El baseline de la
+   fábrica (utils/tokens.css) es 100% escala de grises; aquí
+   sobreescribes SOLO los tokens semánticos que la marca define.
 
-:root {
-	/* Typography — stack de sistema, sin dependencias externas */
-	--font-headline: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-	--font-body:     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-	--font-mono:     ui-monospace, 'SF Mono', Menlo, monospace;
+   Reglas:
+   - No dupliques primitivas ni redefinas la escala completa:
+     sobreescribe únicamente lo que la marca cambia.
+   - Fuentes self-hosted (woff2 subset en cliente/assets/fonts/),
+     NUNCA vía CDN (governance/GREEN_CODING.md).
+   - Sincronización Figma: bun run tokens:sync escribe el bloque
+     delimitado más abajo. No edites dentro del bloque.
 
-	/* ── Type Scale (Major Third 1.25) ── */
-	--text-xs:   clamp(0.7rem, 0.68rem + 0.1vw, 0.75rem);
-	--text-sm:   clamp(0.8rem, 0.77rem + 0.15vw, 0.875rem);
-	--text-base: 1rem;
-	--text-lg:   clamp(1.15rem, 1.05rem + 0.5vw, 1.25rem);
-	--text-xl:   clamp(1.4rem, 1.2rem + 1vw, 1.5rem);
-	--text-2xl:  clamp(1.75rem, 1.4rem + 1.75vw, 2.5rem);
-	--text-3xl:  clamp(2rem, 1.5rem + 2.5vw, 3rem);
-	--text-hero: clamp(2.75rem, 1.8rem + 4.75vw, 5rem);
+   Ejemplo de override manual:
+   :root {
+       --color-primary: #2a8f6e;
+       --color-primary-hover: #237a5d;
+       --color-primary-foreground: #ffffff;
+       --font-headline: 'Space Grotesk', var(--font-body);
+   }
+   ═══════════════════════════════════════════════════════════ */
 
-	/* ── Spacing (8px base) ── */
-	--space-1: 4px;   --space-2: 8px;   --space-3: 12px;
-	--space-4: 16px;  --space-5: 20px;  --space-6: 24px;
-	--space-8: 32px;  --space-10: 40px; --space-12: 48px;
-	--space-16: 64px; --space-20: 80px; --space-24: 96px;
+/* ── FIGMA SYNC START (autogenerado — no editar este bloque) ── */
+/* ── FIGMA SYNC END ── */
 
-	/* Section rhythm (vertical padding) */
-	--section-pad-sm: clamp(48px, 6vw, 72px);
-	--section-pad-md: clamp(64px, 8vw, 88px);
-	--section-pad-lg: clamp(72px, 9vw, 96px);
-
-	/* Radius */
-	--radius-sm:   7px;
-	--radius-md:   10px;
-	--radius-lg:   16px;
-	--radius-xl:   28px;
-	--radius-full: 9999px;
-
-	/* ── Paleta Neutra (dark-first, acento violeta placeholder) ── */
-	/* Backgrounds */
-	--color-bg-deep:       #0D0E12;
-	--color-bg-dark:       #14161D;
-	--color-bg-base:       #0D0E12;
-	--color-bg-light:      #F5F5F7;
-
-	/* Surfaces */
-	--color-surface-base:  #171922;
-	--color-surface-dark:  #10121A;
-
-	/* Primary / Accent */
-	--color-primary:       #A78BFA;
-	--color-primary-hover: #C4B0FF;
-	--color-on-primary:    #0D0E12;
-	--color-accent-primary:#818CF8;
-	--color-white:         #FFFFFF;
-
-	/* Text */
-	--color-text-dark:     #E8EAF2;
-	--color-text-body:     #A9AEC0;
-	--color-text-light:    #FEFFFB;
-	--color-text-muted:    #7C8194;
-	--color-text-primary:  #E8EAF2;
-	--color-text-secondary:#A9AEC0;
-
-	/* Borders */
-	--color-border-tag:    rgba(167, 139, 250, 0.35);
-	--color-border-card:   rgba(169, 174, 192, 0.16);
-	--color-border-outline:#3A3E4E;
-
-	/* Semantic Status */
-	--color-success:       #4ADE80;
-	--color-success-glow:  rgba(74, 222, 128, 0.4);
-	--color-success-bg:    rgba(74, 222, 128, 0.12);
-	--color-success-border:rgba(74, 222, 128, 0.28);
-	--color-on-success:    #0D0E12;
-	--color-warning:       #F3BA25;
-	--color-warning-bg:    rgba(195, 149, 30, 0.2);
-	--color-error:         #FF6B6B;
-	--color-error-bg:      rgba(220, 53, 69, 0.15);
-
-	/* ── Layout ── */
-	--content-max: 1132px;
-	--gutter: clamp(20px, 12.5vw, 190px);
-
-	/* ── Motion Tokens ── */
-	--ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
-	--ease-in-expo:   cubic-bezier(0.7, 0, 0.84, 0);
-	--ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);
-
-	--dur-instant: 100ms;
-	--dur-fast:    200ms;
-	--dur-normal:  300ms;
-	--dur-slow:    500ms;
-	--dur-enter:   600ms;
-}
-
-/* ─── Base Reset ─────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html {
-	font-family: var(--font-body);
-	font-size: 16px;
-	line-height: 1.5;
-	-webkit-font-smoothing: antialiased;
-	font-kerning: normal;
-	font-optical-sizing: auto;
-}
-
-body {
-	background: var(--color-bg-base);
-	color: var(--color-text-body);
-	min-height: 100vh;
-	line-height: 1.55;
-	letter-spacing: 0.01em;
-}
-
-/* ─── Typography Polish ─────────────────────────────────── */
-h1, h2, h3, h4 { text-wrap: balance; font-family: var(--font-headline); color: var(--color-text-dark); }
-article p, .prose p { text-wrap: pretty; }
-
-img, video, svg { display: block; max-width: 100%; }
-button { cursor: pointer; font-family: inherit; }
-
-/* Touch & Interaction */
-button, a, input, select, textarea { touch-action: manipulation; }
-
-/* Accessibility */
-:focus-visible {
-	outline: 2px solid var(--color-primary);
-	outline-offset: 2px;
-	border-radius: 4px;
-}
-
-/* ─── Scroll Reveal Animations ──────────────────────────── */
-.reveal-fade-up {
-	opacity: 0;
-	transform: translateY(24px);
-	transition:
-		opacity var(--dur-enter) var(--ease-out-expo),
-		transform var(--dur-enter) var(--ease-out-expo);
-}
-
-.reveal-fade-up.revealed {
-	opacity: 1;
-	transform: translateY(0);
-}
-
-.stagger-children > .reveal-fade-up:nth-child(1) { transition-delay: 0ms; }
-.stagger-children > .reveal-fade-up:nth-child(2) { transition-delay: 80ms; }
-.stagger-children > .reveal-fade-up:nth-child(3) { transition-delay: 160ms; }
-.stagger-children > .reveal-fade-up:nth-child(4) { transition-delay: 240ms; }
-.stagger-children > .reveal-fade-up:nth-child(5) { transition-delay: 320ms; }
-
-/* ─── UX/UI Pro Max Utilities ───────────────────────────── */
-.shadow-elevation-1 {
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-}
-.shadow-elevation-2 {
-	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
-}
-.shadow-elevation-3 {
-	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-@keyframes pulse-skeleton {
-	0%, 100% { opacity: 1; }
-	50% { opacity: 0.5; }
-}
-
-.skeleton-box {
-	background: linear-gradient(90deg, rgba(200,200,200,0.1) 0%, rgba(200,200,200,0.2) 50%, rgba(200,200,200,0.1) 100%);
-	background-size: 200% 100%;
-	animation: shimmer 2s infinite linear;
-	border-radius: var(--radius-md);
-}
-
-@keyframes shimmer {
-	0% { background-position: -200% 0; }
-	100% { background-position: 200% 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-	*, *::before, *::after {
-		animation-duration: 0.01ms !important;
-		animation-iteration-count: 1 !important;
-		transition-duration: 0.01ms !important;
-		scroll-behavior: auto !important;
-	}
-	.reveal-fade-up {
-		opacity: 1 !important;
-		transform: none !important;
-	}
-}
+/* En estado template este archivo no sobreescribe nada:
+   el sistema renderiza en escala de grises por defecto. */
