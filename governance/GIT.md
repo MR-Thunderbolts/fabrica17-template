@@ -60,6 +60,27 @@ type(scope): subject
 - `factory` — componentes Golden
 - `deps`, `config` — infraestructura
 
+### Regla de Commits Atómicos (agente cierra su propia unidad)
+
+> Extraída de un caso real donde se perdió trazabilidad: commits que mezclaban
+> refactor + limpieza de docs + feature en uno solo, y un mensaje ("glassmorphism
+> effects") que ya no describía el diff real porque el efecto se había sacado en la
+> misma sesión antes de confirmar el commit.
+
+- **El agente commitea al cerrar cada unidad de cambio real** (un punto del brief, un
+  fix puntual), no un humano en batch después desde el IDE — eso es lo que rompe la
+  trazabilidad en la práctica.
+- **Un commit, un propósito.** No mezclar refactor + feature + limpieza de docs en el
+  mismo commit aunque hayan ocurrido en la misma sesión.
+- **El mensaje describe el diff que efectivamente queda en ese commit**, no una
+  intención de una iteración anterior que cambió antes de confirmar. Si el código
+  cambió de rumbo durante la sesión, releer el diff final antes de escribir el
+  mensaje.
+- Si el brief tiene puntos numerados (`BRIEF_PROTOCOL.md`), el commit referencia el
+  punto que resuelve: `feat(hero): paridad V3 (puntos 2, 5, 6)`.
+- Antes de confirmar cualquier commit, revisar que el mensaje no tenga texto de
+  debugging pegado por accidente (ej. un `git push` literal como segunda línea).
+
 ---
 
 ## 3. Flujo de Trabajo Diario

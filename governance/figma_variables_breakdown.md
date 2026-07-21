@@ -18,10 +18,9 @@ Valores absolutos y crudos. Nunca se aplican directamente a los componentes.
 Esta es la capa que los diseñadores **sí deben usar**. Mapean a la Colección 1 y coinciden exactamente con los nombres de variables en el CSS.
 *   **Brand Palette**: 
     *   `color-primary` (Apunta a Purple-300)
-    *   `color-audit-surface` (Apunta a Deep-Blue-900)
-    *   `color-audit-accent` (Apunta a Lime-500)
-    *   `color-card-green-1`, `color-card-purple`, etc.
-*   **Text Colors**: `color-text-primary`, `color-text-muted`, `color-audit-fg`.
+    *   `color-surface-base` (Apunta a Deep-Blue-900)
+    *   `color-accent-primary` (Apunta a Lime-500)
+*   **Text Colors**: `color-text-primary`, `color-text-muted`, `color-text-secondary`.
 *   **Borders**: `color-border-card`, `color-border-outline`.
 *   **Border Radius**: `radius-sm`, `radius-base`, `radius-lg`, `radius-full`.
 
@@ -58,8 +57,8 @@ Tu configuración actual tiene una arquitectura de sistema de diseño **muy avan
     *   *Solución:* Cambiar los nombres de `h1`, `h2` a escalas abstractas basadas en tallas (T-shirt sizing): `text-3xl`, `text-2xl`, `text-base`. Esto calza 1:1 con las clases y variables CSS (`var(--text-2xl)`).
 2.  **Exceso de Profundidad en Mapped:**
     *   *Actual:* Tienes tokens a nivel de componente (`Surface/Action-hover`, `Tag-bg`, `Badge-bg`).
-    *   *Problema:* En un sistema de alto rendimiento como Ciclo17, intentamos mantener el CSS lo más pequeño posible. Si cada componente tiene su propia variable, el archivo CSS crece.
-    *   *Solución:* Reutilizar los tokens semánticos (Alias). En lugar de usar un token especial `Tag-bg`, en el código directamente le asignamos a ese tag el color `color-card-green-1` o `color-surface-tag`.
+    *   *Problema:* En un sistema de alto rendimiento como el de la Fábrica, intentamos mantener el CSS lo más pequeño posible. Si cada componente tiene su propia variable, el archivo CSS crece.
+    *   *Solución:* Reutilizar los tokens semánticos (Alias). En lugar de usar un token especial `Tag-bg`, en el código directamente le asignamos a ese tag el color `color-surface-tag`.
 3.  **Falta de Gutter / Section Padding fluido:**
     *   *Actual:* No veo variables que controlen el espaciado horizontal de los bordes (margins/gutters) ni el padding vertical de las secciones entre Desktop y Mobile.
     *   *Solución:* Agregar tokens como `Layout/gutter` y `Layout/section-pad` en tu colección "Responsive", para que los diseñadores no pongan anchos de frame arbitrarios, sino que respeten el grid.

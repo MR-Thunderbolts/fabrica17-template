@@ -12,7 +12,7 @@ This file captures proven patterns extracted from successful audits. The QA Agen
 ### 1. Token-First Styling
 **Source:** Hero.Split audit (Grade A)
 **Pattern:** Never write `padding: 24px`. Always write `padding: var(--space-6)`.
-**Why:** Token-first styling ensures instant brand changes via `client-brand.css` without touching component code.
+**Why:** Token-first styling ensures instant brand changes via `cliente/tokens.css` without touching component code.
 
 ### 2. Section.Master as Layout Engine
 **Source:** Page assembly audit (Grade A)
@@ -63,7 +63,7 @@ This file captures proven patterns extracted from successful audits. The QA Agen
 **Source:** Sprint 3 Icon Library Simplification (Grade A+)
 **Pattern:** MynaUI Icons (`~icons/mynaui/*`) is established as the default, official icon library for both the factory components and standard client projects. Because MynaUI features highly refined, modern outline vectors with exceptionally consistent weights and rounded stroke caps, separate weight sub-collections (bold, light, thin) are no longer required.
 - **Default imports:** Always import directly from `~icons/mynaui/<icon>`.
-- **Project Specificity:** If the client's project specifications mandate a different collection (e.g. Phosphor `~icons/ph/*`, Lucide `~icons/lucide/*`, or a local custom SVG collection), it is fully permitted to use them to match the project requirements.
+- **Project Specificity:** Authorized sets via npm: MynaUI (default), Lucide `~icons/lucide/*`, Material Symbols `~icons/material-symbols/*`. If the client's project mandates a different Iconify collection (e.g. Phosphor `~icons/ph/*`), it is fully permitted to add it to match the project requirements.
 **Why:** Simplifies the design workflow, maintains a sleek and modern cohesive aesthetic, and ensures absolute flexibility for custom client specifications.
 
 ---

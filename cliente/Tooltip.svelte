@@ -105,12 +105,12 @@
 		width: 260px;
 		background: var(--color-surface-base);
 		border: 1px solid var(--color-accent-primary);
-		border-radius: 14px;
+		border-radius: var(--radius-md);
 		padding: 16px;
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
-		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+		box-shadow: var(--shadow-md);
 		text-align: left;
 		/* Animación via `translate` CSS individual — NO conflicta con transform de posicionamiento */
 		translate: 0 0;
@@ -133,7 +133,7 @@
 	}
 
 	.tooltip-title {
-		color: var(--color-white);
+		color: var(--color-text-primary);
 		font-family: var(--font-headline);
 		font-size: var(--text-base);
 		font-weight: 700;
@@ -153,7 +153,7 @@
 	}
 
 	.btn-close:hover {
-		color: var(--color-white);
+		color: var(--color-text-primary);
 	}
 
 	.tooltip-desc {
@@ -165,7 +165,7 @@
 	}
 
 	.tooltip-link {
-		color: var(--color-white);
+		color: var(--color-text-primary);
 		font-family: var(--font-body);
 		font-size: var(--text-sm);
 		text-decoration: underline;

@@ -1,25 +1,212 @@
-/* ── Fábrica17 — Steel Rails (Baseline Tokens) ── */
+/* ════════════════════════════════════════════════════════════
+   Fábrica17 — Baseline Design System (Grayscale Neutral)
+   ════════════════════════════════════════════════════════════
+   Implementa governance/DESIGN.md:
+     Primitivas (grises) → Semánticos (significado) → Componentes.
+
+   REGLAS:
+   - Este archivo es AGNÓSTICO: cero color de marca, cero webfonts.
+   - Los componentes de factory/ consumen SOLO la capa semántica.
+   - La identidad del cliente se inyecta en cliente/tokens.css
+     sobrescribiendo tokens semánticos (nunca editando este archivo).
+   - Temas: :root = light (default). [data-theme="dark"] = dark.
+     El toggle vive en utils/settings.svelte.ts.
+   ════════════════════════════════════════════════════════════ */
 
 :root {
-	/* Spacing Primitives (Mapped to Figma variables where possible) */
-	--space-1: 4px;
-	--space-2: 8px;
-	--space-3: 12px;
-	--space-4: 16px;
-	--space-5: 20px;
-	--space-6: 24px;
-	--space-8: var(--page-padding, 32px); /* Mapping 8 to Page Padding (64px) */
-	--space-10: 40px;
-	--space-12: 48px;
-	--space-16: var(--section-padding-medium, 64px); /* Mapping 16 to Medium Padding (80px) */
-	--space-20: 80px;
-	--space-24: var(--section-padding-large, 96px); /* Mapping 24 to Large Padding (112px) */
+	/* ── 1. PRIMITIVAS ─────────────────────────────────────── */
+
+	/* Escala de grises (neutra, sin tinte) */
+	--color-white: #ffffff;
+	--color-gray-50: #fafafa;
+	--color-gray-100: #f5f5f5;
+	--color-gray-200: #e5e5e5;
+	--color-gray-300: #d4d4d4;
+	--color-gray-400: #a3a3a3;
+	--color-gray-500: #737373;
+	--color-gray-600: #525252;
+	--color-gray-700: #404040;
+	--color-gray-800: #262626;
+	--color-gray-900: #171717;
+	--color-gray-950: #0a0a0a;
+	--color-black: #0a0a0a;
+
+	/* Espaciado (base 4px) */
+	--space-1: 4px;   --space-2: 8px;   --space-3: 12px;
+	--space-4: 16px;  --space-5: 20px;  --space-6: 24px;
+	--space-8: 32px;  --space-10: 40px; --space-12: 48px;
+	--space-16: 64px; --space-20: 80px; --space-24: 96px;
 	--space-32: 128px;
 
-	/* Color Primitives */
-	--color-white: #ffffff;
-	--color-black: #070202;
-	
-	/* Layout Primitives */
-	--max-width-container: 1280px;
+	/* Tipografía — system stack por defecto (Green Coding: cero CDN).
+	   El cliente sobreescribe --font-headline / --font-body con sus
+	   fuentes self-hosted en cliente/tokens.css. */
+	--font-headline: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	--font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	--font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+	/* Escala tipográfica fluida (Major Third) */
+	--text-xs:   clamp(0.7rem, 0.68rem + 0.1vw, 0.75rem);
+	--text-sm:   clamp(0.8rem, 0.77rem + 0.15vw, 0.875rem);
+	--text-base: 1rem;
+	--text-md:   clamp(1.05rem, 1rem + 0.25vw, 1.125rem);
+	--text-lg:   clamp(1.15rem, 1.05rem + 0.5vw, 1.25rem);
+	--text-xl:   clamp(1.4rem, 1.2rem + 1vw, 1.5rem);
+	--text-2xl:  clamp(1.75rem, 1.4rem + 1.75vw, 2.5rem);
+	--text-3xl:  clamp(2rem, 1.5rem + 2.5vw, 3rem);
+	--text-hero: clamp(2.75rem, 1.8rem + 4.75vw, 5rem);
+
+	/* Radios */
+	--radius-sm: 6px;
+	--radius-md: 12px;
+	--radius-lg: 20px;
+	--radius-xl: 28px;
+	--radius-full: 9999px;
+
+	/* Motion (regla 100/300/500) */
+	--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+	--ease-in-expo: cubic-bezier(0.7, 0, 0.84, 0);
+	--ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+	--dur-instant: 100ms;
+	--dur-fast: 200ms;
+	--dur-normal: 300ms;
+	--dur-slow: 500ms;
+	--dur-enter: 600ms;
+	--transition-fast: var(--dur-fast) var(--ease-in-out);
+
+	/* Layout */
+	--content-max: 1200px;
+	--gutter: clamp(20px, 5vw, 96px);
+	--navbar-height: 72px;
+	--section-pad-sm: clamp(48px, 6vw, 72px);
+	--section-pad-md: clamp(64px, 8vw, 88px);
+	--section-pad-lg: clamp(72px, 9vw, 96px);
+
+	/* ── 2. SEMÁNTICOS — TEMA LIGHT (default) ──────────────── */
+
+	/* Superficies */
+	--color-bg-deep: var(--color-gray-100);
+	--color-bg-base: var(--color-gray-50);
+	--color-neutral-bg: var(--color-bg-base);
+	--color-surface-base: var(--color-white);
+	--color-surface-muted: var(--color-gray-100);
+	--color-surface-dark: var(--color-gray-200);
+	--color-surface-tag: rgba(10, 10, 10, 0.05);
+
+	/* Texto */
+	--color-text-primary: var(--color-gray-950);
+	--color-text-heading: var(--color-text-primary);
+	--color-text-body: var(--color-gray-800);
+	--color-text-secondary: var(--color-gray-600);
+	--color-text-muted: var(--color-gray-500);
+
+	/* Bordes */
+	--color-border-light: rgba(10, 10, 10, 0.12);
+	--color-border-card: var(--color-gray-200);
+	--color-border-outline: var(--color-gray-400);
+
+	/* Interactivos — en grayscale el "primary" es casi-negro */
+	--color-primary: var(--color-gray-900);
+	--color-primary-hover: var(--color-gray-700);
+	--color-primary-foreground: var(--color-white);
+	--color-on-primary: var(--color-primary-foreground);
+	--color-primary-glow: rgba(10, 10, 10, 0.15);
+	--color-accent-primary: var(--color-primary);
+	--color-secondary: var(--color-gray-100);
+	--hover-opacity: 0.85;
+
+	/* Badge "brand" variant (derivados neutros) */
+	--color-brand-soft: var(--color-gray-100);
+	--color-brand-text: var(--color-gray-900);
+	--color-brand-border: var(--color-gray-300);
+
+	/* Estados — conservan matiz por accesibilidad (significado
+	   funcional), calibrados en intensidad contenida */
+	--color-success: #1a7f37;
+	--color-success-bg: #e9f6ee;
+	--color-success-text: #116329;
+	--color-success-glow: rgba(26, 127, 55, 0.3);
+	--color-on-success: #ffffff;
+	--color-warning: #9a6700;
+	--color-warning-bg: #fff8e6;
+	--color-warning-text: #7a5200;
+	--color-danger: #cf222e;
+	--color-danger-bg: #fdeeee;
+	--color-danger-text: #a40e26;
+	--color-error: var(--color-danger);
+
+	/* Sombras */
+	--shadow-sm: 0 1px 2px rgba(10, 10, 10, 0.06);
+	--shadow-md: 0 4px 12px rgba(10, 10, 10, 0.08);
+}
+
+/* ── 3. SEMÁNTICOS — TEMA DARK ─────────────────────────────
+   Activado por utils/settings.svelte.ts vía data-theme. */
+:root[data-theme='dark'] {
+	/* Superficies */
+	--color-bg-deep: var(--color-gray-950);
+	--color-bg-base: var(--color-gray-900);
+	--color-surface-base: var(--color-gray-800);
+	--color-surface-muted: var(--color-gray-800);
+	--color-surface-dark: var(--color-gray-950);
+	--color-surface-tag: rgba(255, 255, 255, 0.08);
+
+	/* Texto */
+	--color-text-primary: var(--color-gray-50);
+	--color-text-body: var(--color-gray-200);
+	--color-text-secondary: var(--color-gray-300);
+	--color-text-muted: var(--color-gray-400);
+
+	/* Bordes */
+	--color-border-light: rgba(255, 255, 255, 0.14);
+	--color-border-card: rgba(255, 255, 255, 0.1);
+	--color-border-outline: var(--color-gray-500);
+
+	/* Interactivos — invertido: "primary" casi-blanco */
+	--color-primary: var(--color-gray-50);
+	--color-primary-hover: var(--color-gray-300);
+	--color-primary-foreground: var(--color-gray-950);
+	--color-primary-glow: rgba(255, 255, 255, 0.2);
+	--color-secondary: var(--color-gray-800);
+
+	/* Badge "brand" variant */
+	--color-brand-soft: rgba(255, 255, 255, 0.08);
+	--color-brand-text: var(--color-gray-100);
+	--color-brand-border: rgba(255, 255, 255, 0.16);
+
+	/* Estados */
+	--color-success: #57c26b;
+	--color-success-bg: rgba(87, 194, 107, 0.12);
+	--color-success-text: #9fe0ac;
+	--color-success-glow: rgba(87, 194, 107, 0.3);
+	--color-on-success: #0b1f0a;
+	--color-warning: #e3b341;
+	--color-warning-bg: rgba(227, 179, 65, 0.12);
+	--color-warning-text: #f0d489;
+	--color-danger: #f47067;
+	--color-danger-bg: rgba(244, 112, 103, 0.12);
+	--color-danger-text: #f8a9a3;
+
+	/* Sombras */
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+	--shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* ── 4. OKLCH (progressive enhancement) ────────────────────
+   Grises perceptualmente uniformes (chroma 0). Protocolo en
+   governance/OKLCH_CALIBRATION.md. */
+@supports (color: oklch(0.5 0 0)) {
+	:root {
+		--color-gray-50: oklch(0.985 0 0);
+		--color-gray-100: oklch(0.97 0 0);
+		--color-gray-200: oklch(0.922 0 0);
+		--color-gray-300: oklch(0.87 0 0);
+		--color-gray-400: oklch(0.708 0 0);
+		--color-gray-500: oklch(0.556 0 0);
+		--color-gray-600: oklch(0.439 0 0);
+		--color-gray-700: oklch(0.371 0 0);
+		--color-gray-800: oklch(0.269 0 0);
+		--color-gray-900: oklch(0.205 0 0);
+		--color-gray-950: oklch(0.145 0 0);
+	}
 }

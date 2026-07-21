@@ -41,7 +41,7 @@
 		font-size: var(--text-xs, 12px);
 		font-weight: 500;
 		line-height: 1.5;
-		border-radius: var(--radius-badge, 6px);
+		border-radius: var(--radius-sm, 6px);
 		white-space: nowrap;
 	}
 
@@ -57,18 +57,18 @@
 	}
 
 	[data-variant="success"] {
-		background: #ecfdf5;
-		color: #065f46;
+		background: var(--color-success-bg, #ecfdf5);
+		color: var(--color-success-text, #065f46);
 	}
 
 	[data-variant="warning"] {
-		background: #fffbeb;
-		color: #92400e;
+		background: var(--color-warning-bg, #fffbeb);
+		color: var(--color-warning-text, #92400e);
 	}
 
 	[data-variant="error"] {
-		background: #fef2f2;
-		color: #991b1b;
+		background: var(--color-danger-bg, #fef2f2);
+		color: var(--color-danger-text, #991b1b);
 	}
 
 	[data-variant="outline"] {

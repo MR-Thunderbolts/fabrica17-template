@@ -5,7 +5,7 @@
  */
 
 class AppSettings {
-	theme = $state<'dark' | 'light'>('dark');
+	theme = $state<'dark' | 'light'>('light');
 	ecoMode = $state(false);
 
 	constructor() {

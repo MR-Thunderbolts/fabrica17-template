@@ -1,216 +1,29 @@
-/* ─── Ciclo17 / Calculadora — Design Tokens ─────────────── */
-/* Self-contained: import this file inside any project to get
-   the full Ciclo17 brand system without external dependencies */
+/* ═══════════════════════════════════════════════════════════
+   CLIENTE — Identidad Visual (Override Layer)
+   ═══════════════════════════════════════════════════════════
+   Este es EL archivo de marca del cliente. El baseline de la
+   fábrica (utils/tokens.css) es 100% escala de grises; aquí
+   sobreescribes SOLO los tokens semánticos que la marca define.
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+   Reglas:
+   - No dupliques primitivas ni redefinas la escala completa:
+     sobreescribe únicamente lo que la marca cambia.
+   - Fuentes self-hosted (woff2 subset en cliente/assets/fonts/),
+     NUNCA vía CDN (governance/GREEN_CODING.md).
+   - Sincronización Figma: bun run tokens:sync escribe el bloque
+     delimitado más abajo. No edites dentro del bloque.
 
-:root {
-	/* Typography */
-	--font-headline: 'Space Grotesk', sans-serif;
-	--font-body:     'DM Sans', sans-serif;
-	--font-mono:     'Space Mono', monospace;
+   Ejemplo de override manual:
+   :root {
+       --color-primary: #2a8f6e;
+       --color-primary-hover: #237a5d;
+       --color-primary-foreground: #ffffff;
+       --font-headline: 'Space Grotesk', var(--font-body);
+   }
+   ═══════════════════════════════════════════════════════════ */
 
-	/* ── Type Scale (Major Third 1.25) ── */
-	--text-xs:   clamp(0.7rem, 0.68rem + 0.1vw, 0.75rem);
-	--text-sm:   clamp(0.8rem, 0.77rem + 0.15vw, 0.875rem);
-	--text-base: 1rem;
-	--text-lg:   clamp(1.15rem, 1.05rem + 0.5vw, 1.25rem);
-	--text-xl:   clamp(1.4rem, 1.2rem + 1vw, 1.5rem);
-	--text-2xl:  clamp(1.75rem, 1.4rem + 1.75vw, 2.5rem);
-	--text-3xl:  clamp(2rem, 1.5rem + 2.5vw, 3rem);
-	--text-hero: clamp(2.75rem, 1.8rem + 4.75vw, 5rem);
+/* ── FIGMA SYNC START (autogenerado — no editar este bloque) ── */
+/* ── FIGMA SYNC END ── */
 
-	/* ── Spacing (8px base) ── */
-	--space-1: 4px;   --space-2: 8px;   --space-3: 12px;
-	--space-4: 16px;  --space-5: 20px;  --space-6: 24px;
-	--space-8: 32px;  --space-10: 40px; --space-12: 48px;
-	--space-16: 64px; --space-20: 80px; --space-24: 96px;
-
-	/* Section rhythm (vertical padding) */
-	--section-pad-sm: clamp(48px, 6vw, 72px);
-	--section-pad-md: clamp(64px, 8vw, 88px);
-	--section-pad-lg: clamp(72px, 9vw, 96px);
-
-	/* Radius */
-	--radius-sm:   6px;
-	--radius-md:   12px;
-	--radius-lg:   20px;
-	--radius-xl:   28px;
-	--radius-full: 9999px;
-
-	/* ── Brand Palette ── */
-	/* Surface */
-	--color-bg-deep:       #0c0f1a;
-	--color-bg-base:       #141827;
-	--color-surface-base:  #191e31;
-	--color-text-secondary:#d4d8e4;
-	--color-accent-primary:#d6f47a;
-
-	/* Glow tokens semánticos reutilizables */
-	--glow-purple:         radial-gradient(ellipse at 50% 40%, rgba(215, 144, 240, 0.08) 0%, transparent 65%);
-	--glow-blue:           radial-gradient(ellipse at 50% 60%, rgba(100, 140, 255, 0.06) 0%, transparent 65%);
-
-	/* Primary (Purple) */
-	--color-primary:       #d790f0;
-	--color-primary-hover: #dfa6f3;
-	--color-primary-glow:  rgba(218, 147, 255, 0.8);
-	--color-on-primary:    #191e31;
-
-	/* Card Pastels */
-	--color-card-green-1:  #effbca;
-	--color-card-green-2:  #e6f8af;
-	--color-card-green-3:  #effbca;
-	--color-card-purple:   #f7e9fc;
-	--color-card-warning:  #fdf1d3;
-	--color-card-blue:     #e0e7ff;
-	--color-card-blue-2:   #c8d9ff;  /* Azul periwinkle suave - PRD #002 */
-	--color-card-gray:     #ccd3df;
-	--color-card-salmon:   #fbd8d1;
-
-	/* Semantic Status — armonizados con el sistema OKLCH del proyecto */
-	/* Success: verde cercano al --color-accent-primary, más saturado para estado */
-	--color-success:       #7de87a;          /* ratio 4.8:1 sobre surface-base ✅ */
-	--color-success-bg:    rgba(125, 232, 122, 0.12);  /* fondo sutil para badges */
-	--color-success-border:rgba(125, 232, 122, 0.28);  /* borde success states */
-	--color-success-glow:  rgba(125, 232, 122, 0.35);  /* glow para iconos/check */
-	--color-on-success:    #0b1f0a;          /* texto oscuro sobre success — AAA */
-	--color-warning:       #f3ba25;
-	--color-warning-bg:    rgba(195, 149, 30, 0.2);
-	--color-error:         #ff6b6b;
-	--color-error-bg:      rgba(220, 53, 69, 0.15);
-
-	/* Surface variants */
-	--color-surface-dark:  #0f121d;
-	--color-border-card:   rgba(255, 255, 255, 0.1);
-	--color-surface-tag:   rgba(255, 255, 255, 0.1);
-
-	/* Text semantic */
-	--color-text-muted:    #969fab;
-	--color-text-primary:  #eef0f6;
-	--color-border-outline: #949dbc;
-
-	/* Tinted white — never use pure #fff */
-	--color-white: #eef0f6;
-
-	/* ── Layout ── */
-	--content-max: 1128px;
-	--gutter: clamp(20px, 5vw, 156px);
-
-	/* ── Motion Tokens ── */
-	/* Easing — exponential curves (Impeccable standard) */
-	--ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);      /* entering */
-	--ease-in-expo:   cubic-bezier(0.7, 0, 0.84, 0);      /* leaving */
-	--ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);      /* state toggles */
-
-	/* Durations (100/300/500 rule) */
-	--dur-instant: 100ms;     /* button press, toggle */
-	--dur-fast:    200ms;     /* hover, tooltip, color */
-	--dur-normal:  300ms;     /* menu, drawer, state */
-	--dur-slow:    500ms;     /* modal, layout change */
-	--dur-enter:   600ms;     /* entrance animation */
-}
-
-/* ─── OKLCH Palette (progressive enhancement) ────────────── */
-@supports (color: oklch(0.5 0.1 0)) {
-	:root {
-		--color-bg-deep:       oklch(0.12 0.02 265);
-		--color-bg-base:       oklch(0.16 0.025 265);
-		--color-surface-base:  oklch(0.19 0.027 264);
-		--color-text-secondary:oklch(0.87 0.012 265);
-		--color-accent-primary:oklch(0.92 0.16 125); /* Calibrated: P3 match for #D6F47A — hue 125 balances yellow-green shift */
-		/* --color-primary and --color-primary-hover intentionally NOT overridden here.
-		   Let the browser map #D790F0 (sRGB) → P3 natively. Any OKLCH override
-		   causes perceptual mismatch vs. the Figma design reference. */
-		--color-on-primary:    oklch(0.19 0.027 264);
-		--color-white:         oklch(0.96 0.008 265);
-		--color-text-muted:    oklch(0.70 0.015 265);
-		--color-text-primary:  oklch(0.96 0.008 265);
-		--color-surface-dark:  oklch(0.13 0.02 265);
-		/* Success — hue 135 (verde saturado, familia del accent) */
-		--color-success:       oklch(0.87 0.18 135);
-		--color-success-bg:    oklch(0.87 0.18 135 / 0.12);
-		--color-success-border:oklch(0.87 0.18 135 / 0.28);
-		--color-success-glow:  oklch(0.87 0.18 135 / 0.35);
-		--color-on-success:    oklch(0.14 0.06 135);
-	}
-}
-
-/* ─── Base Reset ─────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html {
-	font-family: var(--font-body);
-	font-size: 16px;
-	line-height: 1.5;
-	-webkit-font-smoothing: antialiased;
-	font-kerning: normal;
-	font-optical-sizing: auto;
-	/* ─── Audit Page Aliases ─────────────────────────────────── */
-	--color-audit-bg:      var(--color-bg-base);       /* #141827 */
-	--color-audit-surface: var(--color-surface-base);  /* #191e31 */
-	--color-audit-fg:      var(--color-text-primary);  /* #eef0f6 */
-	--color-audit-accent:  var(--color-accent-primary);/* #d6f47a */
-}
-
-body {
-	background: var(--color-bg-base);
-	color: var(--color-text-secondary);
-	min-height: 100vh;
-	/* Light-on-dark compensation: +0.05 line-height, subtle tracking */
-	line-height: 1.55;
-	letter-spacing: 0.01em;
-}
-
-/* ─── Typography Polish ─────────────────────────────────── */
-h1, h2, h3, h4 { text-wrap: balance; }
-article p, .prose p { text-wrap: pretty; }
-
-img, video, svg { display: block; max-width: 100%; }
-button { cursor: pointer; font-family: inherit; }
-
-/* Touch & Interaction — §2 tap-delay */
-button, a, input, select, textarea { touch-action: manipulation; }
-
-/* Accessibility — §1 focus-states */
-:focus-visible {
-	outline: 2px solid var(--color-primary);
-	outline-offset: 2px;
-	border-radius: 4px;
-}
-
-/* ─── Scroll Reveal Animations ──────────────────────────── */
-/* Elements start hidden; `.revealed` is added by IntersectionObserver */
-.reveal-fade-up {
-	opacity: 0;
-	transform: translateY(24px);
-	transition:
-		opacity var(--dur-enter) var(--ease-out-expo),
-		transform var(--dur-enter) var(--ease-out-expo);
-}
-
-.reveal-fade-up.revealed {
-	opacity: 1;
-	transform: translateY(0);
-}
-
-/* Stagger children inside a parent that has .stagger-children */
-.stagger-children > .reveal-fade-up:nth-child(1) { transition-delay: 0ms; }
-.stagger-children > .reveal-fade-up:nth-child(2) { transition-delay: 80ms; }
-.stagger-children > .reveal-fade-up:nth-child(3) { transition-delay: 160ms; }
-.stagger-children > .reveal-fade-up:nth-child(4) { transition-delay: 240ms; }
-.stagger-children > .reveal-fade-up:nth-child(5) { transition-delay: 320ms; }
-
-/* Accessibility — §1 reduced-motion */
-@media (prefers-reduced-motion: reduce) {
-	*, *::before, *::after {
-		animation-duration: 0.01ms !important;
-		animation-iteration-count: 1 !important;
-		transition-duration: 0.01ms !important;
-		scroll-behavior: auto !important;
-	}
-	.reveal-fade-up {
-		opacity: 1 !important;
-		transform: none !important;
-	}
-}
-
+/* En estado template este archivo no sobreescribe nada:
+   el sistema renderiza en escala de grises por defecto. */

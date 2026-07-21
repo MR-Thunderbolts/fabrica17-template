@@ -47,7 +47,7 @@ Connect to Figma URL via MCP. Execute:
 1. `mcp_FigmaDesktop_get_variable_defs` on the root frame.
 2. Compare output against `figma-tokens.json`.
 3. Create `clients/<client-name>/DESIGN.md` with brand-specific overrides.
-4. Generate `clients/<client-name>/client-brand.css`.
+4. Write the brand overrides into `cliente/tokens.css` (semantic tokens only).
 
 #### 3. Gap Analysis (Scout Agent)
 1. Parse Figma node tree via `mcp_FigmaDesktop_get_metadata`.
@@ -87,7 +87,7 @@ For each gap, the Developer Agent:
 
 ### Icons
 - **Default Official Collection:** Use `unplugin-icons` with `@iconify-json/mynaui` (MynaUI Icons). Import individually: `import IconLightning from '~icons/mynaui/lightning'`.
-- **Project Specificity:** Other collections (e.g. `@iconify-json/ph` for Phosphor, `@iconify-json/lucide` for Lucide) are allowed if the client's project specifically requires them.
+- **Project Specificity:** Authorized sets: MynaUI (default), Lucide, and Material Symbols. Other Iconify collections (e.g. `@iconify-json/ph` for Phosphor) are allowed if the client's project specifically requires them.
 - **NEVER** import full icon packages in bundle; always import individually to preserve treeshaking.
 
 #### 👥 Protocolo Interactivo de Inicialización de Iconos (SETUP AGENT)

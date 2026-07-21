@@ -22,13 +22,13 @@
 	.skeleton-card {
 		background: linear-gradient(
 			90deg,
-			rgba(255, 255, 255, 0.04) 25%,
-			rgba(255, 255, 255, 0.09) 37%,
-			rgba(255, 255, 255, 0.04) 63%
+			var(--color-surface-muted) 25%,
+			var(--color-surface-dark) 37%,
+			var(--color-surface-muted) 63%
 		);
 		background-size: 400% 100%;
 		animation: shimmer 1.4s ease infinite;
-		border: 1px solid rgba(255, 255, 255, 0.06);
+		border: 1px solid var(--color-border-card);
 	}
 
 	@keyframes shimmer {

@@ -1,12 +1,13 @@
 /* ============================================================
-   GLOBAL STYLES & IMPORTS
+   Fábrica17 — Global Shell
+   Orden de cascada: baseline (tokens.css) → reset → utilidades.
+   La identidad del cliente se importa DESPUÉS (cliente/tokens.css
+   desde src/app.css) para que sus overrides ganen.
    ============================================================ */
 
-@import '$root/utils/tokens.css';
+@import './tokens.css';
 
-/* ============================================================
-   GLOBAL RESET & BASE STYLES
-   ============================================================ */
+/* ── Reset & Base ── */
 
 *,
 *::before,
@@ -21,6 +22,8 @@ html {
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
 	scroll-behavior: smooth;
+	font-kerning: normal;
+	font-optical-sizing: auto;
 }
 
 body {
@@ -29,6 +32,7 @@ body {
 	line-height: 1.6;
 	color: var(--color-text-body);
 	background-color: var(--color-neutral-bg);
+	min-height: 100vh;
 }
 
 img,
@@ -54,22 +58,60 @@ button {
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: var(--font-headline);
-	color: var(--color-text-primary);
-	line-height: 1;
+	color: var(--color-text-heading);
+	line-height: 1.1;
+	text-wrap: balance;
 }
 
-/* ============================================================
-   UTILITY CLASSES
-   ============================================================ */
+article p,
+.prose p {
+	text-wrap: pretty;
+}
 
-.sr-only {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
-	border: 0;
+/* Touch & Interaction */
+button, a, input, select, textarea {
+	touch-action: manipulation;
+}
+
+/* Accessibility — focus visible */
+:focus-visible {
+	outline: 2px solid var(--color-primary);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+/* ── Scroll Reveal (par de cliente/reveal.ts) ──
+   Los elementos parten ocultos; `.revealed` la agrega el
+   IntersectionObserver de la action use:reveal. */
+.reveal-fade-up {
+	opacity: 0;
+	transform: translateY(24px);
+	transition:
+		opacity var(--dur-enter) var(--ease-out-expo),
+		transform var(--dur-enter) var(--ease-out-expo);
+}
+
+.reveal-fade-up.revealed {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.stagger-children > .reveal-fade-up:nth-child(1) { transition-delay: 0ms; }
+.stagger-children > .reveal-fade-up:nth-child(2) { transition-delay: 80ms; }
+.stagger-children > .reveal-fade-up:nth-child(3) { transition-delay: 160ms; }
+.stagger-children > .reveal-fade-up:nth-child(4) { transition-delay: 240ms; }
+.stagger-children > .reveal-fade-up:nth-child(5) { transition-delay: 320ms; }
+
+/* Accessibility — reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+	.reveal-fade-up {
+		opacity: 1 !important;
+		transform: none !important;
+	}
 }

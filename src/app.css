@@ -1,2 +1,4 @@
-/* SvelteKit shell — delegates everything to the cliente token system */
+/* SvelteKit shell — baseline de la fábrica + identidad del cliente.
+   El archivo del cliente va al final para que sus overrides ganen. */
+@import url('../utils/app.css');
 @import url('../cliente/tokens.css');
